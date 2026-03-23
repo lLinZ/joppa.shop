@@ -1,0 +1,1 @@
+export default function SecondaryButton({ className = "", disabled, children, ...props }: any) { return <button {...props} disabled={disabled} className={className}>{children}</button>; }

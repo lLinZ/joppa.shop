@@ -1,0 +1,45 @@
+﻿resources/js/Components/UI/Card/Card.tsx(17,8): error TS2339: Property 'padding' does not exist on type 'CardProps'.
+resources/js/Components/UI/Card/Card.tsx(17,24): error TS2339: Property 'radius' does not exist on type 'CardProps'.
+resources/js/Components/UI/Card/Card.tsx(17,39): error TS2339: Property 'shadow' does not exist on type 'CardProps'.
+resources/js/Components/UI/Card/Card.tsx(17,54): error TS2339: Property 'children' does not exist on type 'CardProps'.
+resources/js/Layouts/AuthenticatedLayout.tsx(1,29): error TS2307: Cannot find module '@/Components/ApplicationLogo' or its corresponding type declarations.
+resources/js/Layouts/AuthenticatedLayout.tsx(2,22): error TS2307: Cannot find module '@/Components/Dropdown' or its corresponding type declarations.
+resources/js/Layouts/AuthenticatedLayout.tsx(3,21): error TS2307: Cannot find module '@/Components/NavLink' or its corresponding type declarations.
+resources/js/Layouts/AuthenticatedLayout.tsx(4,31): error TS2307: Cannot find module '@/Components/ResponsiveNavLink' or its corresponding type declarations.
+resources/js/Pages/Auth/ConfirmPassword.tsx(1,24): error TS2307: Cannot find module '@/Components/InputError' or its corresponding type declarations.
+resources/js/Pages/Auth/ConfirmPassword.tsx(2,24): error TS2307: Cannot find module '@/Components/InputLabel' or its corresponding type declarations.
+resources/js/Pages/Auth/ConfirmPassword.tsx(3,27): error TS2307: Cannot find module '@/Components/PrimaryButton' or its corresponding type declarations.
+resources/js/Pages/Auth/ConfirmPassword.tsx(4,23): error TS2307: Cannot find module '@/Components/TextInput' or its corresponding type declarations.
+resources/js/Pages/Auth/ConfirmPassword.tsx(42,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Auth/ForgotPassword.tsx(1,24): error TS2307: Cannot find module '@/Components/InputError' or its corresponding type declarations.
+resources/js/Pages/Auth/ForgotPassword.tsx(2,27): error TS2307: Cannot find module '@/Components/PrimaryButton' or its corresponding type declarations.
+resources/js/Pages/Auth/ForgotPassword.tsx(3,23): error TS2307: Cannot find module '@/Components/TextInput' or its corresponding type declarations.
+resources/js/Pages/Auth/ForgotPassword.tsx(43,32): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Auth/ResetPassword.tsx(1,24): error TS2307: Cannot find module '@/Components/InputError' or its corresponding type declarations.
+resources/js/Pages/Auth/ResetPassword.tsx(2,24): error TS2307: Cannot find module '@/Components/InputLabel' or its corresponding type declarations.
+resources/js/Pages/Auth/ResetPassword.tsx(3,27): error TS2307: Cannot find module '@/Components/PrimaryButton' or its corresponding type declarations.
+resources/js/Pages/Auth/ResetPassword.tsx(4,23): error TS2307: Cannot find module '@/Components/TextInput' or its corresponding type declarations.
+resources/js/Pages/Auth/ResetPassword.tsx(46,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Auth/ResetPassword.tsx(63,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Auth/ResetPassword.tsx(81,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Auth/VerifyEmail.tsx(1,27): error TS2307: Cannot find module '@/Components/PrimaryButton' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(1,26): error TS2307: Cannot find module '@/Components/DangerButton' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(2,24): error TS2307: Cannot find module '@/Components/InputError' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(3,24): error TS2307: Cannot find module '@/Components/InputLabel' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(4,19): error TS2307: Cannot find module '@/Components/Modal' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(5,29): error TS2307: Cannot find module '@/Components/SecondaryButton' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(6,23): error TS2307: Cannot find module '@/Components/TextInput' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/DeleteUserForm.tsx(97,40): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(1,24): error TS2307: Cannot find module '@/Components/InputError' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(2,24): error TS2307: Cannot find module '@/Components/InputLabel' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(3,27): error TS2307: Cannot find module '@/Components/PrimaryButton' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(4,23): error TS2307: Cannot find module '@/Components/TextInput' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(75,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(96,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx(114,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx(1,24): error TS2307: Cannot find module '@/Components/InputError' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx(2,24): error TS2307: Cannot find module '@/Components/InputLabel' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx(3,27): error TS2307: Cannot find module '@/Components/PrimaryButton' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx(4,23): error TS2307: Cannot find module '@/Components/TextInput' or its corresponding type declarations.
+resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx(52,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx(69,36): error TS7006: Parameter 'e' implicitly has an 'any' type.

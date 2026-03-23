@@ -1,0 +1,1 @@
+export default function NavLink(props: any) { return <div {...props} />; }

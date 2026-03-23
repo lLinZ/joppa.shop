@@ -1,0 +1,1 @@
+export default function ApplicationLogo(props: any) { return <svg {...props} />; }

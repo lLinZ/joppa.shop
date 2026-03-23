@@ -1,0 +1,1 @@
+export default function ResponsiveNavLink(props: any) { return <div {...props} />; }

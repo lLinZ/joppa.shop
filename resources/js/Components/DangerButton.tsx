@@ -1,0 +1,1 @@
+export default function DangerButton({ className = "", disabled, children, ...props }: any) { return <button {...props} disabled={disabled} className={className}>{children}</button>; }
