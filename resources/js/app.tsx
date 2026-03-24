@@ -11,6 +11,12 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
 import { theme } from './theme';
+import { useWebTracker } from './hooks/useWebTracker';
+
+const RootWrapper = ({ children }: { children: React.ReactNode }) => {
+    useWebTracker();
+    return <>{children}</>;
+};
 
 const appName = import.meta.env.VITE_APP_NAME || 'JOPPA E-commerce';
 
@@ -26,7 +32,9 @@ createInertiaApp({
 
         root.render(
             <MantineProvider theme={theme} defaultColorScheme="light">
-                <App {...props} />
+                <RootWrapper>
+                    <App {...props} />
+                </RootWrapper>
             </MantineProvider>
         );
     },
