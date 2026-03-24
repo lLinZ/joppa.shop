@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -15,8 +16,31 @@ Route::get('/', function () {
 });
 
 Route::get('/product/{id}', function ($id) {
+    $og_title = 'JOPPA Boutique - Edición Ilimitada';
+    $og_description = 'Diseños con alma vintage y tela premium. Tu idea, nuestra tinta.';
+    $og_image = asset('portada_dario.png');
+
+    try {
+        $response = Http::get(env('VITE_CRM_API_URL') . '/catalog/' . $id);
+        if ($response->successful()) {
+            $product = $response->json('product');
+            $og_title = $product['name'] . ' - JOPPA Boutique';
+            if (!empty($product['description'])) {
+                $og_description = htmlspecialchars(strip_tags($product['description']));
+            }
+            if (!empty($product['images']) && count($product['images']) > 0) {
+                $og_image = $product['images'][0];
+            }
+        }
+    } catch (\Exception $e) {}
+
     return Inertia::render('Product/Show', [
         'id' => $id
+    ])->withViewData([
+        'og_title' => $og_title,
+        'og_description' => $og_description,
+        'og_image' => $og_image,
+        'og_url' => url()->current(),
     ]);
 })->name('product.show');
 
@@ -25,9 +49,32 @@ Route::get('/catalog', function () {
 })->name('catalog.index');
 
 Route::get('/catalog/{id}', function ($id) {
+    $og_title = 'JOPPA Boutique - Edición Ilimitada';
+    $og_description = 'Diseños con alma vintage y tela premium. Tu idea, nuestra tinta.';
+    $og_image = asset('portada_dario.png');
+
+    try {
+        $response = Http::get(env('VITE_CRM_API_URL') . '/catalog/' . $id);
+        if ($response->successful()) {
+            $product = $response->json('product');
+            $og_title = $product['name'] . ' - JOPPA Boutique';
+            if (!empty($product['description'])) {
+                $og_description = htmlspecialchars(strip_tags($product['description']));
+            }
+            if (!empty($product['images']) && count($product['images']) > 0) {
+                $og_image = $product['images'][0];
+            }
+        }
+    } catch (\Exception $e) {}
+
     return Inertia::render('Product/Show', [
         'id' => $id,
         'fromCatalog' => true,
+    ])->withViewData([
+        'og_title' => $og_title,
+        'og_description' => $og_description,
+        'og_image' => $og_image,
+        'og_url' => url()->current(),
     ]);
 })->name('catalog.show');
 

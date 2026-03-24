@@ -6,6 +6,13 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        <meta property="og:title" content="{{ $og_title ?? 'JOPPA Boutique - Edición Ilimitada' }}" />
+        <meta property="og:description" content="{{ $og_description ?? 'Diseños con alma vintage y tela premium. Tu idea, nuestra tinta.' }}" />
+        <meta property="og:image" content="{{ $og_image ?? asset('portada_dario.png') }}" />
+        <meta property="og:url" content="{{ $og_url ?? url()->current() }}" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
