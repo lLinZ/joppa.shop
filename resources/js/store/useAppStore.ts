@@ -8,7 +8,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface CartItem {
-    id: number | string;
+    id: string;
+    productId: number | string;
     name: string;
     price: string;
     image: string;
@@ -29,9 +30,9 @@ export interface AppStore {
   setPrimaryColor: (color: string) => void;
   setActiveColor: (color: string) => void;
   toggleCartDrawer: () => void;
-  addToCart: (item: Omit<CartItem, 'quantity'>) => void;
-  removeFromCart: (id: number | string) => void;
-  updateQuantity: (id: number | string, quantity: number) => void;
+  addToCart: (item: Omit<CartItem, 'id' | 'quantity' | 'productId'> & { id: number | string }) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
 }
 
@@ -51,15 +52,16 @@ export const useAppStore = create<AppStore>()(
       toggleCartDrawer: () => set((state) => ({ isCartDrawerOpen: !state.isCartDrawerOpen })),
       
       addToCart: (item) => set((state) => {
-          const existing = state.cartItems.find(i => i.id === item.id);
+          const cartItemId = item.size ? `${item.id}-${item.size}` : String(item.id);
+          const existing = state.cartItems.find(i => i.id === cartItemId);
           if (existing) {
               return { 
-                  cartItems: state.cartItems.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i),
+                  cartItems: state.cartItems.map(i => i.id === cartItemId ? { ...i, quantity: i.quantity + 1 } : i),
                   isCartDrawerOpen: true
               };
           }
           return { 
-              cartItems: [...state.cartItems, { ...item, quantity: 1 }],
+              cartItems: [...state.cartItems, { ...item, id: cartItemId, productId: item.id, quantity: 1 }],
               isCartDrawerOpen: true 
           };
       }),

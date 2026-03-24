@@ -115,10 +115,12 @@ export default function Checkout() {
                 address: `${values.state}, ${values.address_detail}`,
                 total_amount: subtotal,
                 items: cartItems.map((item) => ({
-                    product_id: String(item.id),
+                    product_id: String(item.productId || item.id),
                     product_name: item.name,
                     quantity: item.quantity,
                     price: parsePrice(item.price),
+                    size: item.size || null,
+                    color: item.color || null,
                 })),
             };
 
