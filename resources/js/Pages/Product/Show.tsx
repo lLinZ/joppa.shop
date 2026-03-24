@@ -170,7 +170,7 @@ export default function Show({ id }: { id: string }) {
                 // Analytics: Count view
                 let visitorId = localStorage.getItem('joppa_visitor_id');
                 if (!visitorId) {
-                    visitorId = crypto.randomUUID();
+                    visitorId = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : 'v-' + Date.now() + '-' + Math.random().toString(36).substring(2);
                     localStorage.setItem('joppa_visitor_id', visitorId);
                 }
 
