@@ -168,7 +168,17 @@ export default function Show({ id }: { id: string }) {
                 setLoading(false);
 
                 // Analytics: Count view
-                fetch(`${CRM_BASE}/catalog/${id}/view`, { method: 'POST' }).catch(() => { });
+                let visitorId = localStorage.getItem('joppa_visitor_id');
+                if (!visitorId) {
+                    visitorId = crypto.randomUUID();
+                    localStorage.setItem('joppa_visitor_id', visitorId);
+                }
+
+                fetch(`${CRM_BASE}/catalog/${id}/view`, { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ visitor_id: visitorId })
+                }).catch(() => { });
             })
             .catch(() => {
                 setError(true);
