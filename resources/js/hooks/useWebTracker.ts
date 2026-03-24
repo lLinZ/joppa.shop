@@ -42,6 +42,7 @@ export function useWebTracker() {
         if (typeof window !== 'undefined') {
             if (!(window as any).Pusher) {
                 (window as any).Pusher = Pusher;
+                (window as any).Pusher.logToConsole = true;
             }
 
             const reverbKey = import.meta.env.VITE_REVERB_APP_KEY as string;
@@ -72,10 +73,10 @@ export function useWebTracker() {
                                     url: window.location.href
                                 })
                                 .then(response => {
-                                    callback(false, response.data);
+                                    callback(null, response.data);
                                 })
                                 .catch(error => {
-                                    callback(true, error);
+                                    callback(new Error(error), { auth: '' });
                                 });
                             }
                         };
