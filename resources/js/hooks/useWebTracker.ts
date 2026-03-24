@@ -40,10 +40,12 @@ export function useWebTracker() {
                 (window as any).Pusher = Pusher;
             }
 
-            if (!globalEchoInstance) {
+            const reverbKey = import.meta.env.VITE_REVERB_APP_KEY as string;
+
+            if (reverbKey && !globalEchoInstance) {
                 globalEchoInstance = new Echo({
                     broadcaster: 'reverb',
-                    key: import.meta.env.VITE_REVERB_APP_KEY as string,
+                    key: reverbKey,
                     wsHost: import.meta.env.VITE_REVERB_HOST as string,
                     wsPort: import.meta.env.VITE_REVERB_PORT ? Number(import.meta.env.VITE_REVERB_PORT) : 8080,
                     wssPort: import.meta.env.VITE_REVERB_PORT ? Number(import.meta.env.VITE_REVERB_PORT) : 443,
@@ -71,7 +73,7 @@ export function useWebTracker() {
                 });
 
                 globalEchoInstance.join('presence-store');
-            } else {
+            } else if (globalEchoInstance) {
                 // Si la instancia ya existe (es una navegación SPA), susurramos a todos la nueva URL
                 const channel = globalEchoInstance.join('presence-store');
                 setTimeout(() => {
