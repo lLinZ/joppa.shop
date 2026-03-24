@@ -42,48 +42,65 @@ export function useWebTracker() {
         if (typeof window !== 'undefined') {
             if (!(window as any).Pusher) {
                 (window as any).Pusher = Pusher;
-                (window as any).Pusher.logToConsole = true;
             }
+            
+            // Forzar el log directamente en el módulo importado para Vite
+            Pusher.logToConsole = true;
+            Pusher.log = (message) => {
+                console.log('PUSHER LOG:', message);
+            };
 
             const reverbKey = import.meta.env.VITE_REVERB_APP_KEY as string;
             
             console.log('Tracker: Iniciando...', { 
                 tieneLlave: !!reverbKey, 
-                yaInstanciado: !!globalEchoInstance 
+                yaInstanciado: !!globalEchoInstance,
+                url: import.meta.env.VITE_REVERB_HOST,
+                port: import.meta.env.VITE_REVERB_PORT
             });
 
             if (reverbKey && !globalEchoInstance) {
-                console.log('Tracker: Conectando WebSockets...');
-                globalEchoInstance = new Echo({
-                    broadcaster: 'reverb',
-                    key: reverbKey,
-                    wsHost: import.meta.env.VITE_REVERB_HOST as string,
-                    wsPort: import.meta.env.VITE_REVERB_PORT ? Number(import.meta.env.VITE_REVERB_PORT) : 8080,
-                    wssPort: import.meta.env.VITE_REVERB_PORT ? Number(import.meta.env.VITE_REVERB_PORT) : 443,
-                    forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
-                    enabledTransports: ['ws', 'wss'],
-                    disableStats: true,
-                    authorizer: (channel: any, _options: any) => {
-                        return {
-                            authorize: (socketId: string, callback: any) => {
-                                axios.post(`${CRM_BASE}/broadcasting/auth`, {
-                                    socket_id: socketId,
-                                    channel_name: channel.name,
-                                    visitor_id: visitorId,
-                                    url: window.location.href
-                                })
-                                .then(response => {
-                                    callback(null, response.data);
-                                })
-                                .catch(error => {
-                                    callback(new Error(error), { auth: '' });
-                                });
-                            }
-                        };
-                    },
-                });
+                console.log('Tracker: Ejecutando new Echo()...');
+                
+                try {
+                    globalEchoInstance = new Echo({
+                        broadcaster: 'reverb',
+                        key: reverbKey,
+                        wsHost: import.meta.env.VITE_REVERB_HOST as string,
+                        wsPort: import.meta.env.VITE_REVERB_PORT ? Number(import.meta.env.VITE_REVERB_PORT) : 8080,
+                        wssPort: import.meta.env.VITE_REVERB_PORT ? Number(import.meta.env.VITE_REVERB_PORT) : 443,
+                        forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
+                        enabledTransports: ['ws', 'wss'],
+                        disableStats: true,
+                        authorizer: (channel: any, _options: any) => {
+                            return {
+                                authorize: (socketId: string, callback: any) => {
+                                    console.log('Tracker: Autorizando Pusher Socket ID:', socketId);
+                                    axios.post(`${CRM_BASE}/broadcasting/auth`, {
+                                        socket_id: socketId,
+                                        channel_name: channel.name,
+                                        visitor_id: visitorId,
+                                        url: window.location.href
+                                    })
+                                    .then(response => {
+                                        console.log('Tracker: Autorizado OK', response.data);
+                                        callback(null, response.data);
+                                    })
+                                    .catch(error => {
+                                        console.error('Tracker: Error de Autenticación', error);
+                                        callback(new Error(error), { auth: '' });
+                                    });
+                                }
+                            };
+                        },
+                    });
 
-                globalEchoInstance.join('presence-store');
+                    console.log('Tracker: Instancia Echo creada con éxito. Uniendo a canal...');
+                    globalEchoInstance.join('presence-store');
+                    console.log('Tracker: Instrucción Join enviada.');
+                } catch (e) {
+                    console.error('Tracker: CRASH creando Echo:', e);
+                }
             } else if (globalEchoInstance) {
                 // Si la instancia ya existe (es una navegación SPA), susurramos a todos la nueva URL
                 const channel = globalEchoInstance.join('presence-store');
