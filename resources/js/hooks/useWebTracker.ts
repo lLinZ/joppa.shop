@@ -22,13 +22,17 @@ export function useWebTracker() {
         // Envía un latido confiable al CRM por HTTP (ahora sin intervalos, solo al entrar/salir de página)
         const sendHeartbeat = () => {
             if (isTabActive.current || !isTabActive.current) {
-                // sendBeacon es no-bloqueante y garantizado incluso al cerrar la pestaña
-                const data = new Blob([JSON.stringify({
-                    visitor_id: visitorId,
-                    url: window.location.href,
-                })], { type: 'application/json' });
-                
-                navigator.sendBeacon(TRACKING_URL, data);
+                // Usamos fetch con keepalive y omitimos credenciales para evitar problemas estrictos de CORS
+                fetch(TRACKING_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        visitor_id: visitorId,
+                        url: window.location.href,
+                    }),
+                    keepalive: true,     // Asegura que se envíe incluso si cierran la pestaña (igual que sendBeacon)
+                    credentials: 'omit'  // Clave para evitar el bloqueo de CORS del navegador si el CRM devuelve '*'
+                }).catch(() => {});
             }
         };
 
