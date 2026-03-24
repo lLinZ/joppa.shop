@@ -45,8 +45,14 @@ export function useWebTracker() {
             }
 
             const reverbKey = import.meta.env.VITE_REVERB_APP_KEY as string;
+            
+            console.log('Tracker: Iniciando...', { 
+                tieneLlave: !!reverbKey, 
+                yaInstanciado: !!globalEchoInstance 
+            });
 
             if (reverbKey && !globalEchoInstance) {
+                console.log('Tracker: Conectando WebSockets...');
                 globalEchoInstance = new Echo({
                     broadcaster: 'reverb',
                     key: reverbKey,
