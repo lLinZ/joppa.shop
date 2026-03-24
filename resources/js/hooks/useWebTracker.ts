@@ -14,9 +14,27 @@ export function useWebTracker() {
 
     useEffect(() => {
         let visitorId = localStorage.getItem('joppa_visitor_id');
+        let visitorSource = localStorage.getItem('joppa_visitor_source');
         if (!visitorId) {
             visitorId = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : 'v-' + Date.now() + '-' + Math.random().toString(36).substring(2);
             localStorage.setItem('joppa_visitor_id', visitorId);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            let source = 'Orgánico / Directo';
+            if (urlParams.has('fbclid')) source = '📱 Facebook / IG Ads';
+            else if (urlParams.has('gclid')) source = '🔍 Google Ads';
+            else if (urlParams.has('utm_source')) source = '📢 ' + urlParams.get('utm_source');
+            else if (document.referrer) {
+                if (document.referrer.includes('instagram.com')) source = '📸 Instagram';
+                else if (document.referrer.includes('facebook.com')) source = '📘 Facebook';
+                else if (document.referrer.includes('tiktok.com')) source = '🎵 TikTok';
+                else if (document.referrer.includes('google.')) source = '🔍 Búsqueda Google';
+                else {
+                    try { source = '🔗 ' + new URL(document.referrer).hostname; } catch(e) { source = '🔗 Referido'; }
+                }
+            }
+            localStorage.setItem('joppa_visitor_source', source);
+            visitorSource = source;
         }
 
         // Envía un latido confiable al CRM por HTTP (ahora sin intervalos, solo al entrar/salir de página)
@@ -29,6 +47,7 @@ export function useWebTracker() {
                     body: JSON.stringify({
                         visitor_id: visitorId,
                         url: window.location.href,
+                        source: visitorSource || localStorage.getItem('joppa_visitor_source') || 'Orgánico / Directo'
                     }),
                     keepalive: true,     // Asegura que se envíe incluso si cierran la pestaña (igual que sendBeacon)
                     credentials: 'omit'  // Clave para evitar el bloqueo de CORS del navegador si el CRM devuelve '*'
@@ -80,7 +99,8 @@ export function useWebTracker() {
                                         socket_id: socketId,
                                         channel_name: channel.name,
                                         visitor_id: visitorId,
-                                        url: window.location.href
+                                        url: window.location.href,
+                                        source: localStorage.getItem('joppa_visitor_source') || 'Directo'
                                     })
                                     .then(response => {
                                         console.log('Tracker: Autorizado OK', response.data);
