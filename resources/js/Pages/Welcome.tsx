@@ -57,11 +57,6 @@ export default function Welcome() {
 
                         {/* PRODUCT GRID */}
                         <Box>
-                            <Group justify="space-between" mb="lg" mt="xl">
-                                <Text size="2rem" fw={800} c="#0B3022" style={{ fontFamily: '\"Montserrat\", sans-serif', letterSpacing: '-0.03em' }}>
-                                    Novedades de la Temporada
-                                </Text>
-                            </Group>
                             <ProductGrid />
                         </Box>
 
