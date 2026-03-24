@@ -4,7 +4,8 @@ import axios from 'axios';
 // Interval to send tracking pings (15 seconds)
 const PING_INTERVAL = 15000;
 // URL to ping 
-const TRACKING_URL = 'http://localhost:8000/api/tracking/heartbeat';
+const CRM_BASE = (import.meta.env.VITE_CRM_API_URL as string) || 'http://localhost:8000/api';
+const TRACKING_URL = `${CRM_BASE}/tracking/heartbeat`;
 
 export function useWebTracker() {
     const isTabActive = useRef(true);
