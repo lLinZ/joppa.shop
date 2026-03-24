@@ -343,6 +343,29 @@ export default function Show({ id }: { id: string }) {
                             <Text size="sm" fw={500} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Volver</Text>
                         </Group>
 
+                        {/* MOBILE MAIN IMAGE & CAROUSEL */}
+                        <Box w="100%" mb="2rem">
+                            <Box w="100%" h={{ base: '350px', sm: '500px' }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                {mainImage ? (
+                                    <Image src={mainImage} alt={product.name} fit="contain" style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'opacity 0.2s ease-in-out, transform 0.2s ease-in-out', opacity: animating ? 0 : 1, transform: animating ? 'scale(0.97)' : 'scale(1)' }} />
+                                ) : (
+                                    <Box w="100%" h="100%" style={{ backgroundColor: 'rgba(0,0,0,0.05)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Text c="dimmed">Sin imagen</Text></Box>
+                                )}
+                            </Box>
+                            
+                            {productImages.length > 1 && (
+                                <ScrollArea w="100%" mt="xl" type="never">
+                                    <Group gap="md" justify="flex-start" wrap="nowrap" pb="xs">
+                                        {productImages.map((img, idx) => (
+                                            <Box key={idx} onClick={() => handleImageChange(img)} style={{ flexShrink: 0, width: '72px', height: '72px', cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: mainImage === img ? '2px solid #0B3022' : '2px solid transparent', opacity: mainImage === img ? 1 : 0.6, transition: 'all 0.2s ease' }}>
+                                                <Image src={img} h={72} w={72} fit="cover" />
+                                            </Box>
+                                        ))}
+                                    </Group>
+                                </ScrollArea>
+                            )}
+                        </Box>
+
                         <Text size="3rem" fw={400} c="#0B3022" style={{ fontFamily: '\"Montserrat\", sans-serif', lineHeight: 1.1, letterSpacing: '-0.04em' }}>
                             {product.name}
                         </Text>
@@ -404,14 +427,14 @@ export default function Show({ id }: { id: string }) {
 
                         {/* Mobile Video */}
                         {product.video_url && (
-                            <Box mt="2rem" style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
-                                <Text size="sm" fw={600} mb="xs" style={{ fontFamily: '"Montserrat", sans-serif' }}>Video Promocional</Text>
-                                <video 
-                                    src={product.video_url} 
-                                    controls 
-                                    playsInline
-                                    style={{ width: '100%', display: 'block', borderRadius: '16px' }}
-                                />
+                            <Box mt="2rem" w="100%">
+                                <Text size="sm" fw={600} mb="sm" style={{ fontFamily: '"Montserrat", sans-serif' }}>Video Promocional</Text>
+                                <Box onClick={openVideo} style={{ width: '100%', borderRadius: '24px', overflow: 'hidden', position: 'relative', boxShadow: '0 8px 32px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+                                    <video src={product.video_url} autoPlay loop muted playsInline style={{ width: '100%', minHeight: '350px', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
+                                    <ActionIcon variant="white" radius="xl" size={64} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(4px)' }}>
+                                        <IconPlayerPlay size={32} color="#0B3022" style={{ marginLeft: '4px' }}/>
+                                    </ActionIcon>
+                                </Box>
                             </Box>
                         )}
 
