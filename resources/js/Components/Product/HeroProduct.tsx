@@ -123,7 +123,7 @@ export default function HeroProduct() {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            backgroundImage: 'url("/portada_dario_gemini.png")', // Portada de la tienda
+                            backgroundImage: 'url("/portada_dario.png")', // Portada de la tienda
                             backgroundPosition: 'center center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'
