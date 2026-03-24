@@ -37,10 +37,9 @@ export function useWebTracker() {
             visitorSource = source;
         }
 
-        // Envía un latido confiable al CRM por HTTP (ahora sin intervalos, solo al entrar/salir de página)
+        // Envía un latido confiable al CRM por HTTP
         const sendHeartbeat = () => {
-            if (isTabActive.current || !isTabActive.current) {
-                // Usamos fetch con keepalive y omitimos credenciales para evitar problemas estrictos de CORS
+            if (isTabActive.current) {
                 fetch(TRACKING_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -49,9 +48,17 @@ export function useWebTracker() {
                         url: window.location.href,
                         source: visitorSource || localStorage.getItem('joppa_visitor_source') || 'Orgánico / Directo'
                     }),
-                    keepalive: true,     // Asegura que se envíe incluso si cierran la pestaña (igual que sendBeacon)
-                    credentials: 'omit'  // Clave para evitar el bloqueo de CORS del navegador si el CRM devuelve '*'
+                    keepalive: true,
+                    credentials: 'omit'
                 }).catch(() => {});
+
+                if (globalEchoInstance) {
+                    const channel = globalEchoInstance.join('store');
+                    channel.whisper('navigated', {
+                        id: visitorId,
+                        url: window.location.href
+                    });
+                }
             }
         };
 
@@ -142,12 +149,21 @@ export function useWebTracker() {
             sendHeartbeat(); // Guardar el último segundo exacto antes de cerrar pestaña
         };
 
+        const handleNavigate = () => {
+            setTimeout(() => {
+                sendHeartbeat();
+            }, 100); // small delay to let window.location.href update
+        };
+
         document.addEventListener('visibilitychange', onVisibilityChange);
         window.addEventListener('beforeunload', onBeforeUnload);
+        // Escuchar cambios de ruta en Inertia para SPA
+        document.addEventListener('inertia:navigate', handleNavigate);
 
         return () => {
             document.removeEventListener('visibilitychange', onVisibilityChange);
             window.removeEventListener('beforeunload', onBeforeUnload);
+            document.removeEventListener('inertia:navigate', handleNavigate);
             // No desconectamos globalEchoInstance aquí para que persista durante la navegación SPA
         };
     }, []);
