@@ -123,7 +123,7 @@ export default function HeroProduct() {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            backgroundImage: 'url("https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1200&q=80")', // Luxury Streetwear shot
+                            backgroundImage: 'url("/portada.jpeg")', // Portada de la tienda
                             backgroundPosition: 'center center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'
