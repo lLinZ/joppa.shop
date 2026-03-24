@@ -96,14 +96,14 @@ export function useWebTracker() {
                     });
 
                     console.log('Tracker: Instancia Echo creada con éxito. Uniendo a canal...');
-                    globalEchoInstance.join('presence-store');
+                    globalEchoInstance.join('store');
                     console.log('Tracker: Instrucción Join enviada.');
                 } catch (e) {
                     console.error('Tracker: CRASH creando Echo:', e);
                 }
             } else if (globalEchoInstance) {
                 // Si la instancia ya existe (es una navegación SPA), susurramos a todos la nueva URL
-                const channel = globalEchoInstance.join('presence-store');
+                const channel = globalEchoInstance.join('store');
                 setTimeout(() => {
                     channel.whisper('navigated', {
                         id: visitorId,
