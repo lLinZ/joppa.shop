@@ -7,21 +7,19 @@
 ---
 
 ## 🚀 Overview
-Joppa E-commerce is a cutting-edge online store platform designed for speed, scalability, and an excellent developer experience. It features real-time interactions via WebSockets and a clean, responsive user interface tailored to both desktop and mobile shoppers.
+Joppa E-commerce is a cutting-edge online store platform designed for speed, scalability, and an excellent developer experience. It features a clean, responsive user interface tailored to both desktop and mobile shoppers.
 
 ## ✨ Features
 - **Modern Tech Stack**: Laravel 11 backend + React 18 frontend
 - **Seamless SPA Experience**: Powered by Inertia.js (no more full-page reloads!)
 - **Beautiful UI Components**: Built using [Mantine UI](https://mantine.dev/), ensuring accessibility and responsive design.
 - **State Management**: Handled efficiently with [Zustand](https://github.com/pmndrs/zustand).
-- **Real-Time Capabilities**: Integrated with Laravel Reverb & Echo for instant notifications and dynamic updates.
 - **Iconography**: Clean, intuitive SVG icons powered by Tabler Icons and Lucide React.
 - **Strict Typing**: Fully typed frontend with TypeScript for better developer experience and reliability.
 
 ## 🛠️ Tech Stack
 ### Backend
 - **Framework:** [Laravel 11.x](https://laravel.com) (PHP 8.2+)
-- **Websockets:** Laravel Reverb
 - **Authentication:** Laravel Sanctum
 - **Routing:** Ziggy
 
@@ -39,7 +37,7 @@ Joppa E-commerce is a cutting-edge online store platform designed for speed, sca
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/joppa-ecommerce.git
+   git clone https://github.com/lLinZ/joppa.shop.git
    cd joppa-ecommerce
    ```
 
@@ -72,18 +70,11 @@ Joppa E-commerce is a cutting-edge online store platform designed for speed, sca
    ```
 
 7. **Run the Development Server**
-   Start both the Laravel backend, Vite frontend, and Queue listeners simultaneously using the built-in Composer script:
+   Start both the Laravel backend and Vite frontend using the built-in Composer script:
    ```bash
    composer dev
    ```
    *(Alternatively, you can manually run `php artisan serve` and `npm run dev` in separate terminals).*
-
-## 🔌 WebSockets (Reverb)
-To test and enable real-time features locally, ensure the Reverb service is running in the background alongside a queue worker:
-```bash
-php artisan reverb:start
-php artisan queue:work
-```
 
 ---
 
