@@ -82,7 +82,7 @@ export default function Footer() {
                             Links
                         </Text>
                         <Anchor href="/catalog" c="#F5F5DC" style={{ opacity: 0.7 }} underline="never">Catálogo</Anchor>
-                        <Anchor href="/personaliza-tu-diseno" c="#F5F5DC" style={{ opacity: 0.7 }} underline="never">Crea tu Diseño</Anchor>
+                        <Anchor href="/custom-design" c="#F5F5DC" style={{ opacity: 0.7 }} underline="never">Crea tu Diseño</Anchor>
                         <Anchor href="mailto:atencion@joppa.shop" c="#F5F5DC" style={{ opacity: 0.7 }} underline="never">Contáctanos</Anchor>
                     </Stack>
                 </Flex>

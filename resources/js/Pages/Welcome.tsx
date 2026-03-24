@@ -23,7 +23,7 @@ export default function Welcome() {
     const features = [
         {
             title: 'Calidad Premium',
-            description: 'Materiales 100% orgánicos seleccionados para máxima durabilidad y confort.',
+            description: 'DTF y telas de alta calidad y durabilidad.',
             icon: IconStar,
         },
         {
@@ -43,7 +43,7 @@ export default function Welcome() {
             header={{ height: 100, collapsed: false, offset: true }}
             className="page-transition"
         >
-            <Head title="Welcome to JOPPA Boutique" />
+            <Head title="Joppa - Tu idea, nuestra tinta" />
 
             <CartDrawer />
             <Header opened={opened} toggle={toggle} />
@@ -71,24 +71,24 @@ export default function Welcome() {
                                 style={{ overflow: 'hidden', position: 'relative' }}
                             >
                                 <Box style={{ position: 'absolute', top: -50, right: -50, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%)' }} />
-                                
+
                                 <SimpleGrid cols={{ base: 1, md: 2 }} spacing={60} style={{ position: 'relative', zIndex: 1, alignItems: 'center' }}>
                                     <Box>
                                         <Badge color="rgba(255,255,255,0.2)" c="white" variant="filled" size="lg" radius="xl" mb="xl">
                                             Edición Ilimitada
                                         </Badge>
-                                        <Title 
-                                            order={2} 
+                                        <Title
+                                            order={2}
                                             mb="xl"
-                                            style={{ 
-                                                fontSize: '3rem', 
-                                                lineHeight: 1.1, 
-                                                fontFamily: '"Montserrat", sans-serif', 
-                                                fontWeight: 900, 
-                                                letterSpacing: '-0.03em' 
+                                            style={{
+                                                fontSize: '3rem',
+                                                lineHeight: 1.1,
+                                                fontFamily: '"Montserrat", sans-serif',
+                                                fontWeight: 900,
+                                                letterSpacing: '-0.03em'
                                             }}
                                         >
-                                            Tu Visión.<br/>
+                                            Tu Visión.<br />
                                             Nuestra Creación.
                                         </Title>
                                         <Text size="lg" mb={40} style={{ fontFamily: '"Inter", sans-serif', opacity: 0.9, lineHeight: 1.6, maxWidth: 500 }}>
@@ -112,10 +112,10 @@ export default function Welcome() {
 
                                     <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                         <div style={{ position: 'relative', width: '100%', maxWidth: 350, aspectRatio: '1/1', background: 'rgba(255,255,255,0.03)', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                             <IconPalette size={140} stroke={1} color="rgba(255,255,255,0.6)" />
-                                             <div style={{ position: 'absolute', bottom: -20, right: -20, background: '#F4F4E8', color: '#0B3022', padding: '16px 28px', borderRadius: '100px', fontWeight: 800, fontFamily: '"Montserrat", sans-serif', boxShadow: '0 10px 40px rgba(0,0,0,0.5)', transform: 'rotate(-5deg)' }}>
+                                            <IconPalette size={140} stroke={1} color="rgba(255,255,255,0.6)" />
+                                            <div style={{ position: 'absolute', bottom: -20, right: -20, background: '#F4F4E8', color: '#0B3022', padding: '16px 28px', borderRadius: '100px', fontWeight: 800, fontFamily: '"Montserrat", sans-serif', boxShadow: '0 10px 40px rgba(0,0,0,0.5)', transform: 'rotate(-5deg)' }}>
                                                 Hecho a Medida
-                                             </div>
+                                            </div>
                                         </div>
                                     </Box>
                                 </SimpleGrid>

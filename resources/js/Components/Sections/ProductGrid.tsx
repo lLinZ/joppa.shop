@@ -9,7 +9,7 @@ function ProductCardItem({ product }: { product: any }) {
     return (
         <Card p="md" radius="32px" shadow="none" withBorder={false} bg="#F9F9F4">
             <Box bg="#F4F4E8" pos="relative" style={{ borderRadius: '24px', overflow: 'hidden' }}>
-                <Link href={`/catalog/${product.id}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+                <Link href={`/catalog/${product.slug || product.id}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
                     <AspectRatio ratio={3 / 4}>
                         {product.images && product.images.length > 0 ? (
                             <Image src={product.images[0]} alt={product.name} style={{ mixBlendMode: 'darken' }} />
@@ -22,7 +22,7 @@ function ProductCardItem({ product }: { product: any }) {
                 <Box pos="absolute" bottom="16px" left="16px" right="16px" className="joppa-quick-add">
                     <Button
                         component={Link}
-                        href={`/catalog/${product.id}`}
+                        href={`/catalog/${product.slug || product.id}`}
                         fullWidth
                         color="#0B3022"
                         c="#FFFFFF"
@@ -47,7 +47,7 @@ function ProductCardItem({ product }: { product: any }) {
                 </Group>
 
                 {/* Product Name */}
-                <Link href={`/catalog/${product.id}`} style={{ textDecoration: 'none' }}>
+                <Link href={`/catalog/${product.slug || product.id}`} style={{ textDecoration: 'none' }}>
                     <Text size="lg" fw={700} c="#000000" style={{ fontFamily: '"Inter", sans-serif', lineHeight: 1.2 }}>
                         {product.name}
                     </Text>

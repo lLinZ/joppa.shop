@@ -22,6 +22,7 @@ interface Collection {
 interface Product {
     id: number;
     name: string;
+    slug?: string;
     price: string | number;
     images: string[] | null;
     description: string | null;
@@ -38,7 +39,7 @@ function ProductCard({ product }: { product: Product }) {
             style={{ overflow: 'hidden', cursor: 'pointer', backgroundColor: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 40px rgba(0,0,0,0.12)'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
-            onClick={() => window.location.href = `/catalog/${product.id}`}
+            onClick={() => window.location.href = `/catalog/${product.slug || product.id}`}
         >
             <Box style={{ aspectRatio: '3/4', backgroundColor: '#F0EFE6', position: 'relative', overflow: 'hidden' }}>
                 {thumb ? (
