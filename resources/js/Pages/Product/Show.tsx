@@ -259,78 +259,82 @@ export default function Show({ id }: { id: string }) {
                         <Group align="flex-start" justify="space-between" wrap="nowrap" w="100%">
 
                             {/* LEFT COLUMN (Sticky Title + Video) */}
-                            <Box w="300px" style={{ position: 'sticky', top: '120px', height: 'calc(100vh - 140px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                <Box>
-                                    <Group gap="xs" mb="2rem" style={{ cursor: 'pointer', width: 'fit-content' }} onClick={() => window.history.back()}>
-                                        <IconArrowLeft size={20} color="#0B3022" />
-                                        <Text size="sm" fw={500} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Volver</Text>
-                                    </Group>
+                            <Box w="300px" style={{ position: 'sticky', top: '120px', height: 'calc(100vh - 140px)' }}>
+                                <ScrollArea h="100%" type="never" offsetScrollbars>
+                                    <Box style={{ display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 140px)', paddingBottom: '1rem', gap: '3rem' }}>
+                                        <Box style={{ flexShrink: 0 }}>
+                                            <Group gap="xs" mb="2rem" style={{ cursor: 'pointer', width: 'fit-content' }} onClick={() => window.history.back()}>
+                                                <IconArrowLeft size={20} color="#0B3022" />
+                                                <Text size="sm" fw={500} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Volver</Text>
+                                            </Group>
 
-                                    <Text size="3.5rem" fw={400} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', lineHeight: 1.1, letterSpacing: '-0.04em' }}>
-                                        {product.name}
-                                    </Text>
-
-                                    {product.description && (
-                                        <Text size="1rem" fw={400} c="#4A4A4A" mt="sm" style={{ fontFamily: '"Montserrat", sans-serif' }}>
-                                            {product.description}
-                                        </Text>
-                                    )}
-
-                                    <Text size="1.5rem" fw={500} c="#000000" mt="xl" style={{ fontFamily: '"Montserrat", sans-serif', letterSpacing: '0.05em' }}>
-                                        USD ${Number(product.price).toLocaleString('es-AR')}
-                                    </Text>
-                                    <Text size="0.8rem" c="dimmed" style={{ fontFamily: '"Montserrat", sans-serif' }}>
-                                        Precio referencial en dolares BCV
-                                    </Text>
-
-                                    {/* SIZE SELECTOR (DESKTOP) */}
-                                    <Box mt="2rem">
-                                        <Group justify="space-between" mb="xs">
-                                            <Text size="0.9rem" fw={600} c={sizeError ? "red" : "#000000"} style={{ fontFamily: '"Montserrat", sans-serif', transition: 'color 0.2s' }}>
-                                                {sizeError ? '¡Por favor selecciona una talla!' : `Talla: ${selectedSize || 'Selecciona...'}`}
+                                            <Text size="3.5rem" fw={400} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', lineHeight: 1.1, letterSpacing: '-0.04em' }}>
+                                                {product.name}
                                             </Text>
-                                        </Group>
-                                        <Group gap="xs">
-                                            {SIZES.map(size => (
-                                                <Button
-                                                    key={size}
-                                                    variant={selectedSize === size ? 'filled' : 'outline'}
-                                                    color={sizeError && !selectedSize ? 'red' : '#0B3022'}
-                                                    radius="xl"
-                                                    size="md"
-                                                    onClick={() => { setSelectedSize(size); setSizeError(false); }}
-                                                    style={{
-                                                        flex: 1,
-                                                        fontFamily: '"Montserrat", sans-serif',
-                                                        backgroundColor: selectedSize === size ? '#0B3022' : 'transparent',
-                                                        color: selectedSize === size ? '#FFFFFF' : (sizeError && !selectedSize ? 'red' : '#000000'),
-                                                        borderColor: sizeError && !selectedSize ? 'red' : (selectedSize === size ? '#0B3022' : 'rgba(0,0,0,0.2)'),
-                                                        borderWidth: '1.5px',
-                                                        transition: 'all 0.2s',
-                                                    }}
-                                                >
-                                                    {size}
+
+                                            {product.description && (
+                                                <Text size="1rem" fw={400} c="#4A4A4A" mt="sm" style={{ fontFamily: '"Montserrat", sans-serif' }}>
+                                                    {product.description}
+                                                </Text>
+                                            )}
+
+                                            <Text size="1.5rem" fw={500} c="#000000" mt="xl" style={{ fontFamily: '"Montserrat", sans-serif', letterSpacing: '0.05em' }}>
+                                                USD ${Number(product.price).toLocaleString('es-AR')}
+                                            </Text>
+                                            <Text size="0.8rem" c="dimmed" style={{ fontFamily: '"Montserrat", sans-serif' }}>
+                                                Precio referencial en dolares BCV
+                                            </Text>
+
+                                            {/* SIZE SELECTOR (DESKTOP) */}
+                                            <Box mt="2rem">
+                                                <Group justify="space-between" mb="xs">
+                                                    <Text size="0.9rem" fw={600} c={sizeError ? "red" : "#000000"} style={{ fontFamily: '"Montserrat", sans-serif', transition: 'color 0.2s' }}>
+                                                        {sizeError ? '¡Por favor selecciona una talla!' : `Talla: ${selectedSize || 'Selecciona...'}`}
+                                                    </Text>
+                                                </Group>
+                                                <Group gap="xs">
+                                                    {SIZES.map(size => (
+                                                        <Button
+                                                            key={size}
+                                                            variant={selectedSize === size ? 'filled' : 'outline'}
+                                                            color={sizeError && !selectedSize ? 'red' : '#0B3022'}
+                                                            radius="xl"
+                                                            size="md"
+                                                            onClick={() => { setSelectedSize(size); setSizeError(false); }}
+                                                            style={{
+                                                                flex: 1,
+                                                                fontFamily: '"Montserrat", sans-serif',
+                                                                backgroundColor: selectedSize === size ? '#0B3022' : 'transparent',
+                                                                color: selectedSize === size ? '#FFFFFF' : (sizeError && !selectedSize ? 'red' : '#000000'),
+                                                                borderColor: sizeError && !selectedSize ? 'red' : (selectedSize === size ? '#0B3022' : 'rgba(0,0,0,0.2)'),
+                                                                borderWidth: '1.5px',
+                                                                transition: 'all 0.2s',
+                                                            }}
+                                                        >
+                                                            {size}
+                                                        </Button>
+                                                    ))}
+                                                </Group>
+                                            </Box>
+
+                                            <Group mt="1.5rem" gap="md">
+                                                <Button onClick={handleAddToCart} variant="filled" color="#0B3022" radius="xl" size="lg" h={56} px={40} fullWidth style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 500, fontSize: '1rem', backgroundColor: '#0B3022', color: '#FFFFFF' }}>
+                                                    Añadir a la Bolsa
                                                 </Button>
-                                            ))}
-                                        </Group>
-                                    </Box>
+                                            </Group>
+                                        </Box>
 
-                                    <Group mt="1.5rem" gap="md">
-                                        <Button onClick={handleAddToCart} variant="filled" color="#0B3022" radius="xl" size="lg" h={56} px={40} fullWidth style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 500, fontSize: '1rem', backgroundColor: '#0B3022', color: '#FFFFFF' }}>
-                                            Añadir a la Bolsa
-                                        </Button>
-                                    </Group>
-                                </Box>
-
-                                {/* BOTTOM LEFT VIDEO THUMBNAIL */}
-                                {product.video_url && (
-                                    <Box onClick={openVideo} style={{ width: '220px', borderRadius: '24px', overflow: 'hidden', position: 'relative', boxShadow: '0 8px 32px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-                                        <video src={product.video_url} autoPlay loop muted playsInline style={{ width: '100%', height: '280px', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
-                                        <ActionIcon variant="white" radius="xl" size={48} style={{ position: 'absolute', bottom: '16px', right: '16px', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(4px)' }}>
-                                            <IconPlayerPlay size={20} color="#0B3022" style={{ marginLeft: '4px' }} />
-                                        </ActionIcon>
+                                        {/* BOTTOM LEFT VIDEO THUMBNAIL */}
+                                        {product.video_url && (
+                                            <Box onClick={openVideo} style={{ width: '220px', flexShrink: 0, marginTop: 'auto', borderRadius: '24px', overflow: 'hidden', position: 'relative', boxShadow: '0 8px 32px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+                                                <video src={product.video_url} autoPlay loop muted playsInline style={{ width: '100%', height: '280px', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
+                                                <ActionIcon variant="white" radius="xl" size={48} style={{ position: 'absolute', bottom: '16px', right: '16px', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(4px)' }}>
+                                                    <IconPlayerPlay size={20} color="#0B3022" style={{ marginLeft: '4px' }} />
+                                                </ActionIcon>
+                                            </Box>
+                                        )}
                                     </Box>
-                                )}
+                                </ScrollArea>
                             </Box>
 
                             {/* CENTER COLUMN (Hero Image) */}
