@@ -67,7 +67,7 @@ export default function Welcome() {
                         <Box mt="2rem">
                             <Card
                                 radius="32px"
-                                p={{ base: 48, md: 80 }}
+                                p={{ base: 24, md: 60 }}
                                 shadow="xl"
                                 bg="#0B3022"
                                 c="white"
@@ -75,7 +75,7 @@ export default function Welcome() {
                             >
                                 <Box style={{ position: 'absolute', top: -50, right: -50, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%)' }} />
 
-                                <SimpleGrid cols={{ base: 1, md: 2 }} spacing={60} style={{ position: 'relative', zIndex: 1, alignItems: 'center' }}>
+                                <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 40, md: 60 }} style={{ position: 'relative', zIndex: 1, alignItems: 'center' }}>
                                     <Box>
                                         <Badge color="rgba(255,255,255,0.2)" c="white" variant="filled" size="lg" radius="xl" mb="xl">
                                             Edición Ilimitada
@@ -105,7 +105,14 @@ export default function Welcome() {
                                             bg="#D4AF37"
                                             c="#FFFFFF"
                                             rightSection={<IconPalette size={20} />}
-                                            style={{ boxShadow: '0 8px 30px rgba(0,0,0,0.3)', transition: 'transform 0.2s ease', fontFamily: '"Montserrat", sans-serif', fontWeight: 800 }}
+                                            style={{ 
+                                                boxShadow: '0 8px 30px rgba(0,0,0,0.3)', 
+                                                transition: 'transform 0.2s ease', 
+                                                fontFamily: '"Montserrat", sans-serif', 
+                                                fontWeight: 800,
+                                                width: 'max-content',
+                                                maxWidth: '100%'
+                                            }}
                                             onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
                                             onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                                         >
@@ -113,17 +120,17 @@ export default function Welcome() {
                                         </Button>
                                     </Box>
 
-                                    <Box mih={{ base: 300, md: 450 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
+                                    <Box mih={{ base: 380, md: 450 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
                                         {/* Mosaic of Images */}
                                         <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
                                             {/* Image 1 - Large / Main */}
                                             <Box 
+                                                w={{ base: '80%', md: '70%' }}
+                                                h="80%"
                                                 style={{ 
                                                     position: 'absolute', 
                                                     top: '10%', 
-                                                    left: '10%', 
-                                                    width: '70%', 
-                                                    height: '80%', 
+                                                    left: '5%', 
                                                     borderRadius: '24px', 
                                                     overflow: 'hidden', 
                                                     boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
@@ -141,12 +148,12 @@ export default function Welcome() {
 
                                             {/* Image 2 - Top Secondary */}
                                             <Box 
+                                                w={{ base: '50%', md: '45%' }}
+                                                h="50%"
                                                 style={{ 
                                                     position: 'absolute', 
                                                     top: '0%', 
                                                     right: '5%', 
-                                                    width: '45%', 
-                                                    height: '50%', 
                                                     borderRadius: '20px', 
                                                     overflow: 'hidden', 
                                                     boxShadow: '0 15px 40px rgba(0,0,0,0.3)',
@@ -164,12 +171,12 @@ export default function Welcome() {
 
                                             {/* Image 3 - Bottom Secondary */}
                                             <Box 
+                                                w={{ base: '45%', md: '40%' }}
+                                                h="45%"
                                                 style={{ 
                                                     position: 'absolute', 
                                                     bottom: '5%', 
                                                     right: '0%', 
-                                                    width: '40%', 
-                                                    height: '45%', 
                                                     borderRadius: '20px', 
                                                     overflow: 'hidden', 
                                                     boxShadow: '0 15px 40px rgba(0,0,0,0.3)',
@@ -188,19 +195,20 @@ export default function Welcome() {
                                             {/* Floating Sticker */}
                                             <div style={{ 
                                                 position: 'absolute', 
-                                                bottom: '15%', 
-                                                left: '0%', 
+                                                bottom: '10%', 
+                                                left: '-5%', 
                                                 background: '#F4F4E8', 
                                                 color: '#0B3022', 
-                                                padding: '12px 24px', 
+                                                padding: '8px 16px', 
                                                 borderRadius: '100px', 
                                                 fontWeight: 800, 
                                                 fontFamily: '"Montserrat", sans-serif', 
                                                 boxShadow: '0 10px 40px rgba(0,0,0,0.5)', 
                                                 zIndex: 10,
                                                 transform: 'rotate(-12deg)',
-                                                fontSize: '14px',
-                                                letterSpacing: '0.05em'
+                                                fontSize: 'clamp(10px, 3vw, 14px)',
+                                                letterSpacing: '0.05em',
+                                                whiteSpace: 'nowrap'
                                             }}>
                                                 HECHO A MEDIDA
                                             </div>
