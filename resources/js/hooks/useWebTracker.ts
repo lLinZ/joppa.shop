@@ -38,32 +38,38 @@ export function useWebTracker() {
         }
 
         // Envía un latido confiable al CRM por HTTP
+        // Envía un latido confiable al CRM por HTTP
         const sendHeartbeat = () => {
-            if (isTabActive.current) {
-                fetch(TRACKING_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        visitor_id: visitorId,
-                        url: window.location.href,
-                        source: visitorSource || localStorage.getItem('joppa_visitor_source') || 'Orgánico / Directo'
-                    }),
-                    keepalive: true,
-                    credentials: 'omit'
-                }).catch(() => {});
+            fetch(TRACKING_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    visitor_id: visitorId,
+                    url: window.location.href,
+                    source: visitorSource || localStorage.getItem('joppa_visitor_source') || 'Orgánico / Directo'
+                }),
+                keepalive: true,
+                credentials: 'omit'
+            }).catch(() => {});
 
-                if (globalEchoInstance) {
-                    const channel = globalEchoInstance.join('store');
-                    channel.whisper('navigated', {
-                        id: visitorId,
-                        url: window.location.href
-                    });
-                }
+            if (globalEchoInstance) {
+                const channel = globalEchoInstance.join('store');
+                channel.whisper('navigated', {
+                    id: visitorId,
+                    url: window.location.href
+                });
             }
         };
 
         // Latido inicial de carga de página
         sendHeartbeat();
+
+        // Poliing de seguridad: actualiza duración cada 15 segundos mientras la pestaña esté activa
+        const interval = setInterval(() => {
+            if (isTabActive.current) {
+                sendHeartbeat();
+            }
+        }, 15000);
 
         if (typeof window !== 'undefined') {
             if (!(window as any).Pusher) {
@@ -161,6 +167,7 @@ export function useWebTracker() {
         document.addEventListener('inertia:navigate', handleNavigate);
 
         return () => {
+            clearInterval(interval);
             document.removeEventListener('visibilitychange', onVisibilityChange);
             window.removeEventListener('beforeunload', onBeforeUnload);
             document.removeEventListener('inertia:navigate', handleNavigate);
