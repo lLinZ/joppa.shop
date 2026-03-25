@@ -39,6 +39,7 @@ export default function Welcome() {
     ];
 
     return (
+        <>
         <AppShell
             header={{ height: 100, collapsed: false, offset: true }}
             className="page-transition"
@@ -121,7 +122,7 @@ export default function Welcome() {
                                     </Grid.Col>
 
                                     <Grid.Col span={{ base: 12, md: 7 }}>
-                                        <Box mih={{ base: 380, md: 500 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
+                                        <Box h={{ base: 380, md: 500 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
                                             <style>{`
                                                 @keyframes floating {
                                                     0% { transform: translateY(0px); }
@@ -134,7 +135,7 @@ export default function Welcome() {
                                             `}</style>
 
                                             {/* Mosaic of Images */}
-                                            <Box ml={{ base: 0, md: -60 }} style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                            <Box ml={{ base: 0, md: -60 }} h="100%" w="100%" style={{ position: 'relative' }}>
                                                 {/* Image 1 - Large / Main */}
                                                 <Box 
                                                     className="float-box"
@@ -512,8 +513,9 @@ export default function Welcome() {
 
                 {/* GLOBAL FOOTER */}
                 <Footer />
-                <FloatingWhatsApp />
             </AppShell.Main>
         </AppShell>
+        <FloatingWhatsApp />
+        </>
     );
 }
