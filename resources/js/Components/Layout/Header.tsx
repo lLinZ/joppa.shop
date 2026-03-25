@@ -16,9 +16,9 @@ export interface HeaderProps {
 
 const NAVIGATION_LINKS = [
     { label: 'Shop', href: '/catalog' },
-    { label: 'Crea tu diseño', href: '/personaliza-tu-diseno' },
+    { label: 'Crea tu diseño', href: '/custom-design' },
     { label: 'Novedades', href: '/catalog' },
-    { label: 'Contacto', href: 'mailto:joppa@joppa.com' },
+    { label: 'Contacto', href: '/contact' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ opened, toggle }) => {

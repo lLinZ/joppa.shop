@@ -89,6 +89,10 @@ Route::get('/custom-design', function () {
     return Inertia::render('CustomDesign');
 })->name('custom.design');
 
+Route::get('/contact', function () {
+    return Inertia::render('Contact');
+})->name('contact');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

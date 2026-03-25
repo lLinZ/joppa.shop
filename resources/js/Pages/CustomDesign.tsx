@@ -47,7 +47,7 @@ export default function CustomDesign() {
             state: '',
             general_comments: '',
             items: [
-                { id: Math.random().toString(), gender: 'Unisex', style: 'Media Manga Oversize', color: 'Negro', size: 'M', quantity: 1, image: null as File | null }
+                { id: Math.random().toString(), gender: 'Unisex', style: 'Oversize', color: 'Negro', size: 'M', quantity: 1, image: null as File | null }
             ],
         },
         validate: {
@@ -127,7 +127,7 @@ export default function CustomDesign() {
         form.insertListItem('items', {
             id: Math.random().toString(),
             gender: 'Unisex',
-            style: 'Media Manga Oversize',
+            style: 'Oversize',
             color: 'Negro',
             size: 'M',
             quantity: 1,
@@ -354,7 +354,7 @@ export default function CustomDesign() {
                                     <Select
                                         label="Estilo de Prenda"
                                         size="md"
-                                        data={['Media Manga Oversize', 'Franela Clásica', 'Tank Top', 'Sudadera (Hoodie)', 'Chemise']}
+                                        data={['Oversize', 'Regular Clásica', 'Crop Top', 'Hoodie']}
                                         {...form.getInputProps(`items.${index}.style`)}
                                         styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#FFFFFF', border: 'none', borderRadius: '12px' } }}
                                     />
