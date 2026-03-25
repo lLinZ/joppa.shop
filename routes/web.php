@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
+use App\Http\Controllers\SitemapController;
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

@@ -16,7 +16,6 @@ import ProductGrid from '../Components/Sections/ProductGrid';
 import CartDrawer from '../Components/UI/Cart/CartDrawer';
 import JoppaCrew from '../Components/Sections/JoppaCrew';
 import Footer from '../Components/Layout/Footer';
-
 export default function Welcome() {
     const [opened, { toggle }] = useDisclosure(false);
 
@@ -43,7 +42,10 @@ export default function Welcome() {
             header={{ height: 100, collapsed: false, offset: true }}
             className="page-transition"
         >
-            <Head title="Joppa - Tu idea, nuestra tinta" />
+            <Head>
+                <title>JOPPA Boutique - Edición Ilimitada | Streetwear Premium</title>
+                <meta name="description" content="Descubre la colección exclusiva de JOPPA Boutique. Streetwear de edición ilimitada con alma vintage, telas premium y diseños únicos. Tu idea, nuestra tinta." />
+            </Head>
 
             <CartDrawer />
             <Header opened={opened} toggle={toggle} />

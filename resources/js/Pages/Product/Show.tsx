@@ -244,7 +244,31 @@ export default function Show({ id }: { id: string }) {
             header={{ height: 100, collapsed: false, offset: true }}
             className="page-transition"
         >
-            <Head title={`${product.name} - JOPPA`} />
+            <Head>
+                <title>{`${product.name} - JOPPA`}</title>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org/",
+                        "@type": "Product",
+                        "name": product.name,
+                        "image": product.images || [],
+                        "description": product.description || "",
+                        "sku": `JOPPA-${product.id}`,
+                        "brand": {
+                            "@type": "Brand",
+                            "name": "JOPPA"
+                        },
+                        "offers": {
+                            "@type": "Offer",
+                            "url": window.location.href,
+                            "priceCurrency": "USD",
+                            "price": product.price,
+                            "availability": "https://schema.org/InStock",
+                            "itemCondition": "https://schema.org/NewCondition"
+                        }
+                    })}
+                </script>
+            </Head>
 
             <CartDrawer />
             <Header opened={opened} toggle={toggle} />
