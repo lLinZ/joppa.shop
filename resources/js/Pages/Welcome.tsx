@@ -8,12 +8,13 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import { AppShell, Container, SimpleGrid, Card, Text, Center, Title, ThemeIcon, Box, rem, Stack, Group, Badge, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconStar, IconTruck, IconPalette } from '@tabler/icons-react';
+import { IconStar, IconTruck, IconPalette, IconBrandWhatsapp, IconMail, IconBrandInstagram, IconPhone, IconMessageCircle2 } from '@tabler/icons-react';
 
 import { Header } from '../Components/Layout/Header';
 import HeroProduct from '../Components/Product/HeroProduct';
 import ProductGrid from '../Components/Sections/ProductGrid';
 import CartDrawer from '../Components/UI/Cart/CartDrawer';
+import { FloatingWhatsApp } from '../Components/UI/FloatingWhatsApp';
 import JoppaCrew from '../Components/Sections/JoppaCrew';
 import Footer from '../Components/Layout/Footer';
 export default function Welcome() {
@@ -124,9 +125,148 @@ export default function Welcome() {
                             </Card>
                         </Box>
 
+                        {/* WHOLESALE B2B BLOCK */}
+                        <Box mt="2rem">
+                            <Card
+                                radius="32px"
+                                p={{ base: 40, md: 60 }}
+                                bg="#F9F9F4"
+                                style={{ border: '2px solid #0B3022' }}
+                            >
+                                <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl">
+                                    <Stack justify="center">
+                                        <Badge color="#0B3022" variant="filled" size="lg" radius="xl">
+                                            Venta al Mayor
+                                        </Badge>
+                                        <Title
+                                            order={2}
+                                            c="#0B3022"
+                                            style={{
+                                                fontSize: '2.5rem',
+                                                fontFamily: '"Montserrat", sans-serif',
+                                                fontWeight: 900
+                                            }}
+                                        >
+                                            ¿Tienes una tienda?<br />
+                                            Lleva JOPPA a tus clientes.
+                                        </Title>
+                                        <Text size="lg" c="#0B3022" style={{ opacity: 0.8, fontWeight: 500 }}>
+                                            Ofrecemos precios competitivos y diseños exclusivos para que tu negocio destaque. Contáctanos por WhatsApp para recibir nuestro catálogo de mayoristas y comenzar a trabajar juntos.
+                                        </Text>
+                                        <Group>
+                                            <Button
+                                                component="a"
+                                                href="https://wa.me/584222030200"
+                                                target="_blank"
+                                                size="xl"
+                                                radius="xl"
+                                                bg="#0B3022"
+                                                leftSection={<IconBrandWhatsapp size={24} />}
+                                                style={{ fontWeight: 800 }}
+                                            >
+                                                Contactar Ventas
+                                            </Button>
+                                        </Group>
+                                    </Stack>
+                                    <Center>
+                                        <Box bg="#0B3022" p={40} style={{ borderRadius: '32px', width: '100%', maxWidth: 350 }}>
+                                            <Stack align="center" gap="md">
+                                                <IconTruck size={80} color="#D4AF37" stroke={1.5} />
+                                                <Text ta="center" c="white" fw={800} size="xl">
+                                                    Envío Nacional Garantizado
+                                                </Text>
+                                                <Text ta="center" c="white" style={{ opacity: 0.7 }}>
+                                                    Llegamos a todo el país con logística premium.
+                                                </Text>
+                                            </Stack>
+                                        </Box>
+                                    </Center>
+                                </SimpleGrid>
+                            </Card>
+                        </Box>
+
                         {/* JOPPA CREW COMMUNITY */}
                         <Box mt="2rem">
                             <JoppaCrew />
+                        </Box>
+
+                        {/* CONTACT BENTO SECTION */}
+                        <Box mt="2rem">
+                            <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl">
+                                {/* WhatsApp Card */}
+                                <Card
+                                    radius="32px"
+                                    p="xl"
+                                    bg="#25D366"
+                                    c="white"
+                                    component="a"
+                                    href="https://wa.me/584222030200"
+                                    target="_blank"
+                                    style={{ transition: 'transform 0.2s ease', cursor: 'pointer' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <Stack h="100%" justify="space-between">
+                                        <Group justify="space-between">
+                                            <IconBrandWhatsapp size={40} />
+                                            <IconMessageCircle2 size={24} style={{ opacity: 0.6 }} />
+                                        </Group>
+                                        <Box>
+                                            <Title order={3} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 800 }}>WhatsApp</Title>
+                                            <Text fw={600} size="lg">+58 422 203 0200</Text>
+                                        </Box>
+                                    </Stack>
+                                </Card>
+
+                                {/* Instagram Card */}
+                                <Card
+                                    radius="32px"
+                                    p="xl"
+                                    bg="#000000"
+                                    c="white"
+                                    component="a"
+                                    href="https://instagram.com/joppa.shop"
+                                    target="_blank"
+                                    style={{ transition: 'transform 0.2s ease', cursor: 'pointer' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <Stack h="100%" justify="space-between">
+                                        <Group justify="space-between">
+                                            <IconBrandInstagram size={40} />
+                                            <Box style={{ opacity: 0.6 }}>@joppa.shop</Box>
+                                        </Group>
+                                        <Box>
+                                            <Title order={3} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 800 }}>Instagram</Title>
+                                            <Text fw={500}>Síguenos para novedades</Text>
+                                        </Box>
+                                    </Stack>
+                                </Card>
+
+                                {/* Email/Phone Card */}
+                                <Card
+                                    radius="32px"
+                                    p="xl"
+                                    bg="#D4AF37"
+                                    c="white"
+                                    component="a"
+                                    href="mailto:ventas@joppa.shop"
+                                    style={{ transition: 'transform 0.2s ease', cursor: 'pointer' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                                >
+                                    <Stack h="100%" justify="space-between">
+                                        <Group justify="space-between">
+                                            <IconMail size={40} />
+                                            <IconPhone size={24} style={{ opacity: 0.6 }} />
+                                        </Group>
+                                        <Box>
+                                            <Title order={3} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 800 }}>Email</Title>
+                                            <Text fw={600}>ventas@joppa.shop</Text>
+                                        </Box>
+                                    </Stack>
+                                </Card>
+                            </SimpleGrid>
                         </Box>
 
                         {/* 3. Bento Card: Propuesta de Valor */}
@@ -173,6 +313,7 @@ export default function Welcome() {
 
                 {/* GLOBAL FOOTER */}
                 <Footer />
+                <FloatingWhatsApp />
             </AppShell.Main>
         </AppShell>
     );
