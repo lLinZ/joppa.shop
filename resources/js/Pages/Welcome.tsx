@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Head } from '@inertiajs/react';
-import { AppShell, Container, SimpleGrid, Card, Text, Center, Title, ThemeIcon, Box, rem, Stack, Group, Badge, Button } from '@mantine/core';
+import { AppShell, Container, SimpleGrid, Card, Text, Center, Title, ThemeIcon, Box, rem, Stack, Group, Badge, Button, Image } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconStar, IconTruck, IconPalette, IconBrandWhatsapp, IconMail, IconBrandInstagram, IconPhone, IconMessageCircle2, IconHeart, IconUsers } from '@tabler/icons-react';
 
@@ -229,40 +229,58 @@ export default function Welcome() {
                                         </Group>
                                     </Box>
 
-                                    <Center>
-                                        <Box
-                                            style={{
-                                                width: '100%',
-                                                maxWidth: 400,
-                                                aspectRatio: '1/1',
-                                                borderRadius: '32px',
-                                                background: 'linear-gradient(135deg, #0B3022 0%, #1a4a3a 100%)',
-                                                position: 'relative',
-                                                overflow: 'hidden',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
-                                            }}
-                                        >
-                                            {/* Representación visual abstracta mientras el usuario pone una foto real */}
-                                            <IconUsers size={120} color="rgba(255,255,255,0.2)" stroke={1} />
-                                            <Box
+                                    <Box>
+                                        <SimpleGrid cols={{ base: 1, xs: 2 }} spacing="md">
+                                            {/* Founder 1 */}
+                                            <Card
+                                                radius="24px"
+                                                p={0}
+                                                shadow="md"
                                                 style={{
-                                                    position: 'absolute',
-                                                    bottom: 0,
-                                                    left: 0,
-                                                    right: 0,
-                                                    padding: '2rem',
-                                                    background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%)',
-                                                    textAlign: 'center'
+                                                    overflow: 'hidden',
+                                                    aspectRatio: '4/5',
+                                                    border: '1px solid rgba(11,48,34,0.1)',
+                                                    transition: 'transform 0.3s ease'
                                                 }}
+                                                className="hover:scale-105"
                                             >
-                                                <Text c="white" fw={800} size="xl" style={{ letterSpacing: '0.1em' }}>
-                                                    FOUNDERS
-                                                </Text>
-                                            </Box>
-                                        </Box>
-                                    </Center>
+                                                <Image
+                                                    src="/images/founders/founder_male.jpeg"
+                                                    alt="Founder JOPPA"
+                                                    fit="cover"
+                                                    h="100%"
+                                                />
+                                                <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(to top, rgba(11,48,34,0.8) 0%, transparent 100%)' }}>
+                                                    <Text c="white" fw={800} size="sm" style={{ letterSpacing: '0.05em' }}>DARIO</Text>
+                                                </Box>
+                                            </Card>
+
+                                            {/* Founder 2 */}
+                                            <Card
+                                                radius="24px"
+                                                p={0}
+                                                shadow="md"
+                                                style={{
+                                                    overflow: 'hidden',
+                                                    aspectRatio: '4/5',
+                                                    border: '1px solid rgba(11,48,34,0.1)',
+                                                    transition: 'transform 0.3s ease',
+                                                    marginTop: rem(20) // Staggered look
+                                                }}
+                                                className="hover:scale-105"
+                                            >
+                                                <Image
+                                                    src="/images/founders/founder_female.jpeg"
+                                                    alt="Founder JOPPA"
+                                                    fit="cover"
+                                                    h="100%"
+                                                />
+                                                <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(to top, rgba(11,48,34,0.8) 0%, transparent 100%)' }}>
+                                                    <Text c="white" fw={800} size="sm" style={{ letterSpacing: '0.05em' }}>MARIA</Text>
+                                                </Box>
+                                            </Card>
+                                        </SimpleGrid>
+                                    </Box>
                                 </SimpleGrid>
                             </Card>
                         </Box>
@@ -327,7 +345,7 @@ export default function Welcome() {
                                     bg="#D4AF37"
                                     c="white"
                                     component="a"
-                                    href="mailto:ventas@joppa.shop"
+                                    href="mailto:atencion@joppa.shop"
                                     style={{ transition: 'transform 0.2s ease', cursor: 'pointer' }}
                                     onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
                                     onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
@@ -339,7 +357,7 @@ export default function Welcome() {
                                         </Group>
                                         <Box>
                                             <Title order={3} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 800 }}>Email</Title>
-                                            <Text fw={600}>ventas@joppa.shop</Text>
+                                            <Text fw={600}>atencion@joppa.shop</Text>
                                         </Box>
                                     </Stack>
                                 </Card>
@@ -361,7 +379,7 @@ export default function Welcome() {
                                 mb="4rem"
                                 style={{ letterSpacing: '-0.02em', fontWeight: 800, fontFamily: '\"Montserrat\", sans-serif' }}
                             >
-                                La Diferencia Orgánica
+                                Nuestros servicios
                             </Title>
 
                             <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xl">
