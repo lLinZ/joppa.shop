@@ -84,7 +84,7 @@ export default function Welcome() {
                                             order={2}
                                             mb="xl"
                                             style={{
-                                                fontSize: '3rem',
+                                                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                                                 lineHeight: 1.1,
                                                 fontFamily: '"Montserrat", sans-serif',
                                                 fontWeight: 900,
@@ -94,7 +94,7 @@ export default function Welcome() {
                                             Tu Visión.<br />
                                             Nuestra Creación.
                                         </Title>
-                                        <Text size="lg" mb={40} style={{ fontFamily: '"Inter", sans-serif', opacity: 0.9, lineHeight: 1.6, maxWidth: 500 }}>
+                                        <Text size="lg" mb={40} style={{ fontFamily: '"Inter", sans-serif', opacity: 0.9, lineHeight: 1.6, maxWidth: 450, fontWeight: 500 }}>
                                             No te conformes con lo que ya existe. Únete a nuestro programa de diseño personalizado y da vida a la prenda exacta que siempre has imaginado, con la calidad premium habitual de JOPPA.
                                         </Text>
                                         <Button
@@ -113,13 +113,98 @@ export default function Welcome() {
                                         </Button>
                                     </Box>
 
-                                    <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <div style={{ position: 'relative', width: '100%', maxWidth: 350, aspectRatio: '1/1', background: 'rgba(255,255,255,0.03)', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <IconPalette size={140} stroke={1} color="rgba(255,255,255,0.6)" />
-                                            <div style={{ position: 'absolute', bottom: -20, right: -20, background: '#F4F4E8', color: '#0B3022', padding: '16px 28px', borderRadius: '100px', fontWeight: 800, fontFamily: '"Montserrat", sans-serif', boxShadow: '0 10px 40px rgba(0,0,0,0.5)', transform: 'rotate(-5deg)' }}>
-                                                Hecho a Medida
+                                    <Box mih={{ base: 300, md: 450 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
+                                        {/* Mosaic of Images */}
+                                        <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                            {/* Image 1 - Large / Main */}
+                                            <Box 
+                                                style={{ 
+                                                    position: 'absolute', 
+                                                    top: '10%', 
+                                                    left: '10%', 
+                                                    width: '70%', 
+                                                    height: '80%', 
+                                                    borderRadius: '24px', 
+                                                    overflow: 'hidden', 
+                                                    boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+                                                    zIndex: 2,
+                                                    transform: 'rotate(-2deg)'
+                                                }}
+                                            >
+                                                <Image 
+                                                    src="/images/custom_design_section/Lista 2.png" 
+                                                    alt="JOPPA Custom Design 1" 
+                                                    fit="cover" 
+                                                    h="100%" 
+                                                />
+                                            </Box>
+
+                                            {/* Image 2 - Top Secondary */}
+                                            <Box 
+                                                style={{ 
+                                                    position: 'absolute', 
+                                                    top: '0%', 
+                                                    right: '5%', 
+                                                    width: '45%', 
+                                                    height: '50%', 
+                                                    borderRadius: '20px', 
+                                                    overflow: 'hidden', 
+                                                    boxShadow: '0 15px 40px rgba(0,0,0,0.3)',
+                                                    zIndex: 1,
+                                                    transform: 'rotate(5deg)'
+                                                }}
+                                            >
+                                                <Image 
+                                                    src="/images/custom_design_section/Lista 4.png" 
+                                                    alt="JOPPA Custom Design 2" 
+                                                    fit="cover" 
+                                                    h="100%" 
+                                                />
+                                            </Box>
+
+                                            {/* Image 3 - Bottom Secondary */}
+                                            <Box 
+                                                style={{ 
+                                                    position: 'absolute', 
+                                                    bottom: '5%', 
+                                                    right: '0%', 
+                                                    width: '40%', 
+                                                    height: '45%', 
+                                                    borderRadius: '20px', 
+                                                    overflow: 'hidden', 
+                                                    boxShadow: '0 15px 40px rgba(0,0,0,0.3)',
+                                                    zIndex: 3,
+                                                    transform: 'rotate(-8deg)'
+                                                }}
+                                            >
+                                                <Image 
+                                                    src="/images/custom_design_section/Lista 6.png" 
+                                                    alt="JOPPA Custom Design 3" 
+                                                    fit="cover" 
+                                                    h="100%" 
+                                                />
+                                            </Box>
+
+                                            {/* Floating Sticker */}
+                                            <div style={{ 
+                                                position: 'absolute', 
+                                                bottom: '15%', 
+                                                left: '0%', 
+                                                background: '#F4F4E8', 
+                                                color: '#0B3022', 
+                                                padding: '12px 24px', 
+                                                borderRadius: '100px', 
+                                                fontWeight: 800, 
+                                                fontFamily: '"Montserrat", sans-serif', 
+                                                boxShadow: '0 10px 40px rgba(0,0,0,0.5)', 
+                                                zIndex: 10,
+                                                transform: 'rotate(-12deg)',
+                                                fontSize: '14px',
+                                                letterSpacing: '0.05em'
+                                            }}>
+                                                HECHO A MEDIDA
                                             </div>
-                                        </div>
+                                        </Box>
                                     </Box>
                                 </SimpleGrid>
                             </Card>
