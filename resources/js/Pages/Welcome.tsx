@@ -125,15 +125,12 @@ export default function Welcome() {
                                         <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
                                             {/* Image 1 - Large / Main */}
                                             <Box 
-                                                w={{ base: '80%', md: '70%' }}
-                                                h="80%"
+                                                w={{ base: '85%', md: '75%' }}
+                                                h="85%"
                                                 style={{ 
                                                     position: 'absolute', 
-                                                    top: '10%', 
-                                                    left: '5%', 
-                                                    borderRadius: '24px', 
-                                                    overflow: 'hidden', 
-                                                    boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+                                                    top: '5%', 
+                                                    left: '0%', 
                                                     zIndex: 2,
                                                     transform: 'rotate(-2deg)'
                                                 }}
@@ -141,22 +138,19 @@ export default function Welcome() {
                                                 <Image 
                                                     src="/images/custom_design_section/Lista 2.png" 
                                                     alt="JOPPA Custom Design 1" 
-                                                    fit="cover" 
+                                                    fit="contain" 
                                                     h="100%" 
                                                 />
                                             </Box>
 
                                             {/* Image 2 - Top Secondary */}
                                             <Box 
-                                                w={{ base: '50%', md: '45%' }}
-                                                h="50%"
+                                                w={{ base: '60%', md: '55%' }}
+                                                h="60%"
                                                 style={{ 
                                                     position: 'absolute', 
                                                     top: '0%', 
-                                                    right: '5%', 
-                                                    borderRadius: '20px', 
-                                                    overflow: 'hidden', 
-                                                    boxShadow: '0 15px 40px rgba(0,0,0,0.3)',
+                                                    right: '0%', 
                                                     zIndex: 1,
                                                     transform: 'rotate(5deg)'
                                                 }}
@@ -164,22 +158,19 @@ export default function Welcome() {
                                                 <Image 
                                                     src="/images/custom_design_section/Lista 4.png" 
                                                     alt="JOPPA Custom Design 2" 
-                                                    fit="cover" 
+                                                    fit="contain" 
                                                     h="100%" 
                                                 />
                                             </Box>
 
                                             {/* Image 3 - Bottom Secondary */}
                                             <Box 
-                                                w={{ base: '45%', md: '40%' }}
-                                                h="45%"
+                                                w={{ base: '55%', md: '50%' }}
+                                                h="55%"
                                                 style={{ 
                                                     position: 'absolute', 
-                                                    bottom: '5%', 
-                                                    right: '0%', 
-                                                    borderRadius: '20px', 
-                                                    overflow: 'hidden', 
-                                                    boxShadow: '0 15px 40px rgba(0,0,0,0.3)',
+                                                    bottom: '0%', 
+                                                    right: '-5%', 
                                                     zIndex: 3,
                                                     transform: 'rotate(-8deg)'
                                                 }}
@@ -187,7 +178,7 @@ export default function Welcome() {
                                                 <Image 
                                                     src="/images/custom_design_section/Lista 6.png" 
                                                     alt="JOPPA Custom Design 3" 
-                                                    fit="cover" 
+                                                    fit="contain" 
                                                     h="100%" 
                                                 />
                                             </Box>
