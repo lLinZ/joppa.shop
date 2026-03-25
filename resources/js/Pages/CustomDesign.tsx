@@ -5,10 +5,10 @@
 
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
-import { AppShell, Box, Container, Title, Text, Button, Divider, Group, TextInput, Textarea, Select, NumberInput, Card, ActionIcon, FileInput, Image, Loader, Notification, SimpleGrid, rem } from '@mantine/core';
+import { AppShell, Box, Container, Title, Text, Button, Divider, Group, TextInput, Textarea, Select, NumberInput, Card, ActionIcon, FileInput, Image, Loader, Notification, SimpleGrid, rem, Badge, ThemeIcon, Transition, Collapse } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { IconPlus, IconTrash, IconUpload, IconCheck, IconX, IconPhoto } from '@tabler/icons-react';
+import { IconPlus, IconTrash, IconUpload, IconCheck, IconX, IconPhoto, IconSparkles, IconSettings, IconConfetti, IconBulb, IconPencil, IconRocket } from '@tabler/icons-react';
 import axios from 'axios';
 
 import { Header } from '../Components/Layout/Header';
@@ -142,17 +142,51 @@ export default function CustomDesign() {
             <CartDrawer />
             <Header opened={opened} toggle={toggle} />
 
-            <AppShell.Main bg="#F4F4E8" pt={rem(140)} pb={rem(120)}>
-                <Container size="md">
+            <AppShell.Main bg="#F4F4E8" pt={rem(140)} pb={rem(120)} style={{ position: 'relative', overflow: 'hidden' }}>
+                {/* Background decorative elements */}
+                <Box style={{ position: 'absolute', top: -100, right: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(212, 175, 55, 0) 70%)', zIndex: 0 }} />
+                <Box style={{ position: 'absolute', bottom: 100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(11, 48, 34, 0.03) 0%, rgba(11, 48, 34, 0) 70%)', zIndex: 0 }} />
 
-                    <Box style={{ textAlign: 'center', marginBottom: rem(80) }}>
-                        <Title order={1} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.04em' }}>
-                            Hazlo tuyo.
+                <Container size="md" style={{ position: 'relative', zIndex: 1 }}>
+
+                    <Box style={{ textAlign: 'center', marginBottom: rem(60) }}>
+                        <Badge color="#0B3022" variant="filled" size="lg" radius="xl" mb="md" style={{ letterSpacing: '0.1em', fontWeight: 800 }}>
+                            EXCLUSIVO JOPPA
+                        </Badge>
+                        <Title order={1} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                            Hazlo <span style={{ color: '#D4AF37' }}>tuyo.</span>
                         </Title>
-                        <Text c="#4A4A4A" mt="md" size="xl" style={{ fontFamily: '"Montserrat", sans-serif', maxWidth: '700px', margin: '1.5rem auto 0 auto', lineHeight: 1.6 }}>
-                            Envíanos tus referencias de diseño, elige el corte que deseas y nuestros equipo creará una cotización exclusiva para ti.
+                        <Text c="#4A4A4A" mt="xl" size="xl" style={{ fontFamily: '"Montserrat", sans-serif', maxWidth: '700px', margin: '1.5rem auto 0 auto', lineHeight: 1.6, fontWeight: 500 }}>
+                            Da vida a tu visión con nuestra calidad premium. Sigue los pasos y crea una prenda única diseñada por ti.
                         </Text>
                     </Box>
+
+                    {/* PROCESS BENTO GRID */}
+                    <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="lg" mb={rem(80)}>
+                        <Card radius="24px" p="xl" bg="white" shadow="sm" style={{ border: '1px solid rgba(11,48,34,0.05)' }}>
+                            <ThemeIcon size={54} radius="md" bg="#F9F9F4" c="#0B3022" mb="lg">
+                                <IconBulb size={28} stroke={1.5} />
+                            </ThemeIcon>
+                            <Text fw={800} size="lg" mb="sm" c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif' }}>1. Inspiración</Text>
+                            <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>Comparte tus ideas o referencias. Cualquier imagen o boceto sirve para empezar.</Text>
+                        </Card>
+
+                        <Card radius="24px" p="xl" bg="#0B3022" shadow="md">
+                            <ThemeIcon size={54} radius="md" bg="rgba(255,255,255,0.1)" c="#D4AF37" mb="lg">
+                                <IconPencil size={28} stroke={1.5} />
+                            </ThemeIcon>
+                            <Text fw={800} size="lg" mb="sm" c="white" style={{ fontFamily: '"Montserrat", sans-serif' }}>2. Detalle</Text>
+                            <Text size="sm" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>Elige el corte, color y materiales de nuestra selección premium.</Text>
+                        </Card>
+
+                        <Card radius="24px" p="xl" bg="white" shadow="sm" style={{ border: '1px solid rgba(11,48,34,0.05)' }}>
+                            <ThemeIcon size={54} radius="md" bg="#F9F9F4" c="#D4AF37" mb="lg">
+                                <IconRocket size={28} stroke={1.5} />
+                            </ThemeIcon>
+                            <Text fw={800} size="lg" mb="sm" c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif' }}>3. Creación</Text>
+                            <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>Recibe una cotización exclusiva y, tras tu aprobación, ¡comenzamos!</Text>
+                        </Card>
+                    </SimpleGrid>
 
                     {success && (
                         <Notification icon={<IconCheck size={20} />} color="teal" title="¡Propuesta Recibida!" onClose={() => setSuccess(false)} mb={rem(48)} style={{ border: 'none', borderRadius: '16px', padding: '24px', backgroundColor: '#E8F5E9', fontFamily: '"Montserrat", sans-serif' }}>
@@ -168,8 +202,13 @@ export default function CustomDesign() {
 
                     <form onSubmit={form.onSubmit(handleSubmit)}>
                         {/* DATOS DE CONTACTO - BENTO BOX */}
-                        <Card shadow="none" radius="32px" p={{ base: 32, md: 64 }} mb={rem(64)} bg="#F9F9F4" withBorder={false}>
-                            <Title order={2} c="#0B3022" mb={rem(40)} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 800, letterSpacing: '-0.02em' }}>Datos de Contacto</Title>
+                        <Card shadow="xl" radius="32px" p={{ base: 32, md: 54 }} mb={rem(64)} bg="white" withBorder={false} style={{ border: '1px solid rgba(11,48,34,0.03)' }}>
+                            <Group gap="md" mb={rem(40)} align="center">
+                                <ThemeIcon size={44} radius="xl" bg="#D4AF37" c="white">
+                                    <IconCheck size={22} stroke={2.5} />
+                                </ThemeIcon>
+                                <Title order={2} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 900, letterSpacing: '-0.02em' }}>Datos de Contacto</Title>
+                            </Group>
 
                             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" mb="xl">
                                 <TextInput
@@ -274,12 +313,20 @@ export default function CustomDesign() {
 
                         {/* BLOQUES DE PRENDAS - BENTO BOXES */}
                         <Box mb={rem(24)}>
-                            <Title order={2} c="#0B3022" mb={rem(8)} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 800, letterSpacing: '-0.02em' }}>Tus Diseños Propuestos</Title>
-                            <Text c="dimmed" mb={rem(40)} style={{ fontFamily: '"Montserrat", sans-serif' }}>Añade tantas prendas como necesites a esta única solicitud.</Text>
+                            <Group justify="space-between" align="end" mb={rem(40)}>
+                                <Box>
+                                    <Title order={2} c="#0B3022" mb={rem(8)} style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 900, letterSpacing: '-0.02em' }}>Tus Diseños Propuestos</Title>
+                                    <Text c="dimmed" style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 500 }}>Añade tantas prendas como necesites a esta solicitud.</Text>
+                                </Box>
+                                <Badge variant="outline" color="#0B3022" size="xl" radius="md" p="md">
+                                    {form.values.items.length} {form.values.items.length === 1 ? 'Prenda' : 'Prendas'}
+                                </Badge>
+                            </Group>
                         </Box>
 
                         {form.values.items.map((item, index) => (
-                            <Card key={item.id} shadow="none" radius="32px" p={{ base: 32, md: 48 }} mb={rem(32)} bg="#F9F9F4" withBorder={false} style={{ position: 'relative' }}>
+                            <Collapse key={item.id} in={true} transitionDuration={500}>
+                                <Card shadow="md" radius="32px" p={{ base: 32, md: 48 }} mb={rem(32)} bg="white" withBorder={false} style={{ position: 'relative', borderLeft: '8px solid #0B3022' }}>
                                 {form.values.items.length > 1 && (
                                     <ActionIcon
                                         color="red"
@@ -404,7 +451,8 @@ export default function CustomDesign() {
                                     </SimpleGrid>
                                 </Box>
                             </Card>
-                        ))}
+                        </Collapse>
+                    ))}
 
                         <Button
                             variant="light"
@@ -431,9 +479,27 @@ export default function CustomDesign() {
                             radius="xl"
                             loading={submitting}
                             className="btn-submit"
-                            style={{ fontFamily: '"Montserrat", sans-serif', backgroundColor: '#0B3022', color: '#D4A017', fontSize: '1.4rem', height: 84, fontWeight: 800, transition: 'all 0.3s ease', border: 'none' }}
+                            style={{ 
+                                fontFamily: '"Montserrat", sans-serif', 
+                                backgroundColor: '#0B3022', 
+                                color: '#D4AF37', 
+                                fontSize: '1.4rem', 
+                                height: 84, 
+                                fontWeight: 900, 
+                                transition: 'all 0.3s ease', 
+                                border: 'none',
+                                boxShadow: '0 10px 40px rgba(11, 48, 34, 0.3)'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-4px)';
+                                e.currentTarget.style.boxShadow = '0 15px 50px rgba(11, 48, 34, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 10px 40px rgba(11, 48, 34, 0.3)';
+                            }}
                         >
-                            Enviar Solicitudes de Diseño
+                            Confirmar y Enviar Solicitud
                         </Button>
                     </form>
 

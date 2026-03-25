@@ -8,7 +8,7 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import { AppShell, Container, SimpleGrid, Card, Text, Center, Title, ThemeIcon, Box, rem, Stack, Group, Badge, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconStar, IconTruck, IconPalette, IconBrandWhatsapp, IconMail, IconBrandInstagram, IconPhone, IconMessageCircle2 } from '@tabler/icons-react';
+import { IconStar, IconTruck, IconPalette, IconBrandWhatsapp, IconMail, IconBrandInstagram, IconPhone, IconMessageCircle2, IconHeart, IconUsers } from '@tabler/icons-react';
 
 import { Header } from '../Components/Layout/Header';
 import HeroProduct from '../Components/Product/HeroProduct';
@@ -188,6 +188,83 @@ export default function Welcome() {
                         {/* JOPPA CREW COMMUNITY */}
                         <Box mt="2rem">
                             <JoppaCrew />
+                        </Box>
+
+                        {/* QUIENES SOMOS (FOUNDERS) SECTION */}
+                        <Box mt="2rem">
+                            <Card
+                                radius="32px"
+                                p={{ base: 40, md: 60 }}
+                                bg="#F9F9F4"
+                                shadow="sm"
+                            >
+                                <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" style={{ alignItems: 'center' }}>
+                                    <Box>
+                                        <Badge color="#0B3022" variant="light" size="lg" radius="xl" mb="xl" bg="rgba(11, 48, 34, 0.05)">
+                                            Nuestra Historia
+                                        </Badge>
+                                        <Title
+                                            order={2}
+                                            c="#0B3022"
+                                            mb="xl"
+                                            style={{
+                                                fontSize: '2.5rem',
+                                                fontFamily: '"Montserrat", sans-serif',
+                                                fontWeight: 900,
+                                                lineHeight: 1.1
+                                            }}
+                                        >
+                                            Quiénes Somos
+                                        </Title>
+                                        <Text size="lg" c="#0B3022" style={{ opacity: 0.8, lineHeight: 1.7, maxWidth: 500 }}>
+                                            Somos una pareja de emprendedores apasionados por el diseño y la cultura urbana. Lo que comenzó como un sueño compartido se convirtió en JOPPA, un espacio donde la creatividad no tiene límites.
+                                            <br /><br />
+                                            Cada prenda que diseñamos lleva una parte de nosotros, enfocándonos en la calidad premium y en piezas que cuentan una historia. ¡Gracias por ser parte de este viaje con nosotros!
+                                        </Text>
+                                        <Group mt="2rem">
+                                            <IconHeart size={30} color="#D4AF37" fill="#D4AF37" />
+                                            <Text fw={700} c="#0B3022" style={{ fontFamily: '"Montserrat", sans-serif' }}>
+                                                Hecho con pasión por JOPPA Team
+                                            </Text>
+                                        </Group>
+                                    </Box>
+
+                                    <Center>
+                                        <Box
+                                            style={{
+                                                width: '100%',
+                                                maxWidth: 400,
+                                                aspectRatio: '1/1',
+                                                borderRadius: '32px',
+                                                background: 'linear-gradient(135deg, #0B3022 0%, #1a4a3a 100%)',
+                                                position: 'relative',
+                                                overflow: 'hidden',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}
+                                        >
+                                            {/* Representación visual abstracta mientras el usuario pone una foto real */}
+                                            <IconUsers size={120} color="rgba(255,255,255,0.2)" stroke={1} />
+                                            <Box
+                                                style={{
+                                                    position: 'absolute',
+                                                    bottom: 0,
+                                                    left: 0,
+                                                    right: 0,
+                                                    padding: '2rem',
+                                                    background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%)',
+                                                    textAlign: 'center'
+                                                }}
+                                            >
+                                                <Text c="white" fw={800} size="xl" style={{ letterSpacing: '0.1em' }}>
+                                                    FOUNDERS
+                                                </Text>
+                                            </Box>
+                                        </Box>
+                                    </Center>
+                                </SimpleGrid>
+                            </Card>
                         </Box>
 
                         {/* CONTACT BENTO SECTION */}
