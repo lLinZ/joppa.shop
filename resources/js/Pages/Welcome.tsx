@@ -251,7 +251,7 @@ export default function Welcome() {
                                                     h="100%"
                                                 />
                                                 <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(to top, rgba(11,48,34,0.8) 0%, transparent 100%)' }}>
-                                                    <Text c="white" fw={800} size="sm" style={{ letterSpacing: '0.05em' }}>DARIO</Text>
+                                                    <Text c="white" fw={800} size="sm" style={{ letterSpacing: '0.05em' }}>Jose Miguel</Text>
                                                 </Box>
                                             </Card>
 
@@ -276,7 +276,7 @@ export default function Welcome() {
                                                     h="100%"
                                                 />
                                                 <Box style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(to top, rgba(11,48,34,0.8) 0%, transparent 100%)' }}>
-                                                    <Text c="white" fw={800} size="sm" style={{ letterSpacing: '0.05em' }}>MARIA</Text>
+                                                    <Text c="white" fw={800} size="sm" style={{ letterSpacing: '0.05em' }}>Patricia</Text>
                                                 </Box>
                                             </Card>
                                         </SimpleGrid>
