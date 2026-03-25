@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Head } from '@inertiajs/react';
-import { AppShell, Container, SimpleGrid, Card, Text, Center, Title, ThemeIcon, Box, rem, Stack, Group, Badge, Button, Image } from '@mantine/core';
+import { AppShell, Container, SimpleGrid, Card, Text, Center, Title, ThemeIcon, Box, rem, Stack, Group, Badge, Button, Image, Grid } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconStar, IconTruck, IconPalette, IconBrandWhatsapp, IconMail, IconBrandInstagram, IconPhone, IconMessageCircle2, IconHeart, IconUsers } from '@tabler/icons-react';
 
@@ -75,8 +75,8 @@ export default function Welcome() {
                             >
                                 <Box style={{ position: 'absolute', top: -50, right: -50, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%)' }} />
 
-                                <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 40, md: 60 }} style={{ position: 'relative', zIndex: 1, alignItems: 'center' }}>
-                                    <Box>
+                                <Grid gutter={{ base: 40, md: 80 }} align="center" style={{ position: 'relative', zIndex: 1 }}>
+                                    <Grid.Col span={{ base: 12, md: 5 }}>
                                         <Badge color="rgba(255,255,255,0.2)" c="white" variant="filled" size="lg" radius="xl" mb="xl">
                                             Edición Ilimitada
                                         </Badge>
@@ -118,94 +118,113 @@ export default function Welcome() {
                                         >
                                             Inicia Tu Solicitud
                                         </Button>
-                                    </Box>
+                                    </Grid.Col>
 
-                                    <Box mih={{ base: 380, md: 450 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
-                                        {/* Mosaic of Images */}
-                                        <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
-                                            {/* Image 1 - Large / Main */}
-                                            <Box 
-                                                w={{ base: '85%', md: '75%' }}
-                                                h="85%"
-                                                style={{ 
+                                    <Grid.Col span={{ base: 12, md: 7 }}>
+                                        <Box mih={{ base: 380, md: 500 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%' }}>
+                                            <style>{`
+                                                @keyframes floating {
+                                                    0% { transform: translateY(0px); }
+                                                    50% { transform: translateY(-15px); }
+                                                    100% { transform: translateY(0px); }
+                                                }
+                                                .float-box {
+                                                    animation: floating 4s ease-in-out infinite;
+                                                }
+                                            `}</style>
+
+                                            {/* Mosaic of Images */}
+                                            <Box ml={{ base: 0, md: -60 }} style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                                {/* Image 1 - Large / Main */}
+                                                <Box 
+                                                    className="float-box"
+                                                    w={{ base: '85%', md: '75%' }}
+                                                    h="85%"
+                                                    style={{ 
+                                                        position: 'absolute', 
+                                                        top: '5%', 
+                                                        left: '0%', 
+                                                        zIndex: 2,
+                                                        transform: 'rotate(-2deg)',
+                                                        animationDelay: '0s'
+                                                    }}
+                                                >
+                                                    <Image 
+                                                        src="/images/custom_design_section/Lista 2.png" 
+                                                        alt="JOPPA Custom Design 1" 
+                                                        fit="contain" 
+                                                        h="100%" 
+                                                    />
+                                                </Box>
+
+                                                {/* Image 2 - Top Secondary */}
+                                                <Box 
+                                                    className="float-box"
+                                                    w={{ base: '60%', md: '55%' }}
+                                                    h="60%"
+                                                    style={{ 
+                                                        position: 'absolute', 
+                                                        top: '0%', 
+                                                        right: '5%', 
+                                                        zIndex: 1,
+                                                        transform: 'rotate(5deg)',
+                                                        animationDelay: '0.8s'
+                                                    }}
+                                                >
+                                                    <Image 
+                                                        src="/images/custom_design_section/Lista 4.png" 
+                                                        alt="JOPPA Custom Design 2" 
+                                                        fit="contain" 
+                                                        h="100%" 
+                                                    />
+                                                </Box>
+
+                                                {/* Image 3 - Bottom Secondary */}
+                                                <Box 
+                                                    className="float-box"
+                                                    w={{ base: '55%', md: '50%' }}
+                                                    h="55%"
+                                                    style={{ 
+                                                        position: 'absolute', 
+                                                        bottom: '0%', 
+                                                        right: '0%', 
+                                                        zIndex: 3,
+                                                        transform: 'rotate(-8deg)',
+                                                        animationDelay: '1.5s'
+                                                    }}
+                                                >
+                                                    <Image 
+                                                        src="/images/custom_design_section/Lista 6.png" 
+                                                        alt="JOPPA Custom Design 3" 
+                                                        fit="contain" 
+                                                        h="100%" 
+                                                    />
+                                                </Box>
+
+                                                {/* Floating Sticker */}
+                                                <div style={{ 
                                                     position: 'absolute', 
-                                                    top: '5%', 
-                                                    left: '0%', 
-                                                    zIndex: 2,
-                                                    transform: 'rotate(-2deg)'
-                                                }}
-                                            >
-                                                <Image 
-                                                    src="/images/custom_design_section/Lista 2.png" 
-                                                    alt="JOPPA Custom Design 1" 
-                                                    fit="contain" 
-                                                    h="100%" 
-                                                />
+                                                    bottom: '10%', 
+                                                    left: '-5%', 
+                                                    background: '#F4F4E8', 
+                                                    color: '#0B3022', 
+                                                    padding: '8px 16px', 
+                                                    borderRadius: '100px', 
+                                                    fontWeight: 800, 
+                                                    fontFamily: '"Montserrat", sans-serif', 
+                                                    boxShadow: '0 10px 40px rgba(0,0,0,0.5)', 
+                                                    zIndex: 10,
+                                                    transform: 'rotate(-12deg)',
+                                                    fontSize: 'clamp(10px, 3vw, 14px)',
+                                                    letterSpacing: '0.05em',
+                                                    whiteSpace: 'nowrap'
+                                                }}>
+                                                    HECHO A MEDIDA
+                                                </div>
                                             </Box>
-
-                                            {/* Image 2 - Top Secondary */}
-                                            <Box 
-                                                w={{ base: '60%', md: '55%' }}
-                                                h="60%"
-                                                style={{ 
-                                                    position: 'absolute', 
-                                                    top: '0%', 
-                                                    right: '0%', 
-                                                    zIndex: 1,
-                                                    transform: 'rotate(5deg)'
-                                                }}
-                                            >
-                                                <Image 
-                                                    src="/images/custom_design_section/Lista 4.png" 
-                                                    alt="JOPPA Custom Design 2" 
-                                                    fit="contain" 
-                                                    h="100%" 
-                                                />
-                                            </Box>
-
-                                            {/* Image 3 - Bottom Secondary */}
-                                            <Box 
-                                                w={{ base: '55%', md: '50%' }}
-                                                h="55%"
-                                                style={{ 
-                                                    position: 'absolute', 
-                                                    bottom: '0%', 
-                                                    right: '-5%', 
-                                                    zIndex: 3,
-                                                    transform: 'rotate(-8deg)'
-                                                }}
-                                            >
-                                                <Image 
-                                                    src="/images/custom_design_section/Lista 6.png" 
-                                                    alt="JOPPA Custom Design 3" 
-                                                    fit="contain" 
-                                                    h="100%" 
-                                                />
-                                            </Box>
-
-                                            {/* Floating Sticker */}
-                                            <div style={{ 
-                                                position: 'absolute', 
-                                                bottom: '10%', 
-                                                left: '-5%', 
-                                                background: '#F4F4E8', 
-                                                color: '#0B3022', 
-                                                padding: '8px 16px', 
-                                                borderRadius: '100px', 
-                                                fontWeight: 800, 
-                                                fontFamily: '"Montserrat", sans-serif', 
-                                                boxShadow: '0 10px 40px rgba(0,0,0,0.5)', 
-                                                zIndex: 10,
-                                                transform: 'rotate(-12deg)',
-                                                fontSize: 'clamp(10px, 3vw, 14px)',
-                                                letterSpacing: '0.05em',
-                                                whiteSpace: 'nowrap'
-                                            }}>
-                                                HECHO A MEDIDA
-                                            </div>
                                         </Box>
-                                    </Box>
-                                </SimpleGrid>
+                                    </Grid.Col>
+                                </Grid>
                             </Card>
                         </Box>
 
