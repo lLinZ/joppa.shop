@@ -33,7 +33,7 @@ export default function JoppaCrew() {
                             order={2}
                             c="white"
                             style={{
-                                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                                fontSize: 'clamp(1.5rem, 5vw, 3rem)',
                                 fontFamily: '"Montserrat", sans-serif',
                                 fontWeight: 900,
                                 lineHeight: 1.1,

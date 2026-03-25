@@ -142,9 +142,10 @@ export default function Welcome() {
                                             order={2}
                                             c="#0B3022"
                                             style={{
-                                                fontSize: '2.5rem',
+                                                fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
                                                 fontFamily: '"Montserrat", sans-serif',
-                                                fontWeight: 900
+                                                fontWeight: 900,
+                                                lineHeight: 1.2
                                             }}
                                         >
                                             ¿Tienes una tienda?<br />
@@ -172,7 +173,7 @@ export default function Welcome() {
                                         <Box bg="#0B3022" p={40} style={{ borderRadius: '32px', width: '100%', maxWidth: 350 }}>
                                             <Stack align="center" gap="md">
                                                 <IconTruck size={80} color="#D4AF37" stroke={1.5} />
-                                                <Text ta="center" c="white" fw={800} size="xl">
+                                                <Text ta="center" c="white" fw={800} style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', lineHeight: 1.2 }}>
                                                     Envío Nacional Garantizado
                                                 </Text>
                                                 <Text ta="center" c="white" style={{ opacity: 0.7 }}>
