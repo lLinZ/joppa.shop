@@ -112,7 +112,8 @@ export default function Checkout() {
                 name: values.name,
                 email: values.email,
                 phone: `${values.phone_prefix}${values.phone_number.replace(/\D/g, '')}`,
-                address: `${values.state}, ${values.address_detail}`,
+                address: values.state,
+                notes: values.address_detail || null,
                 total_amount: subtotal,
                 items: cartItems.map((item) => ({
                     product_id: String(item.productId || item.id),
@@ -355,8 +356,8 @@ export default function Checkout() {
                                             />
 
                                             <Textarea
-                                                label="Mensaje (Opcional)"
-                                                placeholder="Municipio, zona, punto de referencia o instrucciones de entrega"
+                                                label="Instrucciones de Entrega (Opcional)"
+                                                placeholder="Municipio, zona, punto de referencia o instrucciones adicionales"
                                                 radius="lg"
                                                 size="md"
                                                 rows={3}
