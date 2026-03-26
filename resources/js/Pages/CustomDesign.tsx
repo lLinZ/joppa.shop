@@ -47,7 +47,7 @@ export default function CustomDesign() {
             state: '',
             general_comments: '',
             items: [
-                { id: Math.random().toString(), gender: 'Unisex', style: 'Oversize', color: 'Negro', size: 'M', quantity: 1, image: null as File | null }
+                { id: Math.random().toString(), gender: 'Unisex', style: 'Oversize', color: 'Negro', size: 'M', quantity: 1, placement: 'frontal' as 'frontal' | 'trasero' | 'doble' | 'pocket', image: null as File | null, image_back: null as File | null }
             ],
         },
         validate: {
@@ -91,8 +91,12 @@ export default function CustomDesign() {
                 formData.append(`items[${index}][color]`, item.color);
                 formData.append(`items[${index}][size]`, item.size);
                 formData.append(`items[${index}][quantity]`, item.quantity.toString());
+                formData.append(`items[${index}][placement]`, item.placement || 'frontal');
                 if (item.image) {
                     formData.append(`items[${index}][image]`, item.image);
+                }
+                if (item.image_back && item.placement === 'doble') {
+                    formData.append(`items[${index}][image_back]`, item.image_back);
                 }
             });
 
@@ -131,9 +135,86 @@ export default function CustomDesign() {
             color: 'Negro',
             size: 'M',
             quantity: 1,
-            image: null
+            placement: 'frontal',
+            image: null,
+            image_back: null,
         });
     };
+
+    // ── T-Shirt Mockup SVG ──────────────────────────────────────────────────────
+    const TShirtMockup = ({ placement }: { placement: string }) => {
+        const gold = '#D4AF37';
+        const goldLight = 'rgba(212,175,55,0.18)';
+        const strokeW = 2;
+
+        // Zone visibility
+        const showFront  = placement === 'frontal' || placement === 'doble';
+        const showBack   = placement === 'trasero';
+        const showPocket = placement === 'pocket'  || placement === 'doble';
+
+        return (
+            <Box style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+                {/* FRONT VIEW */}
+                {(showFront || showPocket || !showBack) && (
+                    <Box style={{ textAlign: 'center' }}>
+                        <Text size="xs" fw={700} c="dimmed" mb={4} style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>Frontal</Text>
+                        <svg width="140" height="160" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            {/* T-Shirt silhouette */}
+                            <path d="M30 10 L10 45 L30 50 L30 145 Q30 150 35 150 L105 150 Q110 150 110 145 L110 50 L130 45 L110 10 L90 25 Q70 35 50 25 Z"
+                                fill="#1A1A1A" stroke="#333" strokeWidth="1.5" />
+                            {/* Collar */}
+                            <path d="M50 25 Q70 40 90 25" fill="none" stroke="#444" strokeWidth="1.5" />
+
+                            {/* Frontal full-chest zone */}
+                            {showFront && (
+                                <rect x="40" y="55" width="60" height="65" rx="6"
+                                    fill={goldLight} stroke={gold} strokeWidth={strokeW} strokeDasharray="5 3" />
+                            )}
+
+                            {/* Pocket zone */}
+                            {showPocket && (
+                                <rect x="43" y="58" width="24" height="24" rx="4"
+                                    fill={gold} fillOpacity="0.3" stroke={gold} strokeWidth={strokeW} />
+                            )}
+
+                            {/* Labels */}
+                            {showFront && !showPocket && (
+                                <text x="70" y="92" textAnchor="middle" fontSize="9" fill={gold} fontWeight="bold" fontFamily="Montserrat,sans-serif">FRENTE</text>
+                            )}
+                            {showPocket && (
+                                <text x="55" y="73" textAnchor="middle" fontSize="7" fill={gold} fontWeight="bold" fontFamily="Montserrat,sans-serif">POCKET</text>
+                            )}
+                        </svg>
+                    </Box>
+                )}
+
+                {/* BACK VIEW */}
+                {(showBack || placement === 'doble') && (
+                    <Box style={{ textAlign: 'center' }}>
+                        <Text size="xs" fw={700} c="dimmed" mb={4} style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>Espalda</Text>
+                        <svg width="140" height="160" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 10 L10 45 L30 50 L30 145 Q30 150 35 150 L105 150 Q110 150 110 145 L110 50 L130 45 L110 10 L90 25 Q70 35 50 25 Z"
+                                fill="#2a2a2a" stroke="#444" strokeWidth="1.5" />
+                            <path d="M50 25 Q70 40 90 25" fill="none" stroke="#555" strokeWidth="1.5" />
+
+                            {/* Back zone */}
+                            <rect x="40" y="55" width="60" height="75" rx="6"
+                                fill={goldLight} stroke={gold} strokeWidth={strokeW} strokeDasharray="5 3" />
+                            <text x="70" y="97" textAnchor="middle" fontSize="9" fill={gold} fontWeight="bold" fontFamily="Montserrat,sans-serif">ESPALDA</text>
+                        </svg>
+                    </Box>
+                )}
+            </Box>
+        );
+    };
+
+    // ── Placement option cards ──────────────────────────────────────────────────
+    const PLACEMENTS = [
+        { value: 'frontal',  label: 'Frontal',         desc: 'Diseño en el pecho completo',    emoji: '🎨' },
+        { value: 'trasero',  label: 'Trasero',          desc: 'Diseño en la espalda completa',  emoji: '🖼️' },
+        { value: 'doble',    label: 'Doble',            desc: 'Pocket + Espalda (2 imágenes)',  emoji: '✨' },
+        { value: 'pocket',   label: 'Solo Pocket',      desc: 'Diseño pequeño en el pecho',     emoji: '🔲' },
+    ] as const;
 
     return (
         <AppShell header={{ height: 100, collapsed: false, offset: true }} className="page-transition">
@@ -414,39 +495,97 @@ export default function CustomDesign() {
                                     />
                                 </SimpleGrid>
 
-                                {/* IMAGE UPLOAD & PREVIEW AREA */}
-                                <Box bg="#FFFFFF" p={rem(32)} style={{ borderRadius: '24px' }}>
-                                    <SimpleGrid cols={{ base: 1, sm: item.image ? 2 : 1 }} spacing="xl">
+                                {/* PLACEMENT SELECTOR + MOCKUP */}
+                                <Box mb={rem(32)}>
+                                    <Text fw={700} size="sm" mb="sm" style={{ fontFamily: '"Montserrat", sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0B3022' }}>
+                                        Posición del Diseño
+                                    </Text>
+                                    <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="sm" mb={rem(24)}>
+                                        {PLACEMENTS.map(p => (
+                                            <Box
+                                                key={p.value}
+                                                onClick={() => form.setFieldValue(`items.${index}.placement`, p.value)}
+                                                style={{
+                                                    border: form.values.items[index].placement === p.value ? '2px solid #D4AF37' : '2px solid rgba(11,48,34,0.1)',
+                                                    borderRadius: '16px',
+                                                    padding: '14px 10px',
+                                                    textAlign: 'center',
+                                                    cursor: 'pointer',
+                                                    background: form.values.items[index].placement === p.value ? 'rgba(212,175,55,0.08)' : '#F9F9F4',
+                                                    transition: 'all 0.2s ease',
+                                                    userSelect: 'none',
+                                                }}
+                                            >
+                                                <Text size="xl" mb={4}>{p.emoji}</Text>
+                                                <Text fw={800} size="sm" c={form.values.items[index].placement === p.value ? '#0B3022' : '#555'} style={{ fontFamily: '"Montserrat", sans-serif', lineHeight: 1.2 }}>{p.label}</Text>
+                                                <Text size="10px" c="dimmed" mt={2} style={{ lineHeight: 1.3 }}>{p.desc}</Text>
+                                            </Box>
+                                        ))}
+                                    </SimpleGrid>
+
+                                    {/* SVG Mockup */}
+                                    <Box p={rem(24)} bg="#111" style={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                                        <Text size="xs" fw={700} c="rgba(255,255,255,0.4)" style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}>Vista Previa del Diseño</Text>
+                                        <TShirtMockup placement={form.values.items[index].placement || 'frontal'} />
+                                        <Text size="xs" c="rgba(255,255,255,0.3)" mt={4}>
+                                            {PLACEMENTS.find(p => p.value === form.values.items[index].placement)?.desc}
+                                        </Text>
+                                    </Box>
+                                </Box>
+
+                                {/* IMAGE UPLOAD AREA */}
+                                <Box bg="#F9F9F4" p={rem(28)} style={{ borderRadius: '20px' }}>
+                                    <Text fw={700} size="sm" mb="md" style={{ fontFamily: '"Montserrat", sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0B3022' }}>
+                                        {form.values.items[index].placement === 'doble' ? 'Tus Diseños (2 archivos)' : 'Tu Diseño de Referencia'}
+                                    </Text>
+                                    <SimpleGrid cols={{ base: 1, sm: form.values.items[index].placement === 'doble' ? 2 : (item.image ? 2 : 1) }} spacing="xl">
+                                        {/* PRIMARY IMAGE */}
                                         <Box>
+                                            <Text size="xs" fw={700} c="dimmed" mb={8} style={{ letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                                                {form.values.items[index].placement === 'doble' ? '① Pocket (frontal)' : 'Imagen de Referencia'}
+                                            </Text>
                                             <FileInput
-                                                label="Diseño deseado, solo el diseño (Max 5MB)"
-                                                placeholder="Sube tu imagen (PNG, JPG)"
-                                                size="xl"
+                                                placeholder="Sube tu imagen (PNG, JPG, PDF)"
+                                                size="lg"
                                                 accept="image/png,image/jpeg,image/webp,.pdf"
-                                                leftSection={<IconUpload size={24} />}
+                                                leftSection={<IconUpload size={20} />}
                                                 {...form.getInputProps(`items.${index}.image`)}
                                                 styles={{
-                                                    label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '16px' },
-                                                    input: { backgroundColor: '#F9F9F4', border: '2px dashed rgba(11,48,34,0.1)', borderRadius: '16px', cursor: 'pointer', height: '80px' }
+                                                    input: { backgroundColor: '#FFFFFF', border: '2px dashed rgba(11,48,34,0.15)', borderRadius: '14px', cursor: 'pointer', height: '70px' }
                                                 }}
                                             />
+                                            {item.image && item.image.type?.startsWith('image/') && (
+                                                <Box mt={12} style={{ height: '160px', backgroundColor: '#F4F4E8', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Image src={URL.createObjectURL(item.image as File)} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                                </Box>
+                                            )}
                                         </Box>
 
-                                        {item.image && (
-                                            <Box style={{ height: '200px', backgroundColor: '#F4F4E8', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                {item.image.type.startsWith('image/') ? (
-                                                    <Image
-                                                        src={URL.createObjectURL(item.image as File)}
-                                                        alt="Design Preview"
-                                                        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                                                    />
-                                                ) : (
-                                                    <Box ta="center">
-                                                        <IconPhoto size={48} color="rgba(11,48,34,0.3)" />
-                                                        <Text mt="xs" fw={700} c="dimmed">{(item.image as File).name}</Text>
+                                        {/* BACK IMAGE — only for 'doble' */}
+                                        {form.values.items[index].placement === 'doble' && (
+                                            <Box>
+                                                <Text size="xs" fw={700} c="dimmed" mb={8} style={{ letterSpacing: '0.06em', textTransform: 'uppercase' }}>② Espalda</Text>
+                                                <FileInput
+                                                    placeholder="Sube tu diseño de espalda"
+                                                    size="lg"
+                                                    accept="image/png,image/jpeg,image/webp,.pdf"
+                                                    leftSection={<IconUpload size={20} />}
+                                                    {...form.getInputProps(`items.${index}.image_back`)}
+                                                    styles={{
+                                                        input: { backgroundColor: '#FFFFFF', border: '2px dashed rgba(212,175,55,0.4)', borderRadius: '14px', cursor: 'pointer', height: '70px' }
+                                                    }}
+                                                />
+                                                {form.values.items[index].image_back && (form.values.items[index].image_back as File)?.type?.startsWith('image/') && (
+                                                    <Box mt={12} style={{ height: '160px', backgroundColor: '#F4F4E8', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                        <Image src={URL.createObjectURL(form.values.items[index].image_back as File)} alt="Back Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                                     </Box>
                                                 )}
                                             </Box>
+                                        )}
+
+                                        {/* Preview for single image */}
+                                        {form.values.items[index].placement !== 'doble' && item.image && (
+                                            <Box />
                                         )}
                                     </SimpleGrid>
                                 </Box>
