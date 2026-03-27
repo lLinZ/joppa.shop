@@ -3,6 +3,7 @@
 // </ai_context>
 
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import '../css/app.css';
 import './bootstrap';
 
@@ -10,6 +11,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { theme } from './theme';
 import { useWebTracker } from './hooks/useWebTracker';
 
@@ -32,6 +34,7 @@ createInertiaApp({
 
         root.render(
             <MantineProvider theme={theme} defaultColorScheme="light">
+                <Notifications />
                 <RootWrapper>
                     <App {...props} />
                 </RootWrapper>

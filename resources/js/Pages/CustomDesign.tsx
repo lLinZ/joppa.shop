@@ -8,12 +8,14 @@ import { Head } from '@inertiajs/react';
 import { AppShell, Box, Container, Title, Text, Button, Divider, Group, TextInput, Textarea, Select, NumberInput, Card, ActionIcon, FileInput, Image, Loader, Notification, SimpleGrid, rem, Badge, ThemeIcon, Transition, Collapse } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { IconPlus, IconTrash, IconUpload, IconCheck, IconX, IconPhoto, IconSparkles, IconSettings, IconConfetti, IconBulb, IconPencil, IconRocket } from '@tabler/icons-react';
+import { IconPlus, IconTrash, IconUpload, IconCheck, IconX, IconPhoto, IconSparkles, IconSettings, IconConfetti, IconBulb, IconPencil, IconRocket, IconDeviceFloppy } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 
 import { Header } from '../Components/Layout/Header';
 import Footer from '../Components/Layout/Footer';
 import CartDrawer from '../Components/UI/Cart/CartDrawer';
+import { DesignStudio } from '../Components/Design/DesignStudio';
 
 const CRM_API_URL = (import.meta.env.VITE_CRM_API_URL as string) || 'http://localhost:8000/api';
 
@@ -47,7 +49,7 @@ export default function CustomDesign() {
             state: '',
             general_comments: '',
             items: [
-                { id: Math.random().toString(), gender: 'Unisex', style: 'Oversize', color: 'Negro', size: 'M', quantity: 1, placement: 'frontal' as 'frontal' | 'trasero' | 'doble' | 'pocket', image: null as File | null, image_back: null as File | null }
+                { id: Math.random().toString(), gender: 'Caballero', style: 'Hoodie Premium', color: 'Negro', size: 'M', quantity: 1, placement: 'frontal', design_data: null as any }
             ],
         },
         validate: {
@@ -61,10 +63,7 @@ export default function CustomDesign() {
                 color: (value: string) => (!value ? 'Requerido' : null),
                 size: (value: string) => (!value ? 'Requerido' : null),
                 quantity: (value: number) => (value < 1 ? 'Mínimo 1' : null),
-                image: (value: File | null) => {
-                    if (value && value.size > 5 * 1024 * 1024) return 'Máximo 5MB permitido';
-                    return null;
-                }
+                design_data: (value: any) => (!value ? 'Debes completar el diseño' : null),
             }
         },
     });
@@ -92,11 +91,10 @@ export default function CustomDesign() {
                 formData.append(`items[${index}][size]`, item.size);
                 formData.append(`items[${index}][quantity]`, item.quantity.toString());
                 formData.append(`items[${index}][placement]`, item.placement || 'frontal');
-                if (item.image) {
-                    formData.append(`items[${index}][image]`, item.image);
-                }
-                if (item.image_back && item.placement === 'doble') {
-                    formData.append(`items[${index}][image_back]`, item.image_back);
+                if (item.design_data) {
+                    const designString = JSON.stringify(item.design_data);
+                    console.log(`Submitting Design Data for Item ${index}:`, designString);
+                    formData.append(`items[${index}][design_data]`, designString);
                 }
             });
 
@@ -130,91 +128,16 @@ export default function CustomDesign() {
     const addDesignBlock = () => {
         form.insertListItem('items', {
             id: Math.random().toString(),
-            gender: 'Unisex',
-            style: 'Oversize',
+            gender: 'Caballero',
+            style: 'Hoodie Premium',
             color: 'Negro',
             size: 'M',
             quantity: 1,
             placement: 'frontal',
-            image: null,
-            image_back: null,
+            design_data: null,
         });
     };
 
-    // ── T-Shirt Mockup SVG ──────────────────────────────────────────────────────
-    const TShirtMockup = ({ placement }: { placement: string }) => {
-        const gold = '#D4AF37';
-        const goldLight = 'rgba(212,175,55,0.18)';
-        const strokeW = 2;
-
-        // Zone visibility
-        const showFront  = placement === 'frontal' || placement === 'doble';
-        const showBack   = placement === 'trasero';
-        const showPocket = placement === 'pocket'  || placement === 'doble';
-
-        return (
-            <Box style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-                {/* FRONT VIEW */}
-                {(showFront || showPocket || !showBack) && (
-                    <Box style={{ textAlign: 'center' }}>
-                        <Text size="xs" fw={700} c="dimmed" mb={4} style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>Frontal</Text>
-                        <svg width="140" height="160" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            {/* T-Shirt silhouette */}
-                            <path d="M30 10 L10 45 L30 50 L30 145 Q30 150 35 150 L105 150 Q110 150 110 145 L110 50 L130 45 L110 10 L90 25 Q70 35 50 25 Z"
-                                fill="#1A1A1A" stroke="#333" strokeWidth="1.5" />
-                            {/* Collar */}
-                            <path d="M50 25 Q70 40 90 25" fill="none" stroke="#444" strokeWidth="1.5" />
-
-                            {/* Frontal full-chest zone */}
-                            {showFront && (
-                                <rect x="40" y="55" width="60" height="65" rx="6"
-                                    fill={goldLight} stroke={gold} strokeWidth={strokeW} strokeDasharray="5 3" />
-                            )}
-
-                            {/* Pocket zone */}
-                            {showPocket && (
-                                <rect x="43" y="58" width="24" height="24" rx="4"
-                                    fill={gold} fillOpacity="0.3" stroke={gold} strokeWidth={strokeW} />
-                            )}
-
-                            {/* Labels */}
-                            {showFront && !showPocket && (
-                                <text x="70" y="92" textAnchor="middle" fontSize="9" fill={gold} fontWeight="bold" fontFamily="Montserrat,sans-serif">FRENTE</text>
-                            )}
-                            {showPocket && (
-                                <text x="55" y="73" textAnchor="middle" fontSize="7" fill={gold} fontWeight="bold" fontFamily="Montserrat,sans-serif">POCKET</text>
-                            )}
-                        </svg>
-                    </Box>
-                )}
-
-                {/* BACK VIEW */}
-                {(showBack || placement === 'doble') && (
-                    <Box style={{ textAlign: 'center' }}>
-                        <Text size="xs" fw={700} c="dimmed" mb={4} style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>Espalda</Text>
-                        <svg width="140" height="160" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M30 10 L10 45 L30 50 L30 145 Q30 150 35 150 L105 150 Q110 150 110 145 L110 50 L130 45 L110 10 L90 25 Q70 35 50 25 Z"
-                                fill="#2a2a2a" stroke="#444" strokeWidth="1.5" />
-                            <path d="M50 25 Q70 40 90 25" fill="none" stroke="#555" strokeWidth="1.5" />
-
-                            {/* Back zone */}
-                            <rect x="40" y="55" width="60" height="75" rx="6"
-                                fill={goldLight} stroke={gold} strokeWidth={strokeW} strokeDasharray="5 3" />
-                            <text x="70" y="97" textAnchor="middle" fontSize="9" fill={gold} fontWeight="bold" fontFamily="Montserrat,sans-serif">ESPALDA</text>
-                        </svg>
-                    </Box>
-                )}
-            </Box>
-        );
-    };
-
-    // ── Placement option cards ──────────────────────────────────────────────────
-    const PLACEMENTS = [
-        { value: 'frontal',  label: 'Frontal',         desc: 'Diseño en el pecho completo',    emoji: '🎨' },
-        { value: 'trasero',  label: 'Trasero',          desc: 'Diseño en la espalda completa',  emoji: '🖼️' },
-        { value: 'doble',    label: 'Doble',            desc: 'Pocket + Espalda (2 imágenes)',  emoji: '✨' },
-        { value: 'pocket',   label: 'Solo Pocket',      desc: 'Diseño pequeño en el pecho',     emoji: '🔲' },
-    ] as const;
 
     return (
         <AppShell header={{ height: 100, collapsed: false, offset: true }} className="page-transition">
@@ -228,7 +151,7 @@ export default function CustomDesign() {
                 <Box style={{ position: 'absolute', top: -100, right: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(212, 175, 55, 0) 70%)', zIndex: 0 }} />
                 <Box style={{ position: 'absolute', bottom: 100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(11, 48, 34, 0.03) 0%, rgba(11, 48, 34, 0) 70%)', zIndex: 0 }} />
 
-                <Container size="md" style={{ position: 'relative', zIndex: 1 }}>
+                <Container size="xl" style={{ position: 'relative', zIndex: 1 }}>
 
                     <Box style={{ textAlign: 'center', marginBottom: rem(60) }}>
                         <Badge color="#0B3022" variant="filled" size="lg" radius="xl" mb="md" style={{ letterSpacing: '0.1em', fontWeight: 800 }}>
@@ -424,170 +347,46 @@ export default function CustomDesign() {
 
                                 <Text fw={800} size="xl" c="#0B3022" mb={rem(32)} style={{ fontFamily: '"Montserrat", sans-serif' }}>Prenda #{index + 1}</Text>
 
-                                <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" mb="xl">
-                                    <Select
-                                        label="Género"
-                                        size="md"
-                                        data={['Dama', 'Caballero', 'Unisex', 'Niño', 'Niña']}
-                                        {...form.getInputProps(`items.${index}.gender`)}
-                                        styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#FFFFFF', border: 'none', borderRadius: '12px' } }}
-                                    />
-                                    <Select
-                                        label="Estilo de Prenda"
-                                        size="md"
-                                        data={['Oversize', 'Regular Clásica', 'Crop Top', 'Hoodie']}
-                                        {...form.getInputProps(`items.${index}.style`)}
-                                        styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#FFFFFF', border: 'none', borderRadius: '12px' } }}
-                                    />
-                                </SimpleGrid>
-
-                                <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xl" mb={rem(40)}>
-                                    <Box>
-                                        <Text size="sm" style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }}>Color de Prenda <span style={{ color: 'red' }}>*</span></Text>
-                                        <Group gap="xs">
-                                            {[
-                                                { label: 'Negro', value: 'Negro', hex: '#1A1A1A' },
-                                                { label: 'Blanco', value: 'Blanco', hex: '#FFFFFF' },
-                                                { label: 'Beige', value: 'Beige', hex: '#F5F5DC' },
-                                                { label: 'Azul Marino', value: 'Azul Marino', hex: '#0A1128' },
-                                            ].map(c => (
-                                                <div 
-                                                    key={c.value}
-                                                    onClick={() => form.setFieldValue(`items.${index}.color`, c.value)}
-                                                    style={{
-                                                        width: 38,
-                                                        height: 38,
-                                                        borderRadius: '50%',
-                                                        backgroundColor: c.hex,
-                                                        border: form.values.items[index].color === c.value ? '2px solid #0B3022' : '1px solid #E0E0E0',
-                                                        cursor: 'pointer',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        boxShadow: form.values.items[index].color === c.value ? '0 0 0 2px #FFFFFF inset' : 'none',
-                                                        transition: 'all 0.2s ease',
-                                                    }}
-                                                    title={c.label}
-                                                >
-                                                    {form.values.items[index].color === c.value && (
-                                                        <IconCheck stroke={3} size={18} color={c.hex === '#FFFFFF' || c.hex === '#F5F5DC' ? '#000' : '#FFF'} />
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </Group>
-                                        {form.errors[`items.${index}.color`] && (
-                                            <Text c="red" size="xs" mt={4}>{form.errors[`items.${index}.color`] as string}</Text>
-                                        )}
-                                    </Box>
-                                    <Select
-                                        label="Talla"
-                                        size="md"
-                                        data={['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL']}
-                                        {...form.getInputProps(`items.${index}.size`)}
-                                        styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#FFFFFF', border: 'none', borderRadius: '12px' } }}
-                                    />
-                                    <NumberInput
-                                        label="Cantidad esperada"
-                                        size="md"
-                                        min={1}
-                                        {...form.getInputProps(`items.${index}.quantity`)}
-                                        styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#FFFFFF', border: 'none', borderRadius: '12px' } }}
-                                    />
-                                </SimpleGrid>
-
-                                {/* PLACEMENT SELECTOR + MOCKUP */}
-                                <Box mb={rem(32)}>
-                                    <Text fw={700} size="sm" mb="sm" style={{ fontFamily: '"Montserrat", sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0B3022' }}>
-                                        Posición del Diseño
-                                    </Text>
-                                    <SimpleGrid cols={{ base: 2, sm: 4 }} spacing="sm" mb={rem(24)}>
-                                        {PLACEMENTS.map(p => (
-                                            <Box
-                                                key={p.value}
-                                                onClick={() => form.setFieldValue(`items.${index}.placement`, p.value)}
-                                                style={{
-                                                    border: form.values.items[index].placement === p.value ? '2px solid #D4AF37' : '2px solid rgba(11,48,34,0.1)',
-                                                    borderRadius: '16px',
-                                                    padding: '14px 10px',
-                                                    textAlign: 'center',
-                                                    cursor: 'pointer',
-                                                    background: form.values.items[index].placement === p.value ? 'rgba(212,175,55,0.08)' : '#F9F9F4',
-                                                    transition: 'all 0.2s ease',
-                                                    userSelect: 'none',
-                                                }}
-                                            >
-                                                <Text size="xl" mb={4}>{p.emoji}</Text>
-                                                <Text fw={800} size="sm" c={form.values.items[index].placement === p.value ? '#0B3022' : '#555'} style={{ fontFamily: '"Montserrat", sans-serif', lineHeight: 1.2 }}>{p.label}</Text>
-                                                <Text size="10px" c="dimmed" mt={2} style={{ lineHeight: 1.3 }}>{p.desc}</Text>
-                                            </Box>
-                                        ))}
+                                <Box mb={rem(40)}>
+                                    <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl" mb="xl">
+                                        <Select
+                                            label="Género"
+                                            size="md"
+                                            data={['Caballero', 'Dama']}
+                                            {...form.getInputProps(`items.${index}.gender`)}
+                                            styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#F9F9F4', border: 'none', borderRadius: '12px' } }}
+                                        />
+                                        <Select
+                                            label="Talla Base"
+                                            size="md"
+                                            data={['S', 'M', 'L']}
+                                            {...form.getInputProps(`items.${index}.size`)}
+                                            styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '8px' }, input: { backgroundColor: '#F9F9F4', border: 'none', borderRadius: '12px' } }}
+                                        />
                                     </SimpleGrid>
 
-                                    {/* SVG Mockup */}
-                                    <Box p={rem(24)} bg="#111" style={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                                        <Text size="xs" fw={700} c="rgba(255,255,255,0.4)" style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}>Vista Previa del Diseño</Text>
-                                        <TShirtMockup placement={form.values.items[index].placement || 'frontal'} />
-                                        <Text size="xs" c="rgba(255,255,255,0.3)" mt={4}>
-                                            {PLACEMENTS.find(p => p.value === form.values.items[index].placement)?.desc}
-                                        </Text>
-                                    </Box>
-                                </Box>
-
-                                {/* IMAGE UPLOAD AREA */}
-                                <Box bg="#F9F9F4" p={rem(28)} style={{ borderRadius: '20px' }}>
-                                    <Text fw={700} size="sm" mb="md" style={{ fontFamily: '"Montserrat", sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0B3022' }}>
-                                        {form.values.items[index].placement === 'doble' ? 'Tus Diseños (2 archivos)' : 'Tu Diseño de Referencia'}
-                                    </Text>
-                                    <SimpleGrid cols={{ base: 1, sm: form.values.items[index].placement === 'doble' ? 2 : (item.image ? 2 : 1) }} spacing="xl">
-                                        {/* PRIMARY IMAGE */}
-                                        <Box>
-                                            <Text size="xs" fw={700} c="dimmed" mb={8} style={{ letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                                                {form.values.items[index].placement === 'doble' ? '① Pocket (frontal)' : 'Imagen de Referencia'}
-                                            </Text>
-                                            <FileInput
-                                                placeholder="Sube tu imagen (PNG, JPG, PDF)"
-                                                size="lg"
-                                                accept="image/png,image/jpeg,image/webp,.pdf"
-                                                leftSection={<IconUpload size={20} />}
-                                                {...form.getInputProps(`items.${index}.image`)}
-                                                styles={{
-                                                    input: { backgroundColor: '#FFFFFF', border: '2px dashed rgba(11,48,34,0.15)', borderRadius: '14px', cursor: 'pointer', height: '70px' }
-                                                }}
-                                            />
-                                            {item.image && item.image.type?.startsWith('image/') && (
-                                                <Box mt={12} style={{ height: '160px', backgroundColor: '#F4F4E8', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <Image src={URL.createObjectURL(item.image as File)} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                                                </Box>
-                                            )}
+                                    <Group justify="space-between" mb="md">
+                                        <Text fw={700} size="sm" c="dimmed" style={{ letterSpacing: '0.05em' }}>CANTIDAD: {item.quantity}</Text>
+                                        <Box style={{ width: 120 }}>
+                                            <NumberInput min={1} {...form.getInputProps(`items.${index}.quantity`)} size="sm" radius="md" />
                                         </Box>
+                                    </Group>
 
-                                        {/* BACK IMAGE — only for 'doble' */}
-                                        {form.values.items[index].placement === 'doble' && (
-                                            <Box>
-                                                <Text size="xs" fw={700} c="dimmed" mb={8} style={{ letterSpacing: '0.06em', textTransform: 'uppercase' }}>② Espalda</Text>
-                                                <FileInput
-                                                    placeholder="Sube tu diseño de espalda"
-                                                    size="lg"
-                                                    accept="image/png,image/jpeg,image/webp,.pdf"
-                                                    leftSection={<IconUpload size={20} />}
-                                                    {...form.getInputProps(`items.${index}.image_back`)}
-                                                    styles={{
-                                                        input: { backgroundColor: '#FFFFFF', border: '2px dashed rgba(212,175,55,0.4)', borderRadius: '14px', cursor: 'pointer', height: '70px' }
-                                                    }}
-                                                />
-                                                {form.values.items[index].image_back && (form.values.items[index].image_back as File)?.type?.startsWith('image/') && (
-                                                    <Box mt={12} style={{ height: '160px', backgroundColor: '#F4F4E8', borderRadius: '12px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                        <Image src={URL.createObjectURL(form.values.items[index].image_back as File)} alt="Back Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                                                    </Box>
-                                                )}
-                                            </Box>
+                                    {/* INTERACTIVE DESIGN STUDIO */}
+                                    <Box mt="xl">
+                                        <DesignStudio 
+                                            gender={item.gender as 'Caballero' | 'Dama'}
+                                            crmApiUrl={CRM_API_URL}
+                                            onSave={(data) => {
+                                                form.setFieldValue(`items.${index}.design_data`, data);
+                                                // Update style and color from studio selection
+                                                form.setFieldValue(`items.${index}.style`, data.product.name);
+                                            }} 
+                                        />
+                                        {form.errors[`items.${index}.design_data`] && (
+                                            <Text c="red" size="xs" mt="sm">{form.errors[`items.${index}.design_data`] as string}</Text>
                                         )}
-
-                                        {/* Preview for single image */}
-                                        {form.values.items[index].placement !== 'doble' && item.image && (
-                                            <Box />
-                                        )}
-                                    </SimpleGrid>
+                                    </Box>
                                 </Box>
                             </Card>
                         </Collapse>
