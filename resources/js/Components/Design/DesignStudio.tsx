@@ -54,12 +54,12 @@ const PRODUCTS: ProductType[] = [
         basePrice: 35,
         assets: {
             Caballero: {
-                front: '/images/custom_design_builder/franela_blanca_sin_fondo.png', // Temporary placeholder for hoodie
-                back: '/images/custom_design_builder/franela_blanca_sin_fondo_back.png'
+                front: '/images/custom_design_builder/hoodie_sin_fondo_front.png',
+                back: '/images/custom_design_builder/hoodie_sin_fondo_back.png'
             },
             Dama: {
-                front: '/images/custom_design_builder/franela_blanca_sin_fondo.png',
-                back: '/images/custom_design_builder/franela_blanca_sin_fondo_back.png'
+                front: '/images/custom_design_builder/hoodie_sin_fondo_front.png',
+                back: '/images/custom_design_builder/hoodie_sin_fondo_back.png'
             }
         }
     },
@@ -116,6 +116,7 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, onSave, crmA
     const [activeTab, setActiveTab] = useState<TabType | null>('text');
     const [zoom, setZoom] = useState(100);
     const [studioScale, setStudioScale] = useState(1);
+    const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const onSaveRef = useRef(onSave);
@@ -209,6 +210,10 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, onSave, crmA
                         back: updateList(prev.back)
                     };
                 });
+                setUploadedImages(prev => {
+                    const filtered = prev.filter(u => u !== tempUrl);
+                    return Array.from(new Set([...filtered, response.data.url]));
+                });
             }
         } catch (err) {
             console.error('Error uploading design asset:', err);
@@ -217,6 +222,7 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, onSave, crmA
     };
 
     const addImage = (url: string) => {
+        setUploadedImages(prev => Array.from(new Set([...prev, url])));
         const newEl: DesignElement = {
             id: Math.random().toString(),
             type: 'image',
@@ -753,6 +759,31 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, onSave, crmA
                                     Añadir Texto
                                 </Button>
                                 
+                                {selectedElement?.type !== 'text' && elements.some(el => el.type === 'text') && (
+                                    <Box mt="xs">
+                                        <Text size="xs" fw={700} c="#0B3022" mb="sm">TEXTOS EN EL DISEÑO</Text>
+                                        <Stack gap="xs">
+                                            {elements.filter(el => el.type === 'text').map(el => (
+                                                <Paper 
+                                                    key={el.id} 
+                                                    withBorder 
+                                                    p="sm" 
+                                                    radius="md" 
+                                                    style={{ cursor: 'pointer', transition: 'all 0.2s', backgroundColor: '#F8F9FA' }}
+                                                    onClick={() => setSelectedId(el.id)}
+                                                    onMouseEnter={(e) => e.currentTarget.style.borderColor = '#0B3022'}
+                                                    onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'}
+                                                >
+                                                    <Group justify="space-between">
+                                                        <Text size="sm" fw={600} truncate style={{ maxWidth: 220 }}>{el.content}</Text>
+                                                        <IconTypography size={16} color="gray" />
+                                                    </Group>
+                                                </Paper>
+                                            ))}
+                                        </Stack>
+                                    </Box>
+                                )}
+
                                 {selectedElement?.type === 'text' && (
                                     <Stack gap="md">
                                         <Box>
@@ -823,6 +854,10 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, onSave, crmA
                                         </Box>
 
                                         <Box mt="sm">
+                                            <Button variant="outline" color="#0B3022" fullWidth leftSection={<IconArrowsSort size={16} />} onClick={() => updateElement(selectedId!, { width: 500, height: 100, rotation: 0, fontSize: 40, letterSpacing: 2 })} radius="md" mb="lg">
+                                                Poner Default
+                                            </Button>
+
                                             <Text size="xs" fw={700} c="#0B3022" mb="xs">ORGANIZAR</Text>
                                             <Group grow gap="xs">
                                                 <Tooltip label="Atrás"><ActionIcon variant="light" color="gray" size="lg" onClick={() => moveZ('back')}><IconArrowBackUp size={20} /></ActionIcon></Tooltip>
@@ -868,8 +903,34 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, onSave, crmA
                                     )}
                                 </FileButton>
 
+                                {uploadedImages.length > 0 && (
+                                    <Box mt="sm">
+                                        <Text size="xs" fw={700} c="#0B3022" mb="sm">GALERÍA DE SUBIDAS</Text>
+                                        <SimpleGrid cols={3} spacing="xs">
+                                            {uploadedImages.map((url, idx) => (
+                                                <Paper 
+                                                    key={idx} 
+                                                    withBorder 
+                                                    p={6} 
+                                                    radius="md" 
+                                                    style={{ cursor: 'pointer', transition: 'border-color 0.2s ease', height: 80 }}
+                                                    onClick={() => addImage(url)}
+                                                    onMouseEnter={(e) => e.currentTarget.style.borderColor = '#0B3022'}
+                                                    onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'}
+                                                >
+                                                    <img src={url} alt="Uploaded" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                                </Paper>
+                                            ))}
+                                        </SimpleGrid>
+                                    </Box>
+                                )}
+
                                 {selectedElement?.type === 'image' && (
-                                    <Stack gap="md">
+                                    <Stack gap="md" mt="sm">
+                                        <Button variant="outline" color="#0B3022" leftSection={<IconArrowsSort size={16} />} onClick={() => updateElement(selectedId!, { width: 200, height: 200, rotation: 0 })} radius="md">
+                                            Poner Default
+                                        </Button>
+
                                         <Text size="xs" fw={700} c="#0B3022" mb="xs">ORGANIZAR</Text>
                                         <Group grow gap="xs">
                                             <Tooltip label="Atrás"><ActionIcon variant="light" color="gray" size="lg" onClick={() => moveZ('back')}><IconArrowBackUp size={20} /></ActionIcon></Tooltip>
