@@ -672,28 +672,6 @@ export default function BetaShow({ id }: { id: string }) {
                             {!isTouchZooming && (
                                 <Text size="xs" c="dimmed" ta="center" mt="-md" style={{ fontFamily: 'Montserrat, sans-serif' }}>Manten presionado para ampliar</Text>
                             )}
-
-                            {/* PROMO VIDEO (MOBILE) */}
-                            {product.video_url && !isTouchZooming && (
-                                <Box 
-                                    onClick={openVideo} 
-                                    style={{ 
-                                        width: '100%', 
-                                        maxWidth: '280px', 
-                                        borderRadius: '24px', 
-                                        overflow: 'hidden', 
-                                        position: 'relative', 
-                                        boxShadow: '0 8px 32px rgba(0,0,0,0.1)', 
-                                        cursor: 'pointer',
-                                        margin: '0 auto' 
-                                    }}
-                                >
-                                    <video crossOrigin="anonymous" src={getImageUrl(product.video_url)} autoPlay loop muted playsInline style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
-                                    <ActionIcon variant="white" radius="xl" size={40} style={{ position: 'absolute', bottom: '12px', right: '12px', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(4px)' }}>
-                                        <IconPlayerPlay size={16} color="#0B3022" style={{ marginLeft: '4px' }} />
-                                    </ActionIcon>
-                                </Box>
-                            )}
                         </Box>
                         <Group justify="center" gap="xs">
                             {GARMENT_COLORS.filter(c => {
@@ -835,6 +813,37 @@ export default function BetaShow({ id }: { id: string }) {
 
                             <ScrollArea w="100%" type="never" offsetScrollbars={false}>
                                 <Group gap="md" wrap="nowrap" px={{ base: 'md', md: 'xl' }} pb="xl">
+                                    {/* PROMO VIDEO ITEM (MOBILE ONLY Leading Item) */}
+                                    {product.video_url && (
+                                        <Box
+                                            onClick={openVideo}
+                                            style={{
+                                                width: window.innerWidth < 768 ? '260px' : '300px',
+                                                height: window.innerWidth < 768 ? '350px' : '400px',
+                                                flexShrink: 0,
+                                                borderRadius: '24px',
+                                                overflow: 'hidden',
+                                                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                                                cursor: 'pointer',
+                                                backgroundColor: '#000',
+                                                position: 'relative'
+                                            }}
+                                        >
+                                            <video 
+                                                crossOrigin="anonymous" 
+                                                src={getImageUrl(product.video_url)} 
+                                                autoPlay 
+                                                loop 
+                                                muted 
+                                                playsInline 
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} 
+                                            />
+                                            <ActionIcon variant="white" radius="xl" size={48} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(4px)' }}>
+                                                <IconPlayerPlay size={20} color="#0B3022" style={{ marginLeft: '4px' }} />
+                                            </ActionIcon>
+                                        </Box>
+                                    )}
+
                                     {product.images.map((img: string, i: number) => (
                                         <Box
                                             key={i}
