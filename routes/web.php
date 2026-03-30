@@ -200,19 +200,27 @@ Route::get('/api/proxy-image', function (Illuminate\Http\Request $request) {
         $status = $streamResponse->status();
         $headers = [
             'Content-Type' => $streamResponse->header('Content-Type'),
-            'Cache-Control' => 'public, max-age=3600',
-            'Accept-Ranges' => 'bytes', // Essential for video seeking
+            'Cache-Control' => 'no-cache, private', // Better for proxied streams
+            'X-Accel-Buffering' => 'no', // DIRECTIVE TO NGINX: Do NOT buffer this stream
+            'Accept-Ranges' => 'bytes',
         ];
 
         if ($streamResponse->header('Content-Range')) {
             $headers['Content-Range'] = $streamResponse->header('Content-Range');
         }
 
+        // Only forward Content-Length if it's a fixed response (not already chunked by upstream)
+        if ($streamResponse->header('Content-Length') && $status === 206) {
+             $headers['Content-Length'] = $streamResponse->header('Content-Length');
+        }
+
         return response()->stream(function () use ($streamResponse) {
+            // Ensure no output buffering is active that could cause memory issues
+            if (ob_get_level()) ob_end_clean();
+            
             $body = $streamResponse->toPsrResponse()->getBody();
             while (!$body->eof()) {
-                echo $body->read(1024 * 32); // 32kb chunks for better throughput
-                if (connection_aborted()) break;
+                echo $body->read(1024 * 64); // 64kb chunks
                 flush();
             }
         }, $status, $headers);
