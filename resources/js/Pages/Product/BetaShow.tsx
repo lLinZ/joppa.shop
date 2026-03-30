@@ -477,18 +477,24 @@ export default function BetaShow({ id }: { id: string }) {
                                         <Text size="xs" fw={700} c="#0B3022" mb="sm" style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>Tono de Prenda</Text>
                                         <Group gap="xs">
                                             {/* 1. Show colors from available_colors if they exist, otherwise show full palette */}
-                                            {(product.available_colors && Array.isArray(product.available_colors) && product.available_colors.length > 0
-                                                ? product.available_colors.map(hex => ({ 
-                                                    value: hex.toUpperCase(), 
-                                                    label: GARMENT_COLORS.find(gc => gc.value.toUpperCase() === hex.toUpperCase())?.label || 'Personalizado' 
-                                                  }))
-                                                : GARMENT_COLORS
-                                            ).map(c => (
+                                            {/* Unified Unique Color Mapping */}
+                                            {Array.from(new Set([
+                                                ...(product.available_colors && Array.isArray(product.available_colors) && product.available_colors.length > 0
+                                                    ? product.available_colors.map(hex => hex.toUpperCase())
+                                                    : GARMENT_COLORS.map(c => c.value.toUpperCase())),
+                                                ...(savedColor ? [savedColor.toUpperCase()] : [])
+                                            ])).map(hex => {
+                                                const preset = GARMENT_COLORS.find(gc => gc.value.toUpperCase() === hex);
+                                                return {
+                                                    value: hex,
+                                                    label: preset ? preset.label : 'Personalizado'
+                                                };
+                                            }).map(c => (
                                                 <Tooltip label={c.label} key={c.value}>
                                                     <UnstyledButton
                                                         onClick={() => setSelectedColor(c.value)}
                                                         style={{
-                                                            width: 32, height: 32, borderRadius: '50%', border: selectedColor.toUpperCase() === c.value.toUpperCase() ? '2px solid #0B3022' : '2px solid transparent',
+                                                            width: 32, height: 32, borderRadius: '50%', border: selectedColor.toUpperCase() === c.value.toLocaleUpperCase() ? '2px solid #0B3022' : '2px solid transparent',
                                                             display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
                                                             padding: 2
                                                         }}
@@ -497,22 +503,6 @@ export default function BetaShow({ id }: { id: string }) {
                                                     </UnstyledButton>
                                                 </Tooltip>
                                             ))}
-
-                                            {/* Show the saved color if it exists and is not in the palette */}
-                                            {savedColor && !GARMENT_COLORS.some(c => c.value.toUpperCase() === savedColor.toUpperCase()) && (
-                                                <Tooltip label="Color de Diseño">
-                                                    <UnstyledButton
-                                                        onClick={() => setSelectedColor(savedColor)}
-                                                        style={{
-                                                            width: 32, height: 32, borderRadius: '50%', border: selectedColor.toUpperCase() === savedColor.toUpperCase() ? '2px solid #0B3022' : '2px solid transparent',
-                                                            display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
-                                                            padding: 2
-                                                        }}
-                                                    >
-                                                        <ColorSwatch color={savedColor} size={24} />
-                                                    </UnstyledButton>
-                                                </Tooltip>
-                                            )}
                                         </Group>
                                     </Box>
 
