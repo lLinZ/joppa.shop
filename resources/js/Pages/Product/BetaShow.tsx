@@ -129,7 +129,7 @@ export default function BetaShow({ id }: { id: string }) {
     }, [product?.available_genders]);
     const COLORS = [
         { name: 'Blanco', hex: '#FFFFFF' },
-        { label: 'Negro', value: '#0D0D0D' },
+        { name: 'Negro', hex: '#1A1A1A' },
         { name: 'Beige', hex: '#D5BEA4' },
         { name: 'Azul Marino', hex: '#1B2735' },
         { name: 'Verde Bosque', hex: '#2D392F' }
@@ -476,10 +476,14 @@ export default function BetaShow({ id }: { id: string }) {
                                     <Box>
                                         <Text size="xs" fw={700} c="#0B3022" mb="sm" style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>Tono de Prenda</Text>
                                         <Group gap="xs">
-                                            {GARMENT_COLORS.filter(c => {
-                                                if (!product.available_colors || !Array.isArray(product.available_colors) || product.available_colors.length === 0) return true;
-                                                return product.available_colors.some(ac => ac.toUpperCase() === c.value.toUpperCase());
-                                            }).map(c => (
+                                            {/* 1. Show colors from available_colors if they exist, otherwise show full palette */}
+                                            {(product.available_colors && Array.isArray(product.available_colors) && product.available_colors.length > 0
+                                                ? product.available_colors.map(hex => ({ 
+                                                    value: hex.toUpperCase(), 
+                                                    label: GARMENT_COLORS.find(gc => gc.value.toUpperCase() === hex.toUpperCase())?.label || 'Personalizado' 
+                                                  }))
+                                                : GARMENT_COLORS
+                                            ).map(c => (
                                                 <Tooltip label={c.label} key={c.value}>
                                                     <UnstyledButton
                                                         onClick={() => setSelectedColor(c.value)}
