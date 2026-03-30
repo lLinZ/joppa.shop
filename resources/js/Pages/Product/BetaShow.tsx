@@ -129,7 +129,7 @@ export default function BetaShow({ id }: { id: string }) {
     }, [product?.available_genders]);
     const COLORS = [
         { name: 'Blanco', hex: '#FFFFFF' },
-        { name: 'Negro', hex: '#1A1A1A' },
+        { label: 'Negro', value: '#0D0D0D' },
         { name: 'Beige', hex: '#D5BEA4' },
         { name: 'Azul Marino', hex: '#1B2735' },
         { name: 'Verde Bosque', hex: '#2D392F' }
