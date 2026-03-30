@@ -111,12 +111,26 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 data-preview-version="1.2.0-perfect-sync"
                 style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
             >
-                {/* 1. MOCKUP LAYER */}
+                {/* 1. MOCKUP LAYER (MUST BE 1000x1100 TO MATCH STUDIO) */}
+                <div 
+                    style={{ 
+                        width: '1000px', 
+                        height: '1100px', 
+                        position: 'absolute', 
+                        top: `${60 * mirrorScale}px`, 
+                        left: '50%',
+                        transform: `scale(${mirrorScale})`,
+                        marginLeft: `-${500 * mirrorScale}px`,
+                        transformOrigin: '0 0',
+                        backgroundColor: '#fff', // CRM Studio has white BG
+                        zIndex: 10
+                    }}
+                >
                 {!hideMockup && (
-                    <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+                    <>
                         <img 
                             src={assetUrl} 
-                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'top center' }} 
+                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center center' }} 
                             alt="" 
                         />
                         <div 
@@ -127,11 +141,11 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                                 maskImage: `url(${assetUrl})`,
                                 maskSize: 'contain',
                                 maskRepeat: 'no-repeat',
-                                maskPosition: 'top center',
+                                maskPosition: 'center center',
                                 WebkitMaskImage: `url(${assetUrl})`,
                                 WebkitMaskSize: 'contain',
                                 WebkitMaskRepeat: 'no-repeat',
-                                WebkitMaskPosition: 'top center',
+                                WebkitMaskPosition: 'center center',
                                 mixBlendMode: 'multiply',
                                 opacity: color.toUpperCase() === '#FFFFFF' ? 0 : 0.85 
                             }} 
@@ -144,42 +158,18 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                                 width: '100%', 
                                 height: '100%', 
                                 objectFit: 'contain', 
-                                objectPosition: 'top center',
+                                objectPosition: 'center center',
                                 mixBlendMode: 'multiply',
-                                filter: 'brightness(1.08) contrast(1.08)',
+                                filter: 'brightness(1.1) contrast(1.1)',
                                 opacity: 0.9,
                                 pointerEvents: 'none'
                             }} 
                             alt="" 
                         />
-                    </div>
+                    </>
                 )}
 
-                {/* 2. DESIGN AREA (THE PERFECT MIRROR) */}
-                <div 
-                    style={{
-                        position: 'absolute',
-                        top: 0, 
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        pointerEvents: 'none',
-                        zIndex: 20
-                    }}
-                >
-                    <div 
-                        style={{
-                            width: '1000px',
-                            height: '1100px',
-                            position: 'absolute',
-                            top: `${60 * mirrorScale}px`, // Fixed absolute scaling to match CRM exactly
-                            left: '50%',
-                            transform: `scale(${mirrorScale})`,
-                            marginLeft: `-${500 * mirrorScale}px`,
-                            transformOrigin: '0 0'
-                        }}
-                    >
-
+                    {/* 2. DESIGN AREA (THE PERFECT MIRROR - PART OF THE SAME 1000x1100 BOX) */}
                     {/* RENDER ELEMENTS IN PIXELS (1000px Coordinate System) */}
                     {elements.map((el: any) => (
                         <div
@@ -194,7 +184,8 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                overflow: 'visible'
+                                overflow: 'visible',
+                                zIndex: 100
                             }}
                         >
                             {el.type === 'image' ? (
@@ -220,6 +211,5 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
 });
