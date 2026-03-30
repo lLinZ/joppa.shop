@@ -33,6 +33,7 @@
         "@mantine/notifications": "^8.3.18",
         "@tabler/icons-react": "^3.40.0",
         "framer-motion": "^12.38.0",
+        "html2canvas": "^1.4.1",
         "lucide-react": "^0.577.0",
         "react-rnd": "^10.5.3",
         "zustand": "^5.0.12"

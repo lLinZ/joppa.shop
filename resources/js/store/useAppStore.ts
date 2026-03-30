@@ -17,6 +17,7 @@ export interface CartItem {
     brand?: string;
     size?: string;
     color?: string;
+    gender?: string;
 }
 
 export interface AppStore {
@@ -52,7 +53,7 @@ export const useAppStore = create<AppStore>()(
       toggleCartDrawer: () => set((state) => ({ isCartDrawerOpen: !state.isCartDrawerOpen })),
       
       addToCart: (item) => set((state) => {
-          const cartItemId = item.size ? `${item.id}-${item.size}` : String(item.id);
+          const cartItemId = `${item.id}-${item.size || ''}-${item.color || ''}-${item.gender || ''}`;
           const existing = state.cartItems.find(i => i.id === cartItemId);
           if (existing) {
               return { 
