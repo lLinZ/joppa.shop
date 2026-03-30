@@ -168,8 +168,12 @@ Route::get('/api/proxy-image', function (Illuminate\Http\Request $request) {
             // But if it's the SAME app, it shouldn't have CORS issues.
         }
 
-        // Security: only allow local hosts for now to avoid being an open proxy
-        if (!in_array($urlHost, ['localhost', '127.0.0.1', $currentHost])) {
+        // Security: Allow local hosts and specifically the crm subdomain
+        $crmHost = parse_url(env('VITE_CRM_API_URL'), PHP_URL_HOST);
+        $allowedHosts = ['localhost', '127.0.0.1', $currentHost, 'crm.joppa.shop'];
+        if ($crmHost) $allowedHosts[] = $crmHost;
+
+        if (!in_array($urlHost, $allowedHosts) && !str_ends_with($urlHost, '.joppa.shop')) {
             return response("Forbidden: Host $urlHost not allowed", 403);
         }
 

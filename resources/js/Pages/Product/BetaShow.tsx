@@ -76,6 +76,22 @@ const getImageUrl = (path: string | null) => {
     return absUrl;
 };
 
+const safeJsonParse = (str: any) => {
+    if (!str) return null;
+    if (typeof str !== 'string') return str;
+    try {
+        // Fix for potential leading/trailing whitespace or quotes
+        const cleaned = str.trim();
+        if (cleaned.startsWith('{') || cleaned.startsWith('[')) {
+            return JSON.parse(cleaned);
+        }
+        return null;
+    } catch (e) {
+        console.error("Failed to parse JSON:", e, str);
+        return null;
+    }
+};
+
 export default function BetaShow({ id }: { id: string }) {
     const [opened, { toggle }] = useDisclosure(false);
     const [videoOpened, { open: openVideo, close: closeVideo }] = useDisclosure(false);
@@ -147,20 +163,13 @@ export default function BetaShow({ id }: { id: string }) {
                 setProduct(data.product);
 
                 // Parse design data if present to get initial color
-                if (data.product.product_design) {
-                    try {
-                        let parsed = data.product.product_design;
-                        if (typeof parsed === 'string' && (parsed.startsWith('{') || parsed.startsWith('['))) {
-                            parsed = JSON.parse(parsed);
-                        }
-                        if (parsed && typeof parsed === 'object' && parsed.color) {
-                            setSelectedColor(parsed.color);
-                            // If the color isn't in our standard list, remember it as the "Saved" color
-                            if (!GARMENT_COLORS.some(c => c.value.toUpperCase() === parsed.color.toUpperCase())) {
-                                setSavedColor(parsed.color);
-                            }
-                        }
-                    } catch (e) { }
+                const parsedDesign = safeJsonParse(data.product.product_design);
+                if (parsedDesign && parsedDesign.color) {
+                    setSelectedColor(parsedDesign.color);
+                    // If the color isn't in our standard list, remember it as the "Saved" color
+                    if (!GARMENT_COLORS.some(c => c.value.toUpperCase() === parsedDesign.color.toUpperCase())) {
+                        setSavedColor(parsedDesign.color);
+                    }
                 }
 
                 setLoading(false);
@@ -207,31 +216,21 @@ export default function BetaShow({ id }: { id: string }) {
     // Inject the selected color into the design data for DesignPreview
     const dynamicDesignData = useMemo(() => {
         let baseDesign: any = { elements: { front: [], back: [] } };
-        if (product?.product_design) {
-            try {
-                let parsed = product.product_design;
-                if (typeof parsed === 'string' && (parsed.startsWith('{') || parsed.startsWith('['))) {
-                    parsed = JSON.parse(parsed);
-                }
+        const parsed = safeJsonParse(product?.product_design);
+        if (parsed) {
+            baseDesign = parsed;
 
-                if (parsed && typeof parsed === 'object') {
-                    baseDesign = parsed;
+            // Recursively fix image URLs in elements to use proxy
+            const fixElements = (els: any[]) => (els || []).map(el => {
+                if (el.type === 'image') {
+                    return { ...el, content: getImageUrl(el.content) };
                 }
+                return el;
+            });
 
-                // Recursively fix image URLs in elements to use proxy
-                const fixElements = (els: any[]) => (els || []).map(el => {
-                    if (el.type === 'image') {
-                        return { ...el, content: getImageUrl(el.content) };
-                    }
-                    return el;
-                });
-
-                if (baseDesign.elements) {
-                    baseDesign.elements.front = fixElements(baseDesign.elements.front);
-                    baseDesign.elements.back = fixElements(baseDesign.elements.back);
-                }
-            } catch (e) {
-                console.error("Error parsing product_design", e);
+            if (baseDesign.elements) {
+                baseDesign.elements.front = fixElements(baseDesign.elements.front);
+                baseDesign.elements.back = fixElements(baseDesign.elements.back);
             }
         }
         return { ...baseDesign, color: selectedColor };
