@@ -156,18 +156,17 @@ Route::get('/api/proxy-image', function (Illuminate\Http\Request $request) {
         $url = $request->query('url');
         if (!$url) return response('Missing URL', 400);
 
+        // Robust URL handling: ensure it has the CRM base if it's a relative storage path
+        if (str_starts_with($url, 'storage/')) {
+            $base = env('VITE_CRM_API_URL');
+            $base = preg_replace('/\/api\/?$/', '', $base);
+            if ($base) $url = $base . '/' . $url;
+        }
+
         $parsedUrl = parse_url($url);
         $urlHost = $parsedUrl['host'] ?? '';
         $currentHost = parse_url(config('app.url'), PHP_URL_HOST) ?? 'localhost';
         
-        // If the URL is already on the current host, redirect or return the content directly
-        // to avoid recursive/deadlock proxying in single-threaded environments
-        if (in_array($urlHost, [$currentHost, 'localhost', '127.0.0.1'])) {
-            // If it's the same port as this app, we should probably just return it or let the client fetch it
-            // However, the client uses the proxy precisely because it might have CORS/403 issues.
-            // But if it's the SAME app, it shouldn't have CORS issues.
-        }
-
         // Security: Allow local hosts and specifically the crm subdomain
         $crmHost = parse_url(env('VITE_CRM_API_URL'), PHP_URL_HOST);
         $allowedHosts = ['localhost', '127.0.0.1', $currentHost, 'crm.joppa.shop'];
@@ -177,31 +176,49 @@ Route::get('/api/proxy-image', function (Illuminate\Http\Request $request) {
             return response("Forbidden: Host $urlHost not allowed", 403);
         }
 
-        // Use streaming to avoid memory issues with large files (videos/high-res)
-        $streamResponse = Http::timeout(60)->withOptions(['stream' => true])->get($url);
+        // Support for video streaming and partial content
+        $streamOptions = ['stream' => true];
+        $requestHeaders = [];
+        if (request()->header('Range')) {
+            $requestHeaders['Range'] = request()->header('Range');
+        }
+
+        $streamResponse = Http::timeout(60)->withHeaders($requestHeaders)->withOptions($streamOptions)->get($url);
+        
+        if ($streamResponse->failed()) {
+            // Fallback for cases where it fails due to range (some servers don't like it)
+            if (isset($requestHeaders['Range'])) {
+                $streamResponse = Http::timeout(60)->withOptions($streamOptions)->get($url);
+            }
+        }
         
         if ($streamResponse->failed()) {
             \Illuminate\Support\Facades\Log::error("Proxy failed for $url: " . $streamResponse->status());
             return response("Target returned " . $streamResponse->status(), 502);
         }
 
+        $status = $streamResponse->status();
         $headers = [
             'Content-Type' => $streamResponse->header('Content-Type'),
             'Cache-Control' => 'public, max-age=3600',
+            'Accept-Ranges' => 'bytes', // Essential for video seeking
         ];
 
-        // Forward Content-Length if available to help the browser correctly track progress
         if ($streamResponse->header('Content-Length')) {
             $headers['Content-Length'] = $streamResponse->header('Content-Length');
+        }
+        if ($streamResponse->header('Content-Range')) {
+            $headers['Content-Range'] = $streamResponse->header('Content-Range');
         }
 
         return response()->stream(function () use ($streamResponse) {
             $body = $streamResponse->toPsrResponse()->getBody();
             while (!$body->eof()) {
-                echo $body->read(1024 * 8); // Stream in 8kb chunks
+                echo $body->read(1024 * 32); // 32kb chunks for better throughput
+                if (connection_aborted()) break;
                 flush();
             }
-        }, 200, $headers);
+        }, $status, $headers);
     } catch (\Exception $e) {
         \Illuminate\Support\Facades\Log::error("Proxy Exception for $url: " . $e->getMessage());
         return response("Internal Server Error: " . $e->getMessage(), 500);

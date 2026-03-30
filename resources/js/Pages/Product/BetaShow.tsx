@@ -216,23 +216,32 @@ export default function BetaShow({ id }: { id: string }) {
     // Inject the selected color into the design data for DesignPreview
     const dynamicDesignData = useMemo(() => {
         let baseDesign: any = { elements: { front: [], back: [] } };
-        const parsed = safeJsonParse(product?.product_design);
-        if (parsed) {
-            baseDesign = parsed;
+            try {
+                const parsed = safeJsonParse(product?.product_design);
+                if (parsed) {
+                    baseDesign = parsed;
 
-            // Recursively fix image URLs in elements to use proxy
-            const fixElements = (els: any[]) => (els || []).map(el => {
-                if (el.type === 'image') {
-                    return { ...el, content: getImageUrl(el.content) };
+                    // Recursively fix image URLs in elements to use absolute CRM URLs
+                    const fixElements = (els: any[]) => (els || []).map(el => {
+                        if (el.type === 'image') {
+                            let content = el.content;
+                            if (content.startsWith('/') && !content.startsWith('//')) {
+                                const base = CRM_BASE.replace(/\/api$/, '').replace(/\/api\/$/, '');
+                                content = `${base}${content}`;
+                            }
+                            return { ...el, content: getImageUrl(content) };
+                        }
+                        return el;
+                    });
+
+                    if (baseDesign.elements) {
+                        baseDesign.elements.front = fixElements(baseDesign.elements.front);
+                        baseDesign.elements.back = fixElements(baseDesign.elements.back);
+                    }
                 }
-                return el;
-            });
-
-            if (baseDesign.elements) {
-                baseDesign.elements.front = fixElements(baseDesign.elements.front);
-                baseDesign.elements.back = fixElements(baseDesign.elements.back);
+            } catch (e) {
+                console.error("Error parsing design data", e);
             }
-        }
         return { ...baseDesign, color: selectedColor };
     }, [product?.product_design, selectedColor]);
 
@@ -431,8 +440,7 @@ export default function BetaShow({ id }: { id: string }) {
                                                 transition: isZooming ? 'none' : 'transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
                                                 pointerEvents: 'none'
                                             }}
-                                        >
-                                            <DesignPreview
+                                        >                                             <DesignPreview
                                                 design={dynamicDesignData}
                                                 view={activeView}
                                                 hideMockup={true}

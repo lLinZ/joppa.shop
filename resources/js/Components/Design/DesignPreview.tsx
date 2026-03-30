@@ -159,17 +159,26 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 <div 
                     style={{
                         position: 'absolute',
-                        top: 60, // Match Studio top padding
-                        left: '50%',
-                        width: '1000px',
-                        height: '1100px',
-                        transform: `scale(${mirrorScale})`,
-                        marginLeft: `-${500 * mirrorScale}px`,
-                        transformOrigin: '0 0',
+                        top: '5.5%', // Slightly adjusted for visual alignment in e-commerce
+                        left: '0',
+                        right: '0',
+                        bottom: '0',
                         pointerEvents: 'none',
                         zIndex: 20
                     }}
                 >
+                    <div 
+                        style={{
+                            width: '1000px',
+                            height: '1100px',
+                            position: 'absolute',
+                            top: 0,
+                            left: '50%',
+                            transform: `scale(${mirrorScale})`,
+                            marginLeft: `-${500 * mirrorScale}px`,
+                            transformOrigin: '0 0'
+                        }}
+                    >
 
                     {/* RENDER ELEMENTS IN PIXELS (1000px Coordinate System) */}
                     {elements.map((el: any) => (
@@ -211,5 +220,6 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 </div>
             </div>
         </div>
-    );
+    </div>
+);
 });
