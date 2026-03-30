@@ -122,7 +122,7 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                         transform: `scale(${mirrorScale})`,
                         marginLeft: `-${500 * mirrorScale}px`,
                         transformOrigin: '0 0',
-                        backgroundColor: '#fff', // CRM Studio has white BG
+                        backgroundColor: 'transparent', 
                         zIndex: 10
                     }}
                 >
@@ -130,7 +130,7 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                     <>
                         <img 
                             src={assetUrl} 
-                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center center' }} 
+                            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'top center' }} 
                             alt="" 
                         />
                         <div 
@@ -141,11 +141,11 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                                 maskImage: `url(${assetUrl})`,
                                 maskSize: 'contain',
                                 maskRepeat: 'no-repeat',
-                                maskPosition: 'center center',
+                                maskPosition: 'top center',
                                 WebkitMaskImage: `url(${assetUrl})`,
                                 WebkitMaskSize: 'contain',
                                 WebkitMaskRepeat: 'no-repeat',
-                                WebkitMaskPosition: 'center center',
+                                WebkitMaskPosition: 'top center',
                                 mixBlendMode: 'multiply',
                                 opacity: color.toUpperCase() === '#FFFFFF' ? 0 : 0.85 
                             }} 
@@ -158,7 +158,7 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                                 width: '100%', 
                                 height: '100%', 
                                 objectFit: 'contain', 
-                                objectPosition: 'center center',
+                                objectPosition: 'top center',
                                 mixBlendMode: 'multiply',
                                 filter: 'brightness(1.1) contrast(1.1)',
                                 opacity: 0.9,
