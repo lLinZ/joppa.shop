@@ -177,16 +177,31 @@ Route::get('/api/proxy-image', function (Illuminate\Http\Request $request) {
             return response("Forbidden: Host $urlHost not allowed", 403);
         }
 
-        $imgResponse = Http::timeout(10)->get($url);
+        // Use streaming to avoid memory issues with large files (videos/high-res)
+        $streamResponse = Http::timeout(60)->withOptions(['stream' => true])->get($url);
         
-        if ($imgResponse->failed()) {
-            \Illuminate\Support\Facades\Log::error("Proxy failed for $url: " . $imgResponse->status());
-            return response("Target returned " . $imgResponse->status(), 502);
+        if ($streamResponse->failed()) {
+            \Illuminate\Support\Facades\Log::error("Proxy failed for $url: " . $streamResponse->status());
+            return response("Target returned " . $streamResponse->status(), 502);
         }
 
-        return response($imgResponse->body())
-            ->header('Content-Type', $imgResponse->header('Content-Type'))
-            ->header('Cache-Control', 'public, max-age=3600');
+        $headers = [
+            'Content-Type' => $streamResponse->header('Content-Type'),
+            'Cache-Control' => 'public, max-age=3600',
+        ];
+
+        // Forward Content-Length if available to help the browser correctly track progress
+        if ($streamResponse->header('Content-Length')) {
+            $headers['Content-Length'] = $streamResponse->header('Content-Length');
+        }
+
+        return response()->stream(function () use ($streamResponse) {
+            $body = $streamResponse->toPsrResponse()->getBody();
+            while (!$body->eof()) {
+                echo $body->read(1024 * 8); // Stream in 8kb chunks
+                flush();
+            }
+        }, 200, $headers);
     } catch (\Exception $e) {
         \Illuminate\Support\Facades\Log::error("Proxy Exception for $url: " . $e->getMessage());
         return response("Internal Server Error: " . $e->getMessage(), 500);
