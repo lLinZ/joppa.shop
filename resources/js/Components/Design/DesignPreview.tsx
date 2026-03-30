@@ -90,14 +90,16 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 borderRadius: lightBg ? '0' : '16px',
                 overflow: 'hidden',
                 boxShadow: (lightBg || hideMockup) ? 'none' : '0 25px 50px rgba(0,0,0,0.5)',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.4s ease',
                 width: isExporting && containerWidth > 0 ? `${containerWidth}px` : '100%',
+                maxWidth: '600px', // Prevent over-scaling on ultra-wide screens
+                margin: '0 auto',
                 aspectRatio: '1000 / 1220',
                 backgroundColor: (hideMockup || lightBg) ? 'transparent' : '#09090b',
                 border: (hideMockup || lightBg) ? 'none' : '1px solid rgba(255,255,255,0.05)',
             }}
         >
-            {/* INJECT FONTS FOR PERFECT RENDERING */}
+            {/* INJECT FONTS FOR PERFECT RENDERING IN CRM */}
             <style dangerouslySetInnerHTML={{ __html: `
                 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Caveat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
             `}} />
@@ -106,11 +108,10 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 ref={(node) => {
                     (localRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
                 }}
-                data-preview-version="1.1.0-top-mirror"
-                data-v="sync-2026-03-29"
+                data-preview-version="1.2.0-perfect-sync"
                 style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
             >
-                {/* 1. MOCKUP LAYER (SCALED BY CONTAINER) */}
+                {/* 1. MOCKUP LAYER */}
                 {!hideMockup && (
                     <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
                         <img 
@@ -155,7 +156,6 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 )}
 
                 {/* 2. DESIGN AREA (THE PERFECT MIRROR) */}
-                {/* Fixed internal 1000px CANVAS scaled and centered to match Studio exactly */}
                 <div 
                     style={{
                         position: 'absolute',
@@ -172,7 +172,7 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                             width: '1000px',
                             height: '1100px',
                             position: 'absolute',
-                            top: `${(60 / 1220) * 100}%`, // Match the 60px Studio offset exactly in percentages
+                            top: `${60 * mirrorScale}px`, // Fixed absolute scaling to match CRM exactly
                             left: '50%',
                             transform: `scale(${mirrorScale})`,
                             marginLeft: `-${500 * mirrorScale}px`,
