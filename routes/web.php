@@ -204,9 +204,6 @@ Route::get('/api/proxy-image', function (Illuminate\Http\Request $request) {
             'Accept-Ranges' => 'bytes', // Essential for video seeking
         ];
 
-        if ($streamResponse->header('Content-Length')) {
-            $headers['Content-Length'] = $streamResponse->header('Content-Length');
-        }
         if ($streamResponse->header('Content-Range')) {
             $headers['Content-Range'] = $streamResponse->header('Content-Range');
         }
