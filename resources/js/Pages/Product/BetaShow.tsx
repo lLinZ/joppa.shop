@@ -806,8 +806,20 @@ export default function BetaShow({ id }: { id: string }) {
                 {product.images && product.images.length > 0 && (
                     <Box w="100%" px={0} style={{ maxWidth: '1600px', margin: '0 auto' }}>
                         <Box py={{ base: '3rem', md: '5rem' }} style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-                            <Box px={{ base: 'md', md: 'xl' }}>
-                                <Text size="1.2rem" fw={700} mb="xs" style={{ fontFamily: 'Montserrat, sans-serif', textTransform: 'uppercase', letterSpacing: '0.05em' }}>VISTO EN MODELO</Text>
+                            <Box px={{ base: 'md', md: 'xl' }} ta="center">
+                                <Text 
+                                    size="1.5rem" 
+                                    fw={700} 
+                                    mb="xs" 
+                                    c="#0B3022"
+                                    style={{ 
+                                        fontFamily: 'Montserrat, sans-serif', 
+                                        textTransform: 'uppercase', 
+                                        letterSpacing: '0.1em' 
+                                    }}
+                                >
+                                    Galería de Imágenes
+                                </Text>
                                 <Text size="xs" c="dimmed" mb="xl" display={{ base: 'block', md: 'none' }} style={{ fontFamily: 'Montserrat, sans-serif' }}>Desliza para ver más →</Text>
                             </Box>
 
@@ -816,6 +828,7 @@ export default function BetaShow({ id }: { id: string }) {
                                     {/* PROMO VIDEO ITEM (MOBILE ONLY Leading Item) */}
                                     {product.video_url && (
                                         <Box
+                                            display={{ base: 'block', lg: 'none' }} // Hide on Desktop as requested
                                             onClick={openVideo}
                                             style={{
                                                 width: window.innerWidth < 768 ? '260px' : '300px',
