@@ -162,13 +162,18 @@ export default function BetaShow({ id }: { id: string }) {
             .then(data => {
                 setProduct(data.product);
 
-                // Parse design data if present to get initial color
+                // Parse design data if present to get initial color and view
                 const parsedDesign = safeJsonParse(data.product.product_design);
-                if (parsedDesign && parsedDesign.color) {
-                    setSelectedColor(parsedDesign.color);
-                    // If the color isn't in our standard list, remember it as the "Saved" color
-                    if (!GARMENT_COLORS.some(c => c.value.toUpperCase() === parsedDesign.color.toUpperCase())) {
-                        setSavedColor(parsedDesign.color);
+                if (parsedDesign) {
+                    if (parsedDesign.color) {
+                        setSelectedColor(parsedDesign.color);
+                        // If the color isn't in our standard list, remember it as the "Saved" color
+                        if (!GARMENT_COLORS.some(c => c.value.toUpperCase() === parsedDesign.color.toUpperCase())) {
+                            setSavedColor(parsedDesign.color);
+                        }
+                    }
+                    if (parsedDesign.view) {
+                        setActiveView(parsedDesign.view);
                     }
                 }
 
