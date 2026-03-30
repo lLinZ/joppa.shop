@@ -672,6 +672,28 @@ export default function BetaShow({ id }: { id: string }) {
                             {!isTouchZooming && (
                                 <Text size="xs" c="dimmed" ta="center" mt="-md" style={{ fontFamily: 'Montserrat, sans-serif' }}>Manten presionado para ampliar</Text>
                             )}
+
+                            {/* PROMO VIDEO (MOBILE) */}
+                            {product.video_url && !isTouchZooming && (
+                                <Box 
+                                    onClick={openVideo} 
+                                    style={{ 
+                                        width: '100%', 
+                                        maxWidth: '280px', 
+                                        borderRadius: '24px', 
+                                        overflow: 'hidden', 
+                                        position: 'relative', 
+                                        boxShadow: '0 8px 32px rgba(0,0,0,0.1)', 
+                                        cursor: 'pointer',
+                                        margin: '0 auto' 
+                                    }}
+                                >
+                                    <video crossOrigin="anonymous" src={getImageUrl(product.video_url)} autoPlay loop muted playsInline style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
+                                    <ActionIcon variant="white" radius="xl" size={40} style={{ position: 'absolute', bottom: '12px', right: '12px', backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(4px)' }}>
+                                        <IconPlayerPlay size={16} color="#0B3022" style={{ marginLeft: '4px' }} />
+                                    </ActionIcon>
+                                </Box>
+                            )}
                         </Box>
                         <Group justify="center" gap="xs">
                             {GARMENT_COLORS.filter(c => {

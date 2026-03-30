@@ -159,10 +159,10 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                 <div 
                     style={{
                         position: 'absolute',
-                        top: '5.5%', // Slightly adjusted for visual alignment in e-commerce
-                        left: '0',
-                        right: '0',
-                        bottom: '0',
+                        top: 0, 
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
                         pointerEvents: 'none',
                         zIndex: 20
                     }}
@@ -172,7 +172,7 @@ export const DesignPreview = React.forwardRef<HTMLDivElement, DesignPreviewProps
                             width: '1000px',
                             height: '1100px',
                             position: 'absolute',
-                            top: 0,
+                            top: `${(60 / 1220) * 100}%`, // Match the 60px Studio offset exactly in percentages
                             left: '50%',
                             transform: `scale(${mirrorScale})`,
                             marginLeft: `-${500 * mirrorScale}px`,
