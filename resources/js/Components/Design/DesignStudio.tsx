@@ -249,6 +249,41 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
         }
     }, [elementsMap, product, color, view, gender, isReady]);
 
+    // --- GHOST DESIGN TRACKING (ABANDONED DESIGNS) ---
+    const [sessionId] = useState(() => {
+        let id = localStorage.getItem('joppa_design_session_v1');
+        if (!id) {
+            id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            localStorage.setItem('joppa_design_session_v1', id);
+        }
+        return id;
+    });
+
+    useEffect(() => {
+        if (!isHydrated.current || !isReady) return;
+        
+        // Solo guardamos el diseño abandonado si al menos metieron un elemento o cambiaron el color por defecto
+        const totalElements = elementsMap.front.length + elementsMap.back.length;
+        if (totalElements === 0) return;
+
+        const pingTimeoutId = setTimeout(() => {
+            const payload = {
+                session_id: sessionId,
+                duration_increment: 5, // Aprox 5 segundos de iteración activa
+                design_data: {
+                    elementsMap: elementsMap,
+                    product: product,
+                    color: color,
+                    view: view,
+                }
+            };
+            const pingUrl = crmApiUrl ? `${crmApiUrl}/abandoned-designs/ping` : 'http://localhost:8000/api/abandoned-designs/ping';
+            axios.post(pingUrl, payload).catch(() => {});
+        }, 5000); // Debounce de 5 segundos
+
+        return () => clearTimeout(pingTimeoutId);
+    }, [elementsMap, product, color, view, gender, isReady, sessionId, crmApiUrl]);
+
     const elements = elementsMap[view];
 
     // Colors and sizes for this specific product + gender combination
