@@ -43,8 +43,15 @@ interface ProductType {
     name: string;
     basePrice: number;
     assets: {
-        Caballero: ProductAssets;
-        Dama: ProductAssets;
+        [gender: string]: ProductAssets;
+    };
+    variants?: {
+        [gender: string]: {
+            enabled: boolean;
+            assets: ProductAssets;
+            colors: { label: string; value: string; enabled?: boolean }[];
+            sizes: string[];
+        };
     };
 }
 
@@ -73,8 +80,25 @@ const DEFAULT_GARMENT_COLORS = [
     { label: 'Verde Bosque', value: '#0B3022' },
 ];
 
-// Exported for backward compatibility — will be updated dynamically
+// Exported for backward compatibility with BetaShow — updated after API fetch
 export let GARMENT_COLORS: { label: string; value: string }[] = DEFAULT_GARMENT_COLORS;
+
+// Helper: convert new nested API products to the legacy ProductType format
+function apiProductToLocal(p: any): ProductType {
+    // Build assets map from variants
+    const assets: Record<string, { front: string; back: string }> = {};
+    for (const [gender, variant] of Object.entries(p.variants ?? {})) {
+        assets[gender] = (variant as any).assets ?? { front: '', back: '' };
+    }
+    return {
+        id: p.id,
+        name: p.name,
+        basePrice: p.basePrice,
+        assets,
+        // store full variants for color/size lookup
+        variants: p.variants,
+    };
+}
 
 const FONTS = [
     { label: 'Montserrat', value: 'Montserrat, sans-serif' },
@@ -131,21 +155,29 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
             .then(data => {
                 if (data) {
                     if (data.products && data.products.length > 0) {
-                        setAvailableProducts(data.products);
-                    }
-                    if (data.colors && data.colors.length > 0) {
-                        const colorList = data.colors.map((c: any) => ({ label: c.label, value: c.value }));
-                        setAvailableColors(colorList);
-                        // Update the exported reference for backward compat
-                        GARMENT_COLORS = colorList;
-                    }
-                    if (data.sizes && data.sizes.length > 0) {
-                        setAvailableSizes(data.sizes);
+                        const mapped = data.products.map(apiProductToLocal);
+                        setAvailableProducts(mapped);
+                        setProduct(mapped[0]);
+                        // Build flat color list from ALL variants for backward compat
+                        const allColors: { label: string; value: string }[] = [];
+                        for (const p of data.products) {
+                            for (const v of Object.values(p.variants ?? {})) {
+                                for (const c of (v as any).colors ?? []) {
+                                    if (!allColors.some(x => x.value.toUpperCase() === c.value.toUpperCase())) {
+                                        allColors.push({ label: c.label, value: c.value });
+                                    }
+                                }
+                            }
+                        }
+                        if (allColors.length > 0) {
+                            setAvailableColors(allColors);
+                            GARMENT_COLORS = allColors;
+                        }
                     }
                 }
                 setConfigLoaded(true);
             })
-            .catch(() => setConfigLoaded(true)); // Fail silently, use defaults
+            .catch(() => setConfigLoaded(true));
     }, [crmApiUrl]);
 
     useEffect(() => {
@@ -218,6 +250,19 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
     }, [elementsMap, product, color, view, gender, isReady]);
 
     const elements = elementsMap[view];
+
+    // Colors and sizes for this specific product + gender combination
+    const variantColors: { label: string; value: string }[] = (() => {
+        const v = (product as any).variants?.[gender];
+        if (v?.colors && v.colors.length > 0) return v.colors;
+        return availableColors;
+    })();
+
+    const variantSizes: string[] = (() => {
+        const v = (product as any).variants?.[gender];
+        if (v?.sizes && v.sizes.length > 0) return v.sizes;
+        return availableSizes;
+    })();
 
     const parentRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -543,9 +588,9 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
                             <Stack gap="lg">
                                 <Select label="PRENDA" data={availableProducts.map(p => ({ label: p.name, value: p.id }))} value={product.id} onChange={(v) => { const found = availableProducts.find(p => p.id === v); if (found) setProduct(found); }} />
                                 <Box>
-                                    <Text size="xs" fw={700} mb={8}>COLOR DE PRENDA</Text>
+                                    <Text size="xs" fw={700} mb={8}>COLOR DE PRENDA ({gender})</Text>
                                     <Group gap="xs" mb="md">
-                                        {availableColors.map(c => (
+                                        {variantColors.map(c => (
                                             <Tooltip label={c.label} key={c.value}>
                                                 <ActionIcon 
                                                     radius="xl" 

@@ -112,16 +112,27 @@ export default function BetaShow({ id }: { id: string }) {
     const [sizeError, setSizeError] = useState(false);
     const [globalColors, setGlobalColors] = useState<{ label: string; value: string }[]>(GARMENT_COLORS);
 
-    // Fetch canonical color list from CRM builder config
+    // Fetch canonical color list from CRM builder config (new nested structure)
     useEffect(() => {
         fetch(`${CRM_BASE}/builder-config`)
             .then(res => res.ok ? res.json() : null)
             .then(data => {
-                if (data?.colors && data.colors.length > 0) {
-                    setGlobalColors(data.colors.map((c: any) => ({ label: c.label, value: c.value })));
+                if (data?.products) {
+                    // Build a flat, de-duplicated color list from all variants
+                    const allColors: { label: string; value: string }[] = [];
+                    for (const p of data.products) {
+                        for (const v of Object.values(p.variants ?? {})) {
+                            for (const c of (v as any).colors ?? []) {
+                                if (!allColors.some(x => x.value.toUpperCase() === c.value.toUpperCase())) {
+                                    allColors.push({ label: c.label, value: c.value });
+                                }
+                            }
+                        }
+                    }
+                    if (allColors.length > 0) setGlobalColors(allColors);
                 }
             })
-            .catch(() => {}); // silent fail, use defaults
+            .catch(() => {});
     }, []);
 
     const SIZES = product?.available_sizes && product.available_sizes.length > 0 

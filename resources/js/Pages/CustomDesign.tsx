@@ -44,18 +44,34 @@ export default function CustomDesign() {
     const [error, setError] = useState<string | null>(null);
     const isMobile = useMediaQuery('(max-width: 992px)');
     const [availableSizes, setAvailableSizes] = useState<string[]>(['S', 'M', 'L', 'XL', '2XL']);
+    const [apiProducts, setApiProducts] = useState<any[]>([]);
 
-    // Fetch builder config for dynamic sizes
+    // Fetch builder config for dynamic sizes and products
     useEffect(() => {
         fetch(`${CRM_API_URL}/builder-config`)
             .then(res => res.ok ? res.json() : null)
             .then(data => {
-                if (data?.sizes && data.sizes.length > 0) {
-                    setAvailableSizes(data.sizes);
+                if (data?.products) setApiProducts(data.products);
+                // Global fallback sizes (all sizes from all variants)
+                if (data?.products) {
+                    const allSizes = new Set<string>();
+                    for (const p of data.products) {
+                        for (const v of Object.values(p.variants ?? {})) {
+                            for (const s of (v as any).sizes ?? []) allSizes.add(s);
+                        }
+                    }
+                    if (allSizes.size > 0) setAvailableSizes([...allSizes]);
                 }
             })
-            .catch(() => {}); // silent fail
+            .catch(() => {});
     }, []);
+
+    // Get sizes for a specific product + gender
+    const getSizesForItem = (style: string, gender: string): string[] => {
+        const prod = apiProducts.find(p => p.name === style);
+        const variant = prod?.variants?.[gender];
+        return variant?.sizes?.length ? variant.sizes : availableSizes;
+    };
 
     const form = useForm({
         initialValues: {
@@ -673,7 +689,7 @@ export default function CustomDesign() {
                                                     <Select
                                                         label="Talla Base"
                                                         size="md"
-                                                        data={availableSizes}
+                                                        data={getSizesForItem(item.style, item.gender)}
                                                         {...form.getInputProps(`items.${index}.size`)}
                                                         styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '4px', fontSize: '12px' }, input: { backgroundColor: '#F9F9F4', border: 'none', borderRadius: '12px' } }}
                                                     />
