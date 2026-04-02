@@ -110,6 +110,19 @@ export default function BetaShow({ id }: { id: string }) {
     const [touchPos, setTouchPos] = useState({ x: 50, y: 50 });
     const [selectedGender, setSelectedGender] = useState<'CABALLERO' | 'DAMA' | string>('CABALLERO');
     const [sizeError, setSizeError] = useState(false);
+    const [globalColors, setGlobalColors] = useState<{ label: string; value: string }[]>(GARMENT_COLORS);
+
+    // Fetch canonical color list from CRM builder config
+    useEffect(() => {
+        fetch(`${CRM_BASE}/builder-config`)
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.colors && data.colors.length > 0) {
+                    setGlobalColors(data.colors.map((c: any) => ({ label: c.label, value: c.value })));
+                }
+            })
+            .catch(() => {}); // silent fail, use defaults
+    }, []);
 
     const SIZES = product?.available_sizes && product.available_sizes.length > 0 
         ? product.available_sizes 
@@ -481,10 +494,10 @@ export default function BetaShow({ id }: { id: string }) {
                                             {Array.from(new Set([
                                                 ...(product.available_colors && Array.isArray(product.available_colors) && product.available_colors.length > 0
                                                     ? product.available_colors.map(hex => hex.toUpperCase())
-                                                    : GARMENT_COLORS.map(c => c.value.toUpperCase())),
+                                                    : globalColors.map(c => c.value.toUpperCase())),
                                                 ...(savedColor ? [savedColor.toUpperCase()] : [])
                                             ])).map(hex => {
-                                                const preset = GARMENT_COLORS.find(gc => gc.value.toUpperCase() === hex);
+                                                const preset = globalColors.find(gc => gc.value.toUpperCase() === hex);
                                                 return {
                                                     value: hex,
                                                     label: preset ? preset.label : 'Personalizado'
@@ -673,7 +686,7 @@ export default function BetaShow({ id }: { id: string }) {
                             )}
                         </Box>
                         <Group justify="center" gap="xs">
-                            {GARMENT_COLORS.filter(c => {
+                            {globalColors.filter(c => {
                                 if (!product.available_colors || !Array.isArray(product.available_colors) || product.available_colors.length === 0) return true;
                                 return product.available_colors.some(ac => ac.toUpperCase() === c.value.toUpperCase());
                             }).map(c => (

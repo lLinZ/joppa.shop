@@ -43,6 +43,19 @@ export default function CustomDesign() {
     const [openedIndices, setOpenedIndices] = useState<number[]>([0]);
     const [error, setError] = useState<string | null>(null);
     const isMobile = useMediaQuery('(max-width: 992px)');
+    const [availableSizes, setAvailableSizes] = useState<string[]>(['S', 'M', 'L', 'XL', '2XL']);
+
+    // Fetch builder config for dynamic sizes
+    useEffect(() => {
+        fetch(`${CRM_API_URL}/builder-config`)
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.sizes && data.sizes.length > 0) {
+                    setAvailableSizes(data.sizes);
+                }
+            })
+            .catch(() => {}); // silent fail
+    }, []);
 
     const form = useForm({
         initialValues: {
@@ -660,7 +673,7 @@ export default function CustomDesign() {
                                                     <Select
                                                         label="Talla Base"
                                                         size="md"
-                                                        data={['S', 'M', 'L', 'XL', '2XL']}
+                                                        data={availableSizes}
                                                         {...form.getInputProps(`items.${index}.size`)}
                                                         styles={{ label: { fontFamily: '"Montserrat", sans-serif', fontWeight: 700, marginBottom: '4px', fontSize: '12px' }, input: { backgroundColor: '#F9F9F4', border: 'none', borderRadius: '12px' } }}
                                                     />

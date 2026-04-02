@@ -48,22 +48,8 @@ interface ProductType {
     };
 }
 
-const PRODUCTS: ProductType[] = [
-    {
-        id: 'hoodie',
-        name: 'Hoodie Premium',
-        basePrice: 35,
-        assets: {
-            Caballero: {
-                front: '/images/custom_design_builder/hoodie_sin_fondo_front.png',
-                back: '/images/custom_design_builder/hoodie_sin_fondo_back.png'
-            },
-            Dama: {
-                front: '/images/custom_design_builder/hoodie_sin_fondo_front.png',
-                back: '/images/custom_design_builder/hoodie_sin_fondo_back.png'
-            }
-        }
-    },
+// Default fallbacks (used until API loads or if API fails)
+const DEFAULT_PRODUCTS: ProductType[] = [
     {
         id: 'oversize',
         name: 'T-Shirt Oversize',
@@ -78,22 +64,17 @@ const PRODUCTS: ProductType[] = [
                 back: '/images/custom_design_builder/franela_blanca_sin_fondo_back.png'
             }
         }
-    }
+    },
 ];
 
-export const GARMENT_COLORS = [
+const DEFAULT_GARMENT_COLORS = [
     { label: 'Negro', value: '#1A1A1A' },
     { label: 'Blanco', value: '#FFFFFF' },
-    { label: 'Beige', value: '#D5BEA4' },
-    { label: 'Azul', value: '#1F2640' },
     { label: 'Verde Bosque', value: '#0B3022' },
-    { label: 'Gris Carbón', value: '#4A4A4A' },
-    { label: 'Rojo Vino', value: '#6B1B1B' },
-    { label: 'Oliva', value: '#556B2F' },
-    { label: 'Mostaza', value: '#E3B448' },
-    { label: 'Melocotón', value: '#FFCCB6' },
-    { label: 'Gris Lavanda', value: '#9696AF' },
 ];
+
+// Exported for backward compatibility — will be updated dynamically
+export let GARMENT_COLORS: { label: string; value: string }[] = DEFAULT_GARMENT_COLORS;
 
 const FONTS = [
     { label: 'Montserrat', value: 'Montserrat, sans-serif' },
@@ -118,8 +99,12 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
         back: []
     });
     const [selectedId, setSelectedId] = useState<string | null>(null);
-    const [product, setProduct] = useState(PRODUCTS[0]);
-    const [color, setColor] = useState(GARMENT_COLORS[0].value);
+    const [availableProducts, setAvailableProducts] = useState<ProductType[]>(DEFAULT_PRODUCTS);
+    const [availableColors, setAvailableColors] = useState<{ label: string; value: string }[]>(DEFAULT_GARMENT_COLORS);
+    const [availableSizes, setAvailableSizes] = useState<string[]>(['S', 'M', 'L', 'XL']);
+    const [configLoaded, setConfigLoaded] = useState(false);
+    const [product, setProduct] = useState<ProductType>(DEFAULT_PRODUCTS[0]);
+    const [color, setColor] = useState(DEFAULT_GARMENT_COLORS[0].value);
     const [view, setView] = useState<'front' | 'back'>('front');
     const [activeTab, setActiveTab] = useState<TabType | null>('product');
     const [zoom, setZoom] = useState(100);
@@ -135,6 +120,33 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
     const containerRef = useRef<HTMLDivElement>(null);
     const onSaveRef = useRef(onSave);
     useEffect(() => { onSaveRef.current = onSave; }, [onSave]);
+
+    // --- FETCH CONFIG FROM CRM ---
+    useEffect(() => {
+        const configUrl = crmApiUrl
+            ? `${crmApiUrl}/builder-config`
+            : 'http://localhost:8000/api/builder-config';
+        fetch(configUrl)
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data) {
+                    if (data.products && data.products.length > 0) {
+                        setAvailableProducts(data.products);
+                    }
+                    if (data.colors && data.colors.length > 0) {
+                        const colorList = data.colors.map((c: any) => ({ label: c.label, value: c.value }));
+                        setAvailableColors(colorList);
+                        // Update the exported reference for backward compat
+                        GARMENT_COLORS = colorList;
+                    }
+                    if (data.sizes && data.sizes.length > 0) {
+                        setAvailableSizes(data.sizes);
+                    }
+                }
+                setConfigLoaded(true);
+            })
+            .catch(() => setConfigLoaded(true)); // Fail silently, use defaults
+    }, [crmApiUrl]);
 
     useEffect(() => {
         if (isMobile && !zoomInitialized.current) {
@@ -178,8 +190,8 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
                 }
             }
             if (design_data.product) {
-                const foundProduct = PRODUCTS.find(p => p.id === design_data.product.id) || PRODUCTS[0];
-                setProduct(foundProduct);
+                const foundProduct = availableProducts.find(p => p.id === design_data.product.id) || availableProducts[0];
+                setProduct(foundProduct || DEFAULT_PRODUCTS[0]);
             }
             if (design_data.color) setColor(design_data.color);
             if (design_data.view) setView(design_data.view);
@@ -529,11 +541,11 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
                     <Box p="xl" style={{ flex: 1, overflowY: 'auto', minHeight: isMobile ? 'unset' : 600 }}>
                         <Tabs.Panel value="product">
                             <Stack gap="lg">
-                                <Select label="PRENDA" data={PRODUCTS.map(p => ({ label: p.name, value: p.id }))} value={product.id} onChange={(v) => setProduct(PRODUCTS.find(p => p.id === v) || PRODUCTS[0])} />
+                                <Select label="PRENDA" data={availableProducts.map(p => ({ label: p.name, value: p.id }))} value={product.id} onChange={(v) => { const found = availableProducts.find(p => p.id === v); if (found) setProduct(found); }} />
                                 <Box>
                                     <Text size="xs" fw={700} mb={8}>COLOR DE PRENDA</Text>
                                     <Group gap="xs" mb="md">
-                                        {GARMENT_COLORS.map(c => (
+                                        {availableColors.map(c => (
                                             <Tooltip label={c.label} key={c.value}>
                                                 <ActionIcon 
                                                     radius="xl" 
