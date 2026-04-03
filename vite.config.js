@@ -11,10 +11,10 @@ export default defineConfig({
         }),
         react(),
         ViteImageOptimizer({
-            png: { quality: 80 },
-            jpeg: { quality: 80 },
-            jpg: { quality: 80 },
-            webp: { quality: 80 },
+            png: { quality: 100 }, // Calidad nativa para no destruir el perfil ICC (color)
+            jpeg: { quality: 90 }, // 90 es el borde dulce seguro para JPEG
+            jpg: { quality: 90 },
+            webp: { quality: 90, lossless: true },
         }),
     ],
 });
