@@ -4,20 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Joppa | Estampados en DTF de alta calidad') }}</title>
+        <title inertia>{{ config('app.name', 'Joppa | Estampados DTF en Valencia') }}</title>
 
-        <meta name="description" content="{{ $og_description ?? 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.' }}">
+        <meta name="description" content="{{ $og_description ?? 'Somos expertos en estampados DTF en Valencia, Carabobo. Crea y personaliza tus prendas con Joppa, tu tienda virtual de impresión DTF, sublimación y diseño.' }}">
         <link rel="canonical" href="{{ url()->current() }}" />
 
         <meta property="og:site_name" content="Joppa" />
-        <meta property="og:title" content="{{ $og_title ?? 'Joppa | Estampados en DTF de alta calidad' }}" />
-        <meta property="og:description" content="{{ $og_description ?? 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.' }}" />
+        <meta property="og:title" content="{{ $og_title ?? 'Joppa | Estampados DTF en Valencia' }}" />
+        <meta property="og:description" content="{{ $og_description ?? 'Somos expertos en estampados DTF en Valencia, Carabobo. Crea y personaliza tus prendas con Joppa, tu tienda virtual de impresión DTF, sublimación y diseño.' }}" />
         <meta property="og:image" content="{{ $og_image ?? Vite::asset('resources/images/portada_dario.png') }}" />
         <meta property="og:url" content="{{ $og_url ?? url()->current() }}" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="{{ $og_title ?? 'Joppa | Estampados en DTF de alta calidad' }}" />
-        <meta name="twitter:description" content="{{ $og_description ?? 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa.' }}" />
+        <meta name="twitter:title" content="{{ $og_title ?? 'Joppa | Estampados DTF en Valencia' }}" />
+        <meta name="twitter:description" content="{{ $og_description ?? 'Somos expertos en estampados DTF en Valencia, Carabobo. Crea y personaliza tus prendas.' }}" />
         <meta name="twitter:image" content="{{ $og_image ?? Vite::asset('resources/images/portada_dario.png') }}" />
 
         <!-- Favicons y SEO Mobile Icons (Previene que Google cachee logos por defecto) -->
@@ -42,7 +42,7 @@
               "@type": "SiteNavigationElement",
               "name": "Custom Design",
               "url": "https://www.joppa.shop/custom-design",
-              "description": "Crea y personaliza tu propio estampado en DTF de alta calidad."
+              "description": "Crea y personaliza tu propio estampado en DTF de alta calidad en Valencia, Carabobo."
             },
             {
               "@type": "SiteNavigationElement",

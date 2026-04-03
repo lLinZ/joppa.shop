@@ -22,8 +22,8 @@ export default function Welcome() {
 
     const features = [
         {
-            title: 'Calidad Premium',
-            description: 'DTF y telas de alta calidad y durabilidad.',
+            title: 'Impresión DTF Premium',
+            description: 'Servicio de estampados DTF en Valencia, Carabobo con colores vivos y de alta durabilidad para tus prendas.',
             icon: IconStar,
         },
         {
@@ -45,8 +45,8 @@ export default function Welcome() {
             className="page-transition"
         >
             <Head>
-                <title>Joppa | Estampados en DTF de alta calidad</title>
-                <meta name="description" content="Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados." />
+                <title>Joppa | Estampados DTF en Valencia</title>
+                <meta name="description" content="Somos expertos en estampados DTF en Valencia, Carabobo. Crea y personaliza tus prendas con Joppa, tu tienda virtual de impresión DTF, sublimación y diseño." />
             </Head>
 
             <CartDrawer />
@@ -93,10 +93,10 @@ export default function Welcome() {
                                             }}
                                         >
                                             Tu Visión.<br />
-                                            Nuestra Creación.
+                                            Nuestro DTF.
                                         </Title>
                                         <Text size="lg" mb={40} style={{ fontFamily: '"Inter", sans-serif', opacity: 0.9, lineHeight: 1.6, maxWidth: 450, fontWeight: 500 }}>
-                                            No te conformes con lo que ya existe. Únete a nuestro programa de diseño personalizado y da vida a la prenda exacta que siempre has imaginado, con la calidad premium habitual de JOPPA.
+                                            No te conformes con lo que ya existe. Únete a nuestro programa de diseño personalizado y da vida a la prenda exacta que siempre has imaginado, con el mejor servicio de impresión DTF en Valencia y calidad premium habitual de JOPPA.
                                         </Text>
                                         <Button
                                             component="a"
@@ -256,7 +256,7 @@ export default function Welcome() {
                                             Lleva JOPPA a tus clientes.
                                         </Title>
                                         <Text size="lg" c="#0B3022" style={{ opacity: 0.8, fontWeight: 500 }}>
-                                            Ofrecemos precios competitivos y diseños exclusivos para que tu negocio destaque. Contáctanos por WhatsApp para recibir nuestro catálogo de mayoristas y comenzar a trabajar juntos.
+                                            Ofrecemos precios competitivos en estampados DTF al mayor y diseños exclusivos para que tu negocio destaque en Carabobo y toda Venezuela. Contáctanos por WhatsApp para recibir nuestro catálogo de mayoristas y comenzar a trabajar juntos.
                                         </Text>
                                         <Group>
                                             <Button
@@ -322,7 +322,7 @@ export default function Welcome() {
                                             Quiénes Somos
                                         </Title>
                                         <Text size="lg" c="#0B3022" style={{ opacity: 0.8, lineHeight: 1.7, maxWidth: 500 }}>
-                                            Somos una pareja de emprendedores apasionados por el diseño y la cultura urbana. Lo que comenzó como un sueño compartido se convirtió en JOPPA, un espacio donde la creatividad no tiene límites.
+                                            Somos una pareja de emprendedores en Valencia apasionados por el diseño, la cultura urbana y la estampación digital. Lo que comenzó como un sueño compartido se convirtió en JOPPA, un espacio donde la impresión en DTF de alta precisión se encuentra con la creatividad sin límites.
                                             <br /><br />
                                             Cada prenda que diseñamos lleva una parte de nosotros, enfocándonos en la calidad premium y en piezas que cuentan una historia. ¡Gracias por ser parte de este viaje con nosotros!
                                         </Text>
