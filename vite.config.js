@@ -11,9 +11,10 @@ export default defineConfig({
         }),
         react(),
         ViteImageOptimizer({
+            exclude: /_pro\.(webp|png|jpe?g)$/i, // Evita tocar las imágenes procesadas manualmente
             png: { quality: 100 },
-            pngquant: false, // <- Apaga el compresor de colores que estaba lavando tus imágenes
-            optipng: { optimizationLevel: 3 }, // Solo comprime datos sin borrar paletas de color
+            pngquant: false,
+            optipng: { optimizationLevel: 3 },
             jpeg: { quality: 90 },
             jpg: { quality: 90 },
             webp: { lossless: true },

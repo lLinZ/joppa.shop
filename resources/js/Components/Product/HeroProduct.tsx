@@ -8,7 +8,7 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import { SimpleGrid, Box, Title, Text, Button, Flex, rem, Group, ActionIcon, Avatar } from '@mantine/core';
 import { IconArrowUpRight } from '@tabler/icons-react';
-import portadaDario from '../../../images/portada_dario.png';
+import portadaDario from '../../../images/portada_dario_pro.webp';
 
 export default function HeroProduct() {
     return (
