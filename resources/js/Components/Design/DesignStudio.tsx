@@ -100,11 +100,11 @@ function apiProductToLocal(p: any): ProductType {
     };
 }
 
-const FONTS = [
-    { label: 'Montserrat', value: 'Montserrat, sans-serif' },
-    { label: 'Bebas Neue', value: "'Bebas Neue', sans-serif" },
-    { label: 'Caveat', value: 'Caveat, cursive' },
-    { label: 'Playfair Display', value: 'Playfair Display, serif' },
+const DEFAULT_FONTS = [
+    { label: 'Montserrat', value: 'Montserrat, sans-serif', url: 'Montserrat:wght@400;700;900' },
+    { label: 'Bebas Neue', value: "'Bebas Neue', sans-serif", url: 'Bebas+Neue' },
+    { label: 'Caveat', value: 'Caveat, cursive', url: 'Caveat:wght@400;700' },
+    { label: 'Playfair Display', value: 'Playfair Display, serif', url: 'Playfair+Display:wght@400;700' },
 ];
 
 export interface DesignStudioProps {
@@ -126,6 +126,7 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
     const [availableProducts, setAvailableProducts] = useState<ProductType[]>(DEFAULT_PRODUCTS);
     const [availableColors, setAvailableColors] = useState<{ label: string; value: string }[]>(DEFAULT_GARMENT_COLORS);
     const [availableSizes, setAvailableSizes] = useState<string[]>(['S', 'M', 'L', 'XL']);
+    const [availableFonts, setAvailableFonts] = useState<any[]>(DEFAULT_FONTS);
     const [configLoaded, setConfigLoaded] = useState(false);
     const [product, setProduct] = useState<ProductType>(DEFAULT_PRODUCTS[0]);
     const [color, setColor] = useState(DEFAULT_GARMENT_COLORS[0].value);
@@ -173,6 +174,9 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
                             setAvailableColors(allColors);
                             GARMENT_COLORS = allColors;
                         }
+                    }
+                    if (data.fonts && data.fonts.length > 0) {
+                        setAvailableFonts(data.fonts);
                     }
                 }
                 setConfigLoaded(true);
@@ -337,7 +341,7 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
             height: 100,
             rotation: 0,
             fontSize: 40,
-            fontFamily: FONTS[0].value,
+            fontFamily: availableFonts[0]?.value || 'sans-serif',
             color: '#0B3022',
             letterSpacing: 2,
             zIndex: getNextZIndex()
@@ -459,7 +463,7 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
             }}
         >
             <style dangerouslySetInnerHTML={{ __html: `
-                @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;900&family=Caveat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+                @import url('https://fonts.googleapis.com/css2?${availableFonts.map(f => f.url ? `family=${f.url}` : '').filter(Boolean).join('&')}&display=swap');
             `}} />
 
             {/* CANVAS AREA (LEFT) */}
@@ -662,7 +666,7 @@ export const DesignStudio: React.FC<DesignStudioProps> = ({ gender, design_data,
                                 {selectedId && selectedElement?.type === 'text' && (
                                     <Stack gap="md" mt="xl" p="md" style={{ backgroundColor: '#F8F9FA', borderRadius: '12px' }}>
                                         <textarea value={selectedElement.content} onChange={(e) => updateElement(selectedId, { content: e.target.value })} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }} />
-                                        <Select label="FUENTE" data={FONTS} value={selectedElement.fontFamily} onChange={(v) => updateElement(selectedId, { fontFamily: v || '' })} />
+                                        <Select label="FUENTE" data={availableFonts.map(f => ({label: f.label, value: f.value}))} value={selectedElement.fontFamily} onChange={(v) => updateElement(selectedId, { fontFamily: v || '' })} />
                                         <ColorInput label="COLOR" value={selectedElement.color} onChange={(v) => updateElement(selectedId, { color: v })} />
                                         <Box><Text size="xs" fw={700}>TAMAÑO ({selectedElement.fontSize})</Text><Slider value={selectedElement.fontSize} onChange={(v) => updateElement(selectedId, { fontSize: v })} min={10} max={120} label={null} /></Box>
                                     </Stack>
