@@ -7,6 +7,11 @@ import '@mantine/notifications/styles.css';
 import '../css/app.css';
 import './bootstrap';
 
+// Instruct Vite to process all images in resources/images
+import.meta.glob([
+    '../images/**',
+]);
+
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';

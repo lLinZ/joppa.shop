@@ -12,13 +12,13 @@
         <meta property="og:site_name" content="Joppa" />
         <meta property="og:title" content="{{ $og_title ?? 'Joppa | Estampados en DTF de alta calidad' }}" />
         <meta property="og:description" content="{{ $og_description ?? 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.' }}" />
-        <meta property="og:image" content="{{ $og_image ?? asset('portada_dario.png') }}" />
+        <meta property="og:image" content="{{ $og_image ?? Vite::asset('resources/images/portada_dario.png') }}" />
         <meta property="og:url" content="{{ $og_url ?? url()->current() }}" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="{{ $og_title ?? 'Joppa | Estampados en DTF de alta calidad' }}" />
         <meta name="twitter:description" content="{{ $og_description ?? 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa.' }}" />
-        <meta name="twitter:image" content="{{ $og_image ?? asset('portada_dario.png') }}" />
+        <meta name="twitter:image" content="{{ $og_image ?? Vite::asset('resources/images/portada_dario.png') }}" />
 
         <!-- Favicons y SEO Mobile Icons (Previene que Google cachee logos por defecto) -->
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

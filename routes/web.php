@@ -19,9 +19,9 @@ Route::get('/', function () {
 });
 
 Route::get('/product/{id}', function ($id) {
-    $og_title = 'JOPPA Boutique - Edición Ilimitada';
-    $og_description = 'Diseños con alma vintage y tela premium. Tu idea, nuestra tinta.';
-    $og_image = asset('portada_dario.png');
+    $og_title = 'Joppa | Estampados en DTF de alta calidad';
+    $og_description = 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.';
+    $og_image = \Illuminate\Support\Facades\Vite::asset('resources/images/portada_dario.png');
 
     try {
         $response = Http::get(env('VITE_CRM_API_URL') . '/catalog/' . $id);
@@ -49,9 +49,9 @@ Route::get('/product/{id}', function ($id) {
 
 Route::get('/product/{id}/legacy', function ($id) {
     // Legacy view for fallback
-    $og_title = 'JOPPA Boutique - Edición Ilimitada';
-    $og_description = 'Diseños con alma vintage y tela premium. Tu idea, nuestra tinta.';
-    $og_image = asset('portada_dario.png');
+    $og_title = 'Joppa | Estampados en DTF de alta calidad';
+    $og_description = 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.';
+    $og_image = \Illuminate\Support\Facades\Vite::asset('resources/images/portada_dario.png');
 
     try {
         $response = Http::get(env('VITE_CRM_API_URL') . '/catalog/' . $id);
@@ -85,7 +85,7 @@ Route::get('/catalog', function () {
     return Inertia::render('Catalog/Index')->withViewData([
         'og_title' => 'Catálogo Oficial | Joppa',
         'og_description' => 'Explora nuestra inmensa colección de prendas con estampados en DTF premium listas para ti.',
-        'og_image' => asset('portada.jpeg'),
+        'og_image' => \Illuminate\Support\Facades\Vite::asset('resources/images/portada.jpeg'),
         'og_url' => url()->current(),
     ]);
 })->name('catalog.index');
@@ -139,7 +139,7 @@ Route::get('/custom-design', function () {
     return Inertia::render('CustomDesign')->withViewData([
         'og_title' => 'Design Studio | Joppa',
         'og_description' => 'Personaliza desde cero tu prenda ideal en nuestro Estudio de Diseño interactivo.',
-        'og_image' => asset('portada_dario_gemini.png'),
+        'og_image' => \Illuminate\Support\Facades\Vite::asset('resources/images/portada_dario_gemini.png'),
         'og_url' => url()->current(),
     ]);
 })->name('custom.design');
