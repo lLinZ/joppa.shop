@@ -82,7 +82,12 @@ Route::get('/product/{id}/beta', function ($id) {
 });
 
 Route::get('/catalog', function () {
-    return Inertia::render('Catalog/Index');
+    return Inertia::render('Catalog/Index')->withViewData([
+        'og_title' => 'Catálogo Oficial | Joppa',
+        'og_description' => 'Explora nuestra inmensa colección de prendas con estampados en DTF premium listas para ti.',
+        'og_image' => asset('portada.jpeg'),
+        'og_url' => url()->current(),
+    ]);
 })->name('catalog.index');
 
 Route::get('/catalog/{id}', function ($id) {
@@ -131,7 +136,12 @@ Route::get('/checkout', function () {
 })->name('checkout');
 
 Route::get('/custom-design', function () {
-    return Inertia::render('CustomDesign');
+    return Inertia::render('CustomDesign')->withViewData([
+        'og_title' => 'Design Studio | Joppa',
+        'og_description' => 'Personaliza desde cero tu prenda ideal en nuestro Estudio de Diseño interactivo.',
+        'og_image' => asset('portada_dario_gemini.png'),
+        'og_url' => url()->current(),
+    ]);
 })->name('custom.design');
 
 Route::get('/contact', function () {
