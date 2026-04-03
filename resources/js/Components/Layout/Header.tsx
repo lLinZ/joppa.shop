@@ -119,10 +119,6 @@ export const Header: React.FC<HeaderProps> = ({ opened, toggle }) => {
                             <IconSearch color="#000000" size={20} stroke={1.5} />
                         </UnstyledButton>
 
-                        <UnstyledButton aria-label="Account">
-                            <IconUser color="#000000" size={20} stroke={1.5} />
-                        </UnstyledButton>
-
                         <UnstyledButton aria-label="Cart" style={{ position: 'relative' }} onClick={toggleCartDrawer}>
                             <Indicator
                                 color="#0B3022"

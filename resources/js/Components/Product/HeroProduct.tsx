@@ -8,6 +8,7 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import { SimpleGrid, Box, Title, Text, Button, Flex, rem, Group, ActionIcon, Avatar } from '@mantine/core';
 import { IconArrowUpRight } from '@tabler/icons-react';
+import portadaDario from '../../../images/portada_dario.png';
 
 export default function HeroProduct() {
     return (
@@ -123,7 +124,7 @@ export default function HeroProduct() {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            backgroundImage: 'url("/portada_dario.png")', // Portada de la tienda
+                            backgroundImage: `url(${portadaDario})`, // Portada optimizada inyectada por Vite
                             backgroundPosition: 'center center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat'

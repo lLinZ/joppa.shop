@@ -45,8 +45,8 @@ export default function Welcome() {
             className="page-transition"
         >
             <Head>
-                <title>JOPPA Boutique - Edición Ilimitada | Streetwear Premium</title>
-                <meta name="description" content="Descubre la colección exclusiva de JOPPA Boutique. Streetwear de edición ilimitada con alma vintage, telas premium y diseños únicos. Tu idea, nuestra tinta." />
+                <title>Joppa | Estampados en DTF de alta calidad</title>
+                <meta name="description" content="Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados." />
             </Head>
 
             <CartDrawer />
