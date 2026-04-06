@@ -62,11 +62,10 @@ export default function ProductGrid() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${CRM_BASE}/catalog`)
+        fetch(`${CRM_BASE}/catalog/featured`)
             .then(res => res.json())
             .then(data => {
-                const list = data.products || [];
-                setProducts(list.slice(0, 4));
+                setProducts(data.products || []);
                 setLoading(false);
             })
             .catch(() => {
