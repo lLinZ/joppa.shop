@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('/product/{id}', function ($id) {
-    $og_title = 'Joppa | Estampados en DTF de alta calidad';
-    $og_description = 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.';
+    $og_title = 'Joppa | Estampados DTF en Valencia';
+    $og_description = 'Los mejores estampados en DTF de alta calidad en Valencia, Carabobo. Crea y personaliza tus prendas con Joppa.';
     $og_image = \Illuminate\Support\Facades\Vite::asset('resources/images/portada_dario.png');
 
     try {
@@ -49,8 +49,8 @@ Route::get('/product/{id}', function ($id) {
 
 Route::get('/product/{id}/legacy', function ($id) {
     // Legacy view for fallback
-    $og_title = 'Joppa | Estampados en DTF de alta calidad';
-    $og_description = 'Los mejores estampados en DTF de alta calidad. Crea y personaliza tus prendas con Joppa, tu tienda virtual de estampados.';
+    $og_title = 'Joppa | Estampados DTF en Valencia';
+    $og_description = 'Los mejores estampados en DTF de alta calidad en Valencia, Carabobo. Crea y personaliza tus prendas con Joppa.';
     $og_image = \Illuminate\Support\Facades\Vite::asset('resources/images/portada_dario.png');
 
     try {
@@ -83,23 +83,23 @@ Route::get('/product/{id}/beta', function ($id) {
 
 Route::get('/catalog', function () {
     return Inertia::render('Catalog/Index')->withViewData([
-        'og_title' => 'Catálogo Oficial | Joppa',
-        'og_description' => 'Explora nuestra inmensa colección de prendas con estampados en DTF premium listas para ti.',
+        'og_title' => 'Catálogo | Joppa',
+        'og_description' => 'Explora nuestra colección de prendas con estampados DTF premium en Valencia, Carabobo.',
         'og_image' => \Illuminate\Support\Facades\Vite::asset('resources/images/portada.jpeg'),
         'og_url' => url()->current(),
     ]);
 })->name('catalog.index');
 
 Route::get('/catalog/{id}', function ($id) {
-    $og_title = 'JOPPA Boutique - Edición Ilimitada';
-    $og_description = 'Diseños con alma vintage y tela premium. Tu idea, nuestra tinta.';
+    $og_title = 'Joppa | Estampados DTF en Valencia';
+    $og_description = 'Estampados DTF de alta calidad con diseños exclusivos. Tu idea, nuestra tinta.';
     $og_image = asset('portada_dario.png');
 
     try {
         $response = Http::get(env('VITE_CRM_API_URL') . '/catalog/' . $id);
         if ($response->successful()) {
             $product = $response->json('product');
-            $og_title = $product['name'] . ' - JOPPA Boutique';
+            $og_title = $product['name'] . ' | Joppa';
             if (!empty($product['description'])) {
                 $og_description = htmlspecialchars(strip_tags($product['description']));
             }
@@ -137,8 +137,8 @@ Route::get('/checkout', function () {
 
 Route::get('/custom-design', function () {
     return Inertia::render('CustomDesign')->withViewData([
-        'og_title' => 'Design Studio | Joppa',
-        'og_description' => 'Personaliza desde cero tu prenda ideal en nuestro Estudio de Diseño interactivo.',
+        'og_title' => 'Personaliza tu Diseño | Joppa',
+        'og_description' => 'Crea y personaliza tu propio estampado en DTF de alta calidad en Valencia, Carabobo.',
         'og_image' => \Illuminate\Support\Facades\Vite::asset('resources/images/portada_dario_gemini.png'),
         'og_url' => url()->current(),
     ]);
