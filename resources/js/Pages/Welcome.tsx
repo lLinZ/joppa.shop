@@ -45,8 +45,8 @@ export default function Welcome() {
             className="page-transition"
         >
             <Head>
-                <title>Joppa | Estampados DTF en Valencia</title>
-                <meta name="description" content="Somos expertos en estampados DTF en Valencia, Carabobo. Crea y personaliza tus prendas con Joppa, tu tienda virtual de impresión DTF, sublimación y diseño." />
+                <title>Joppa | Estampados DTF Premium y Ropa Streetwear</title>
+                <meta head-key="description" name="description" content="Estampados DTF Premium y Ropa Streetwear en Venezuela. Crea y personaliza prendas exclusivas con la mejor calidad en impresión y diseño urbano." />
             </Head>
 
             <CartDrawer />
