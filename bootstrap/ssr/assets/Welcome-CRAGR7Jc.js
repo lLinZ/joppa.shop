@@ -417,7 +417,44 @@ function Welcome() {
         children: [
           /* @__PURE__ */ jsxs(Head, { children: [
             /* @__PURE__ */ jsx("title", { children: "JOPPA | Estampados DTF y Franelas Personalizadas en Venezuela" }),
-            /* @__PURE__ */ jsx("meta", { "head-key": "description", name: "description", content: "Lleva tu marca al siguiente nivel. Impresión DTF premium, franelas streetwear y estampados personalizados. Envíos desde Valencia a toda Venezuela. ¡Cotiza hoy!" })
+            /* @__PURE__ */ jsx("meta", { "head-key": "description", name: "description", content: "Lleva tu marca al siguiente nivel. Impresión DTF premium, franelas streetwear y estampados personalizados. Envíos desde Valencia a toda Venezuela. ¡Cotiza hoy!" }),
+            /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": "https://joppa.shop/#website",
+                  "url": "https://joppa.shop/",
+                  "name": "JOPPA",
+                  "description": "Franelas Personalizadas y Estampados DTF en Venezuela",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://joppa.shop/catalog?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                },
+                {
+                  "@type": "LocalBusiness",
+                  "@id": "https://joppa.shop/#organization",
+                  "name": "JOPPA",
+                  "url": "https://joppa.shop/",
+                  "logo": "https://joppa.shop/images/logo.png",
+                  "image": "https://joppa.shop/images/modelo-joppa-home.webp",
+                  "description": "Servicio de impresión DTF premium y personalización de franelas. Envíos nacionales desde Valencia.",
+                  "telephone": "+584222030200",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Valencia",
+                    "addressRegion": "Carabobo",
+                    "addressCountry": "VE"
+                  },
+                  "priceRange": "$$",
+                  "sameAs": [
+                    "https://www.instagram.com/joppa.shop"
+                  ]
+                }
+              ]
+            }) })
           ] }),
           /* @__PURE__ */ jsx(CartDrawer, {}),
           /* @__PURE__ */ jsx(Header, { opened, toggle }),

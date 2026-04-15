@@ -4,7 +4,7 @@
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
   "resources/css/app.css": [],
   "resources/images/portada_dario_pro.webp": [
-    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/Welcome-CRAGR7Jc.js",
     "/build/assets/portada_dario_pro-DkM02sAp.webp"
   ],
   "resources/js/Components/ApplicationLogo.tsx": [
@@ -44,7 +44,7 @@
     "/build/assets/PrimaryButton-DxAAwvpz.js"
   ],
   "resources/js/Components/Product/HeroProduct.tsx": [
-    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/Welcome-CRAGR7Jc.js",
     "/build/assets/portada_dario_pro-DkM02sAp.webp"
   ],
   "resources/js/Components/Product/ProductAura.tsx": [
@@ -60,11 +60,11 @@
     "/build/assets/SecondaryButton-DK5h_GDS.js"
   ],
   "resources/js/Components/Sections/JoppaCrew.tsx": [
-    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/Welcome-CRAGR7Jc.js",
     "/build/assets/portada_dario_pro-DkM02sAp.webp"
   ],
   "resources/js/Components/Sections/ProductGrid.tsx": [
-    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/Welcome-CRAGR7Jc.js",
     "/build/assets/portada_dario_pro-DkM02sAp.webp"
   ],
   "resources/js/Components/TextInput.tsx": [
@@ -74,7 +74,7 @@
     "/build/assets/Footer--tUsT2lM.js"
   ],
   "resources/js/Components/UI/FloatingWhatsApp.tsx": [
-    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/Welcome-CRAGR7Jc.js",
     "/build/assets/portada_dario_pro-DkM02sAp.webp"
   ],
   "resources/js/Layouts/AuthenticatedLayout.tsx": [
@@ -144,7 +144,7 @@
     "/build/assets/UpdateProfileInformationForm-BCtDDuZM.js"
   ],
   "resources/js/Pages/Welcome.tsx": [
-    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/Welcome-CRAGR7Jc.js",
     "/build/assets/portada_dario_pro-DkM02sAp.webp"
   ],
   "resources/js/ssr.tsx": [],
