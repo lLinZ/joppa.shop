@@ -1,0 +1,155 @@
+{
+  "node_modules/@mantine/core/styles.css": [],
+  "node_modules/@mantine/notifications/styles.css": [],
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/css/app.css": [],
+  "resources/images/portada_dario_pro.webp": [
+    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/portada_dario_pro-DkM02sAp.webp"
+  ],
+  "resources/js/Components/ApplicationLogo.tsx": [
+    "/build/assets/AuthenticatedLayout-D8GHNuWA.js"
+  ],
+  "resources/js/Components/DangerButton.tsx": [
+    "/build/assets/SecondaryButton-DK5h_GDS.js"
+  ],
+  "resources/js/Components/Design/DesignPreview.tsx": [
+    "/build/assets/BetaShow-CCCjNiyu.js"
+  ],
+  "resources/js/Components/Design/DesignStudio.tsx": [
+    "/build/assets/DesignStudio-DxRxIBTb.js"
+  ],
+  "resources/js/Components/Dropdown.tsx": [
+    "/build/assets/AuthenticatedLayout-D8GHNuWA.js"
+  ],
+  "resources/js/Components/InputError.tsx": [
+    "/build/assets/TextInput-D3aeQ6WU.js"
+  ],
+  "resources/js/Components/InputLabel.tsx": [
+    "/build/assets/InputLabel-BY7g9Y8L.js"
+  ],
+  "resources/js/Components/Layout/Footer.tsx": [
+    "/build/assets/Footer--tUsT2lM.js"
+  ],
+  "resources/js/Components/Layout/Header.tsx": [
+    "/build/assets/Header-BA1_ggmj.js"
+  ],
+  "resources/js/Components/Modal.tsx": [
+    "/build/assets/SecondaryButton-DK5h_GDS.js"
+  ],
+  "resources/js/Components/NavLink.tsx": [
+    "/build/assets/AuthenticatedLayout-D8GHNuWA.js"
+  ],
+  "resources/js/Components/PrimaryButton.tsx": [
+    "/build/assets/PrimaryButton-DxAAwvpz.js"
+  ],
+  "resources/js/Components/Product/HeroProduct.tsx": [
+    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/portada_dario_pro-DkM02sAp.webp"
+  ],
+  "resources/js/Components/Product/ProductAura.tsx": [
+    "/build/assets/ProductAura-BBGd2TTl.js"
+  ],
+  "resources/js/Components/Product/ProductReviews.tsx": [
+    "/build/assets/BetaShow-CCCjNiyu.js"
+  ],
+  "resources/js/Components/ResponsiveNavLink.tsx": [
+    "/build/assets/AuthenticatedLayout-D8GHNuWA.js"
+  ],
+  "resources/js/Components/SecondaryButton.tsx": [
+    "/build/assets/SecondaryButton-DK5h_GDS.js"
+  ],
+  "resources/js/Components/Sections/JoppaCrew.tsx": [
+    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/portada_dario_pro-DkM02sAp.webp"
+  ],
+  "resources/js/Components/Sections/ProductGrid.tsx": [
+    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/portada_dario_pro-DkM02sAp.webp"
+  ],
+  "resources/js/Components/TextInput.tsx": [
+    "/build/assets/TextInput-D3aeQ6WU.js"
+  ],
+  "resources/js/Components/UI/Cart/CartDrawer.tsx": [
+    "/build/assets/Footer--tUsT2lM.js"
+  ],
+  "resources/js/Components/UI/FloatingWhatsApp.tsx": [
+    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/portada_dario_pro-DkM02sAp.webp"
+  ],
+  "resources/js/Layouts/AuthenticatedLayout.tsx": [
+    "/build/assets/AuthenticatedLayout-D8GHNuWA.js"
+  ],
+  "resources/js/Layouts/GuestLayout.tsx": [
+    "/build/assets/GuestLayout-D5SsJsBz.js"
+  ],
+  "resources/js/Pages/Auth/ConfirmPassword.tsx": [
+    "/build/assets/ConfirmPassword-HxrMvhXW.js"
+  ],
+  "resources/js/Pages/Auth/ForgotPassword.tsx": [
+    "/build/assets/ForgotPassword-UaIwbqIm.js"
+  ],
+  "resources/js/Pages/Auth/Login.tsx": [
+    "/build/assets/Login-DHIM79g5.js"
+  ],
+  "resources/js/Pages/Auth/Register.tsx": [
+    "/build/assets/Register-DLHGzcc2.js"
+  ],
+  "resources/js/Pages/Auth/ResetPassword.tsx": [
+    "/build/assets/ResetPassword-B7-uXokG.js"
+  ],
+  "resources/js/Pages/Auth/VerifyEmail.tsx": [
+    "/build/assets/VerifyEmail-Dx_qzYcj.js"
+  ],
+  "resources/js/Pages/Catalog/Index.tsx": [
+    "/build/assets/Index-C2W6a2TT.js"
+  ],
+  "resources/js/Pages/Checkout/Checkout.tsx": [
+    "/build/assets/Checkout-G97th6Tb.js"
+  ],
+  "resources/js/Pages/Contact.tsx": [
+    "/build/assets/Contact-BpCgsEX8.js"
+  ],
+  "resources/js/Pages/CustomDesign.tsx": [
+    "/build/assets/CustomDesign-ByQM-XfH.js"
+  ],
+  "resources/js/Pages/Dashboard.tsx": [
+    "/build/assets/Dashboard-DgOa9NtF.js"
+  ],
+  "resources/js/Pages/Product/BetaShow.tsx": [
+    "/build/assets/BetaShow-CCCjNiyu.js"
+  ],
+  "resources/js/Pages/Product/Show.tsx": [
+    "/build/assets/Show-BdEK6agf.js"
+  ],
+  "resources/js/Pages/Profile/Edit.tsx": [
+    "/build/assets/Edit-IWIH3UN-.js"
+  ],
+  "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx": [
+    "/build/assets/Edit-IWIH3UN-.js"
+  ],
+  "resources/js/Pages/Profile/Partials/DeleteUserForm.tsx": [
+    "/build/assets/DeleteUserForm-DMAgHnqq.js"
+  ],
+  "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx": [
+    "/build/assets/Edit-IWIH3UN-.js"
+  ],
+  "resources/js/Pages/Profile/Partials/UpdatePasswordForm.tsx": [
+    "/build/assets/UpdatePasswordForm-7zOtsyBF.js"
+  ],
+  "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx": [
+    "/build/assets/Edit-IWIH3UN-.js"
+  ],
+  "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.tsx": [
+    "/build/assets/UpdateProfileInformationForm-BCtDDuZM.js"
+  ],
+  "resources/js/Pages/Welcome.tsx": [
+    "/build/assets/Welcome-C39FJtST.js",
+    "/build/assets/portada_dario_pro-DkM02sAp.webp"
+  ],
+  "resources/js/ssr.tsx": [],
+  "resources/js/store/useAppStore.ts": [
+    "/build/assets/Header-BA1_ggmj.js"
+  ],
+  "resources/js/theme.ts": []
+}
