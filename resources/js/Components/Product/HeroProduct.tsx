@@ -40,17 +40,33 @@ export default function HeroProduct() {
                     }}
                 >
                     <Box>
-                        <Title
+                        <Text
+                            component="span"
                             c="#0B3022"
                             style={{
-                                fontSize: 'clamp(3rem, 10vw, 5rem)',
+                                display: 'block',
+                                fontSize: '1rem',
                                 fontWeight: 700,
-                                lineHeight: 1, // Reduced line height
-                                fontFamily: '\"Montserrat\", sans-serif',
-                                letterSpacing: '-0.02em'
+                                fontFamily: '"Montserrat", sans-serif',
+                                letterSpacing: '0.1em',
+                                textTransform: 'uppercase',
+                                marginBottom: '1rem'
                             }}
                         >
                             Tu idea, nuestra tinta
+                        </Text>
+                        <Title
+                            order={1}
+                            c="#0B3022"
+                            style={{
+                                fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                                fontWeight: 700,
+                                lineHeight: 1.1, 
+                                fontFamily: '"Montserrat", sans-serif',
+                                letterSpacing: '-0.02em'
+                            }}
+                        >
+                            Estampados DTF Premium y Ropa Streetwear en Venezuela.
                         </Title>
                         <Text
                             c="#4A4A4A"
