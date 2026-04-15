@@ -45,8 +45,8 @@ export default function Welcome() {
             className="page-transition"
         >
             <Head>
-                <title>Joppa | Estampados DTF Premium y Ropa Streetwear</title>
-                <meta head-key="description" name="description" content="Estampados DTF Premium y Ropa Streetwear en Venezuela. Crea y personaliza prendas exclusivas con la mejor calidad en impresión y diseño urbano." />
+                <title>JOPPA | Estampados DTF y Franelas Personalizadas en Venezuela</title>
+                <meta head-key="description" name="description" content="Lleva tu marca al siguiente nivel. Impresión DTF premium, franelas streetwear y estampados personalizados. Envíos desde Valencia a toda Venezuela. ¡Cotiza hoy!" />
             </Head>
 
             <CartDrawer />
