@@ -61,12 +61,12 @@ export default function HeroProduct() {
                             style={{
                                 fontSize: 'clamp(2.5rem, 6vw, 4rem)',
                                 fontWeight: 700,
-                                lineHeight: 1.1, 
+                                lineHeight: 1.1,
                                 fontFamily: '"Montserrat", sans-serif',
                                 letterSpacing: '-0.02em'
                             }}
                         >
-                            Estampados DTF Premium y Ropa Streetwear en Venezuela.
+                            Estampados DTF y Ropa Streetwear en Venezuela
                         </Title>
                         <Text
                             c="#4A4A4A"
